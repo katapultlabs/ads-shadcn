@@ -1,0 +1,307 @@
+{
+  "Box": [
+    "state"
+  ],
+  "Center": [
+    "state"
+  ],
+  "Circle": [
+    "state"
+  ],
+  "ClientOnly": [
+    "variant",
+    "size",
+    "state"
+  ],
+  "Code": [
+    "state"
+  ],
+  "CodeBlock": [
+    "state"
+  ],
+  "ColorSwatch": [
+    "variant",
+    "state"
+  ],
+  "DatePicker": [
+    "hideOutsideDays"
+  ],
+  "For": [
+    "variant",
+    "size",
+    "state"
+  ],
+  "Format": [
+    "variant",
+    "size",
+    "state"
+  ],
+  "Heading": [
+    "state"
+  ],
+  "Highlight": [
+    "size"
+  ],
+  "Icon": [
+    "state"
+  ],
+  "Image": [
+    "variant",
+    "size",
+    "state"
+  ],
+  "Kbd": [
+    "state"
+  ],
+  "Link": [
+    "state"
+  ],
+  "Locale": [
+    "size",
+    "state"
+  ],
+  "Mark": [
+    "state"
+  ],
+  "Square": [
+    "state"
+  ],
+  "VisuallyHidden": [
+    "size",
+    "state"
+  ],
+  "Checkbox": [
+    "checked",
+    "defaultChecked"
+  ],
+  "Field": [
+    "size"
+  ],
+  "FileUpload": [
+    "size",
+    "state"
+  ],
+  "InputAddon": [
+    "variant",
+    "size",
+    "state"
+  ],
+  "InputElement": [
+    "variant",
+    "size",
+    "state"
+  ],
+  "InputGroup": [
+    "variant",
+    "state"
+  ],
+  "Switch": [
+    "checked"
+  ],
+  "Toggle": [
+    "size"
+  ],
+  "Avatar": [
+    "state"
+  ],
+  "Badge": [
+    "state"
+  ],
+  "DataList": [
+    "state"
+  ],
+  "List": [
+    "size",
+    "state"
+  ],
+  "Listbox": [
+    "size",
+    "state"
+  ],
+  "Stat": [
+    "state"
+  ],
+  "Status": [
+    "state"
+  ],
+  "Table": [
+    "size",
+    "state"
+  ],
+  "Tag": [
+    "state"
+  ],
+  "Timeline": [
+    "state"
+  ],
+  "TreeView": [
+    "variant",
+    "size",
+    "state",
+    "animateContent"
+  ],
+  "Alert": [
+    "state"
+  ],
+  "Clipboard": [
+    "size"
+  ],
+  "EmptyState": [
+    "state"
+  ],
+  "Loader": [
+    "size"
+  ],
+  "Presence": [
+    "size",
+    "state"
+  ],
+  "Progress": [
+    "state"
+  ],
+  "ProgressCircle": [
+    "state"
+  ],
+  "Skeleton": [
+    "loading"
+  ],
+  "Spinner": [
+    "state"
+  ],
+  "Toast": [
+    "variant",
+    "size",
+    "state"
+  ],
+  "Breadcrumb": [
+    "state"
+  ],
+  "Carousel": [
+    "size",
+    "state"
+  ],
+  "Collapsible": [
+    "size"
+  ],
+  "Menu": [
+    "state",
+    "open"
+  ],
+  "Pagination": [
+    "size"
+  ],
+  "Steps": [
+    "state"
+  ],
+  "Tabs": [
+    "state"
+  ],
+  "Tooltip": [
+    "size",
+    "state",
+    "open"
+  ],
+  "ActionBar": [
+    "variant",
+    "size",
+    "state",
+    "open"
+  ],
+  "Blockquote": [
+    "size",
+    "state"
+  ],
+  "Card": [
+    "state"
+  ],
+  "Dialog": [
+    "variant",
+    "state",
+    "open"
+  ],
+  "Drawer": [
+    "variant",
+    "state",
+    "open"
+  ],
+  "FloatingPanel": [
+    "size",
+    "state"
+  ],
+  "HoverCard": [
+    "state",
+    "open"
+  ],
+  "Popover": [
+    "state",
+    "open"
+  ],
+  "AbsoluteCenter": [
+    "variant"
+  ],
+  "AspectRatio": [
+    "variant",
+    "size"
+  ],
+  "Bleed": [
+    "variant",
+    "size"
+  ],
+  "Container": [
+    "size"
+  ],
+  "Environment": [
+    "size"
+  ],
+  "Flex": [
+    "size"
+  ],
+  "Float": [
+    "variant",
+    "size"
+  ],
+  "FocusTrap": [
+    "size",
+    "state",
+    "disabled"
+  ],
+  "Grid": [
+    "variant"
+  ],
+  "Group": [
+    "size"
+  ],
+  "Marquee": [
+    "size"
+  ],
+  "Portal": [
+    "size",
+    "state"
+  ],
+  "Show": [
+    "variant",
+    "size",
+    "state"
+  ],
+  "SimpleGrid": [
+    "variant",
+    "size"
+  ],
+  "Spacer": [
+    "size"
+  ],
+  "Splitter": [
+    "size"
+  ],
+  "Sticky": [
+    "size"
+  ],
+  "Wrap": [
+    "size"
+  ],
+  "Toaster": [
+    "variant",
+    "size",
+    "state"
+  ]
+}

@@ -1,0 +1,181 @@
+# Onboarding — using ADS Light for a new client
+
+ADS Light is an **agentic design system**: a foundation of accessible, themeable
+components plus a machine-readable spec (`components.json`), composition patterns
+(`patterns.json`), a render-and-verify explorer, and an MCP server. You build a
+client's UI by **theming the shared system**, not by forking components.
+
+This guide gets you from zero to a branded, verified client UI. It is written for
+both **people** (read the prose, use the explorer) and **AI agents** (follow the
+MCP tool / command sequences in the boxes).
+
+> First time in the repo? Run `npm install` once. Read `AGENT_GUIDE.md` for the
+> decision tree and `ARCHITECTURE.md` for how the pieces fit.
+
+---
+
+## The one rule
+
+A per-client branch should normally change **only the brand layer**
+(`client-theme.json`). Never hardcode brand colors, fonts, radii, or button
+styling into components — change the theme. Client-specific components are
+allowed, but they must be registered in `components.json` (and `src/meta`).
+
+---
+
+## Quickstart: onboard a client in 5 steps
+
+```bash
+# 0. one-time
+npm install
+
+# 1. Branch for the client (keeps the brand layer isolated)
+git switch -c client/acme    # if this repo is under git
+
+# 2. Scaffold + activate the client's brand layer
+npm run new-client -- "Acme Corp" --primary "#ff5a1f" --font "Geist" --radius 8 --activate
+
+# 3. See it live and refine the brand
+npm run dev                  # explorer at http://127.0.0.1:5173  → click "Tokens"
+
+# 4. Verify the core components read as the brand
+npm run verify:renders       # renders everything + axe a11y + asserts brand button color
+
+# 5. Deliver screenshots from the explorer / render tools (never unverified UI)
+```
+
+That's the happy path. The rest of this file explains each piece and the two
+real-world scenarios.
+
+---
+
+## Scenario A — greenfield (client has no product yet)
+
+Use the Quickstart as-is. Capture the brand into `client-theme.json`, render the
+core set, register any bespoke components, deliver.
+
+## Scenario B — client already has an ongoing product
+
+The deciding question: **is their product built on the same component foundation
+(Chakra UI v3) that ADS Light wraps?**
+
+- **Same foundation** → ADS becomes their runtime design system.
+  1. Reverse their existing brand into tokens with `npm run new-client` (set
+     `--primary`, `--font`, `--radius`), then refine in the explorer's Tokens panel.
+  2. Sanity-render the core set; confirm screenshots read as *their* brand.
+  3. Map their screens to ADS components/patterns; register anything bespoke.
+  4. Adopt **incrementally** — restyle via tokens first, then swap ad-hoc
+     primitives for ADS components screen by screen. No big-bang rewrite.
+
+- **Different stack (Vue, React+Tailwind, native, …)** → ADS is the *source of
+  truth*, not the runtime.
+  1. Use `search_components` / `get_component` / `get_pattern` as the spec authority.
+  2. Reproduce the token layers (`src/tokens`) in their framework (the
+     `/design-tokens` skill generates this).
+  3. Mirror `patterns.json` recipes into their components.
+  4. Keep code ↔ Figma in sync with the `/figma-*` skills if they have a library.
+
+**Capturing what already exists** (either path): the installed design skills are
+the on-ramp — `/impeccable document` records their current visual system into a
+`DESIGN.md`, `/impeccable extract` pulls recurring tokens/components, and
+`/design-review` audits the result against the brief.
+
+---
+
+## The `new-client` script
+
+Manages the brand layer in `client-themes/<slug>.json` and (optionally) activates
+one by copying it to `client-theme.json`.
+
+| Command | What it does |
+|---|---|
+| `npm run new-client -- "Acme Corp"` | Create `client-themes/acme-corp.json` from the current active theme |
+| `… --primary "#ff5a1f"` | Set brand seed; the 50/100/500/600/700 ramp is derived to match `createTheme` |
+| `… --font "Geist"` | Set heading + body font stack |
+| `… --font-url "https://…"` | Set the webfont URL token |
+| `… --radius 8` | Set brand corner radius (px) |
+| `… --button-transform uppercase` | Set button text transform (`none` default) |
+| `… --from "Other Client"` | Clone an existing client theme as the base |
+| `… --activate` | Also copy the new theme to `client-theme.json` |
+| `npm run new-client -- --list` | List stored client themes |
+| `npm run new-client -- --switch "Acme Corp"` | Activate an existing stored theme |
+
+Activating backs up the previous `client-theme.json` to `client-theme.backup.json`.
+The script never touches git, components, or patterns — only the theme file.
+
+---
+
+## Two ways to drive it
+
+### People (the explorer)
+
+```bash
+npm run dev        # interactive explorer at http://127.0.0.1:5173 (HMR)
+npm run preview    # production build at http://127.0.0.1:4173 (render surface)
+```
+
+- Browse / search the ~119 component specs; flip variants, sizes, states.
+- Click **Tokens** to review the live theme in light and dark mode.
+- URL contract for deep links / automation:
+  - `/?component=Button` — render a known component
+  - `/?code=<base64url-jsx>` — render arbitrary JSX
+  - `/?colorMode=dark` — render in dark mode
+  - render target is always `#ads-render-target`
+
+### Agents (the MCP server)
+
+```bash
+npm run mcp        # ADS Light MCP over stdio
+```
+
+Default loop (see `AGENT_GUIDE.md`):
+
+1. `search_components` → `get_component` — read `whenToUse`, `neverUseFor`, `keyProps`.
+2. `get_theme` / `set_theme` — read or change the brand layer (no hardcoded values).
+3. `search_patterns` → `get_pattern` — executable multi-component JSX.
+4. `render_component` / `render_code` — screenshot before delivering; the result
+   carries an `a11y` block and warns on hardcoded colors.
+5. If the screenshot is wrong, fix code/theme/spec and render again.
+6. New client-only component? `add_component`; missing usage knowledge? `update_component`.
+
+---
+
+## Verify before you ship
+
+| Command | Checks |
+|---|---|
+| `npm run verify:renders` | Renders every component + pattern, runs axe-core, asserts the brand button resolves to the brand color |
+| `npm run quality` | Refreshes generated metadata and the quality report |
+| `npm run verify:visual` | Pixel-diffs every component against `artifacts/baseline/` (run `baseline:capture` first) |
+| `npm test` | `validate:specs` + `build` + `verify:renders` |
+
+Render tools and `verify:renders` flag raw hex / `rgb()` / `hsl()` in JSX — that's
+the no-hardcoded-color rule enforced at the point UI is generated.
+
+---
+
+## Where things live
+
+| File / dir | Role |
+|---|---|
+| `client-theme.json` | The **active** brand layer (imported by `src/App.jsx`) |
+| `client-themes/` | Stored per-client brand layers (managed by `new-client`) |
+| `src/theme/createTheme.js` | Turns the theme JSON into the Chakra system (ramps, semantic tokens) |
+| `components.json` | Machine-readable component specs (variants, states, props, examples) |
+| `patterns.json` | Composition patterns (multi-component recipes) |
+| `src/meta` | Rich per-component contracts (axes, relationships, a11y, AI hints) |
+| `src/tokens` | Primitive → typography → semantic → component token layers |
+| `CLAUDE.md` / `AGENT_GUIDE.md` / `ARCHITECTURE.md` | Rules, decision tree, architecture |
+
+---
+
+## Troubleshooting
+
+- **Brand color didn't apply** — you hardcoded a value somewhere. Move it into
+  `client-theme.json`; `verify:renders` will point at the offending render.
+- **Wrong client is active** — `npm run new-client -- --list`, then `--switch`.
+  Restore a clobbered active theme from `client-theme.backup.json`.
+- **A component looks off in dark mode** — check its `ads.*` semantic tokens;
+  the explorer's `?colorMode=dark` renders the `.dark` path.
+- **Render can't reach the explorer** — the render script falls back to serving
+  built `dist/` on a temp port. Run `npm run build` if `dist/` is stale.

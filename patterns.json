@@ -1,0 +1,100 @@
+{
+  "patterns": [
+    {
+      "name": "Labeled Form Field",
+      "intent": "Collect a short value with an accessible label, helper copy, and optional error.",
+      "components": ["Field", "Input", "Field.HelperText", "Field.ErrorText"],
+      "composition": "Field.Root > Field.Label + Input + helper/error text.",
+      "selectionRules": [
+        "Use Input for one-line values.",
+        "Use Textarea when the expected answer is longer than one sentence.",
+        "Never rely on placeholder as the only label."
+      ],
+      "jsx": "<Field.Root width=\"320px\"><Field.Label>Email</Field.Label><Input placeholder=\"you@example.com\" /><Field.HelperText>We only use this for account updates.</Field.HelperText></Field.Root>"
+    },
+    {
+      "name": "Dialog Confirmation",
+      "intent": "Ask the user to confirm a consequential action without losing page context.",
+      "components": ["Dialog", "Button"],
+      "composition": "Dialog.Root with Title, concise Body, footer HStack containing secondary and primary/destructive Button.",
+      "selectionRules": [
+        "Use Dialog for blocking decisions.",
+        "Use the danger palette for destructive confirmation.",
+        "Avoid long multi-step flows inside Dialog."
+      ],
+      "jsx": "<Dialog.Root defaultOpen modal={false}><Dialog.Positioner position=\"absolute\" inset=\"auto\"><Dialog.Content maxW=\"380px\" boxShadow=\"lg\"><Dialog.Header><Dialog.Title>Delete project?</Dialog.Title></Dialog.Header><Dialog.Body><Text color=\"ads.muted\">This permanently removes the project and its data.</Text></Dialog.Body><Dialog.Footer><HStack><Dialog.CloseTrigger asChild><Button variant=\"outline\">Cancel</Button></Dialog.CloseTrigger><Button colorPalette=\"red\">Delete</Button></HStack></Dialog.Footer></Dialog.Content></Dialog.Positioner></Dialog.Root>"
+    },
+    {
+      "name": "Object Summary Card",
+      "intent": "Represent one repeated entity in a collection.",
+      "components": ["Card", "Badge", "DataList", "Button"],
+      "composition": "Card.Root with Header title/status, Body metadata, Footer actions.",
+      "selectionRules": [
+        "Use one card per object.",
+        "Avoid nested cards.",
+        "Use Table when row/column comparison matters more than object browsing."
+      ],
+      "jsx": "<Card.Root width=\"320px\" variant=\"outline\"><Card.Header><HStack justify=\"space-between\"><Heading size=\"sm\">Acme Inc.</Heading><Badge colorPalette=\"green\">Active</Badge></HStack></Card.Header><Card.Body><DataList.Root orientation=\"horizontal\"><DataList.Item><DataList.ItemLabel>Plan</DataList.ItemLabel><DataList.ItemValue>Enterprise</DataList.ItemValue></DataList.Item><DataList.Item><DataList.ItemLabel>Seats</DataList.ItemLabel><DataList.ItemValue>240</DataList.ItemValue></DataList.Item></DataList.Root></Card.Body><Card.Footer><Button size=\"sm\" variant=\"outline\">Open</Button></Card.Footer></Card.Root>"
+    },
+    {
+      "name": "Persistent Feedback",
+      "intent": "Keep status visible until the underlying condition changes.",
+      "components": ["Alert", "Button"],
+      "composition": "Alert.Root with Indicator, Title, Description, and an optional action nearby.",
+      "selectionRules": [
+        "Use Alert for persistent feedback.",
+        "Use Toast/Toaster only when the message can disappear.",
+        "Match status to severity."
+      ],
+      "jsx": "<Alert.Root status=\"warning\" variant=\"surface\" maxW=\"380px\"><Alert.Indicator /><Alert.Content><Alert.Title>Payment method expiring</Alert.Title><Alert.Description>Update your card before the next billing cycle.</Alert.Description></Alert.Content></Alert.Root>"
+    },
+    {
+      "name": "Page Header with Actions",
+      "intent": "Title a view and expose its primary and secondary actions.",
+      "components": ["Flex", "Heading", "Text", "Button"],
+      "composition": "Flex space-between: left Stack with Heading + supporting Text, right HStack of actions with one primary Button.",
+      "selectionRules": [
+        "Expose at most one primary (brand) action per header.",
+        "Use Button for actions and Link/Breadcrumb for navigation.",
+        "Keep the supporting line to one sentence."
+      ],
+      "jsx": "<Flex width=\"520px\" align=\"center\" justify=\"space-between\" gap=\"4\"><Stack gap=\"1\"><Heading size=\"md\">Team members</Heading><Text color=\"ads.muted\">Manage who can access this workspace.</Text></Stack><HStack><Button variant=\"outline\">Export</Button><Button colorPalette=\"brand\">Invite</Button></HStack></Flex>"
+    },
+    {
+      "name": "Empty State",
+      "intent": "Explain why a region is empty and offer the next action.",
+      "components": ["EmptyState", "Button"],
+      "composition": "EmptyState.Root > Content with Indicator icon, Title, Description, and a single recovery action.",
+      "selectionRules": [
+        "Give one clear next action, not several.",
+        "Use neutral, non-alarming copy for normal-empty (not error) states.",
+        "Reserve for genuinely empty regions, not loading (use Skeleton/Spinner)."
+      ],
+      "jsx": "<EmptyState.Root><EmptyState.Content><EmptyState.Indicator><Search size={28} /></EmptyState.Indicator><EmptyState.Title>No results found</EmptyState.Title><EmptyState.Description>Try adjusting your filters or search terms.</EmptyState.Description><Button mt=\"2\" colorPalette=\"brand\">Clear filters</Button></EmptyState.Content></EmptyState.Root>"
+    },
+    {
+      "name": "Search and Filter Bar",
+      "intent": "Let the user narrow a collection by free text and a category.",
+      "components": ["InputGroup", "Input", "NativeSelect"],
+      "composition": "HStack: InputGroup with leading search icon (flex 1) + a NativeSelect for the category facet.",
+      "selectionRules": [
+        "Always give the search Input an accessible label.",
+        "Use Select/NativeSelect for finite facets, not free text.",
+        "Keep the search field the widest element in the row."
+      ],
+      "jsx": "<HStack width=\"520px\" gap=\"3\"><InputGroup flex=\"1\" startElement={<Search size={16} />}><Input aria-label=\"Search\" placeholder=\"Search components\" /></InputGroup><NativeSelect.Root width=\"160px\"><NativeSelect.Field aria-label=\"Category\"><option>All</option><option>Inputs</option><option>Layout</option></NativeSelect.Field><NativeSelect.Indicator /></NativeSelect.Root></HStack>"
+    },
+    {
+      "name": "Metric Summary Row",
+      "intent": "Show a few headline numbers side by side at the top of a dashboard.",
+      "components": ["Card", "Stat"],
+      "composition": "HStack of equal-width outline Cards, each wrapping a Stat.Root with Label + ValueText.",
+      "selectionRules": [
+        "Keep to 2-4 metrics; more belongs in a Table.",
+        "Use Stat.Label + Stat.ValueText only inside the dl (no bare spans).",
+        "Right-align or format numbers consistently."
+      ],
+      "jsx": "<HStack width=\"540px\" gap=\"4\">{[[\"Revenue\",\"$48.2k\"],[\"Active users\",\"1,284\"],[\"Churn\",\"2.1%\"]].map(([label,value]) => (<Card.Root key={label} flex=\"1\" variant=\"outline\"><Card.Body><Stat.Root><Stat.Label>{label}</Stat.Label><Stat.ValueText>{value}</Stat.ValueText></Stat.Root></Card.Body></Card.Root>))}</HStack>"
+    }
+  ]
+}

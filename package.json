@@ -1,0 +1,47 @@
+{
+  "name": "ads-light",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host 127.0.0.1",
+    "preview": "vite preview --host 127.0.0.1 --port 4173",
+    "build": "vite build",
+    "mcp": "node mcp-server/index.js",
+    "new-client": "node scripts/new-client.mjs",
+    "render": "node scripts/render-preview.js",
+    "generate:tokens": "node scripts/generate-token-explorer-data.mjs",
+    "generate:icons": "node scripts/generate-lucide-icons.mjs",
+    "fix:examples": "node scripts/fix-starter-examples.mjs",
+    "enrich:components": "node scripts/enrich-component-metadata.mjs",
+    "generate:chakra": "node scripts/generate-chakra-metadata.mjs",
+    "generate:rich-meta": "node scripts/generate-rich-meta-module.mjs",
+    "quality": "node scripts/generate-quality-report.mjs",
+    "generate": "npm run generate:tokens && npm run generate:icons && npm run enrich:components && npm run fix:examples && npm run generate:chakra && npm run generate:rich-meta && npm run quality",
+    "check:chakra": "node scripts/check-chakra-coverage.mjs",
+    "validate:specs": "node scripts/validate-specs.mjs",
+    "generate:inert-controls": "node scripts/generate-inert-controls.mjs",
+    "verify:renders": "node scripts/verify-renders.mjs",
+    "baseline:capture": "node scripts/visual-baseline.mjs --capture",
+    "verify:visual": "node scripts/visual-baseline.mjs",
+    "test": "npm run validate:specs && npm run build && npm run verify:renders"
+  },
+  "dependencies": {
+    "@babel/standalone": "^7.26.4",
+    "@chakra-ui/react": "^3.15.1",
+    "@modelcontextprotocol/sdk": "^1.7.0",
+    "@vitejs/plugin-react": "^4.3.4",
+    "framer-motion": "^12.4.7",
+    "lucide-react": "^0.475.0",
+    "playwright": "^1.50.1",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "vite": "^6.1.0",
+    "zod": "^3.24.1"
+  },
+  "devDependencies": {
+    "axe-core": "^4.12.1",
+    "pixelmatch": "^5.3.0",
+    "pngjs": "^7.0.0"
+  }
+}

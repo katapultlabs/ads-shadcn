@@ -1,0 +1,1148 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ADS Light Component Explorer</title>
+    <style>
+      :root {
+        --font: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        --radius: 8px;
+        --primary: #145fc4;
+        --primary-weak: #eef6ff;
+        --secondary: #5b6475;
+        --success: #15803d;
+        --warning: #b45309;
+        --danger: #b42318;
+        --info: #0369a1;
+        --surface: #ffffff;
+        --canvas: #fbfcfe;
+        --text: #182230;
+        --muted: #667085;
+        --line: #d8dee8;
+        --button-transform: none;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        min-width: 320px;
+        color: var(--text);
+        background: #eef1f5;
+        font-family: var(--font);
+      }
+
+      button,
+      input,
+      select,
+      textarea {
+        font: inherit;
+      }
+
+      .app {
+        display: grid;
+        grid-template-columns: 276px minmax(0, 1fr) 316px;
+        min-height: 100vh;
+      }
+
+      .sidebar,
+      .controls {
+        height: 100vh;
+        overflow: auto;
+        background: var(--surface);
+      }
+
+      .sidebar {
+        border-right: 1px solid var(--line);
+        padding: 18px 14px;
+      }
+
+      .controls {
+        border-left: 1px solid var(--line);
+        padding: 18px;
+      }
+
+      .brand {
+        display: grid;
+        gap: 3px;
+        padding: 4px 8px 18px;
+      }
+
+      .brand strong {
+        font-size: 17px;
+      }
+
+      .brand span,
+      .eyebrow,
+      .meta {
+        color: var(--muted);
+        font-size: 12px;
+      }
+
+      .nav-group {
+        display: grid;
+        gap: 3px;
+        margin-top: 10px;
+      }
+
+      .nav-group-title {
+        color: #8a94a6;
+        text-transform: uppercase;
+        padding: 12px 8px 5px;
+        font-size: 10px;
+        font-weight: 800;
+      }
+
+      .nav-button {
+        width: 100%;
+        min-height: 34px;
+        color: #303846;
+        cursor: pointer;
+        text-align: left;
+        background: transparent;
+        border: 0;
+        border-radius: 6px;
+        padding: 0 9px;
+        font-size: 13px;
+      }
+
+      .nav-button:hover {
+        background: #f2f5f9;
+      }
+
+      .nav-button.active {
+        color: var(--primary);
+        background: var(--primary-weak);
+        font-weight: 750;
+      }
+
+      .workspace {
+        min-width: 0;
+        display: grid;
+        grid-template-rows: auto minmax(0, 1fr);
+        background: var(--canvas);
+      }
+
+      .topbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: 18px;
+        border-bottom: 1px solid var(--line);
+        background: rgba(255, 255, 255, 0.74);
+        padding: 18px 22px;
+      }
+
+      h1,
+      h2,
+      h3,
+      p {
+        margin: 0;
+      }
+
+      h1 {
+        margin-top: 3px;
+        font-size: 26px;
+        line-height: 1.15;
+      }
+
+      .url-chip {
+        max-width: 44vw;
+        color: #475467;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        background: #f5f7fa;
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        padding: 7px 10px;
+        font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+        font-size: 11px;
+        overflow: hidden;
+      }
+
+      .canvas-wrap {
+        min-height: 0;
+        padding: 22px;
+      }
+
+      .canvas-panel {
+        height: 100%;
+        min-height: 560px;
+        background: var(--surface);
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        overflow: hidden;
+      }
+
+      .canvas-toolbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        min-height: 42px;
+        border-bottom: 1px solid var(--line);
+        padding: 0 14px;
+      }
+
+      .canvas {
+        min-height: calc(100% - 42px);
+        display: grid;
+        place-items: center;
+        padding: 36px;
+        background-color: #fff;
+        background-image: radial-gradient(rgba(20, 95, 196, 0.16) 1px, transparent 1px);
+        background-size: 20px 20px;
+      }
+
+      #renderTarget {
+        max-width: min(760px, 100%);
+      }
+
+      .state-frame {
+        display: grid;
+        place-items: center;
+        gap: 12px;
+      }
+
+      .state-hover > :first-child {
+        filter: brightness(0.98);
+        box-shadow: 0 10px 28px rgba(24, 34, 48, 0.16);
+      }
+
+      .state-focus > :first-child {
+        outline: 3px solid color-mix(in srgb, var(--primary), transparent 65%);
+        outline-offset: 4px;
+      }
+
+      .state-active > :first-child {
+        transform: translateY(1px);
+        filter: brightness(0.94);
+      }
+
+      .state-disabled {
+        opacity: 0.52;
+        pointer-events: none;
+      }
+
+      .state-note {
+        color: var(--muted);
+        background: #f7f9fc;
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        padding: 6px 10px;
+        font-size: 11px;
+      }
+
+      .control-section {
+        display: grid;
+        gap: 14px;
+      }
+
+      .control-head {
+        display: grid;
+        gap: 4px;
+        padding-bottom: 14px;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .control-row {
+        display: grid;
+        gap: 7px;
+      }
+
+      .control-row label,
+      .control-label {
+        color: var(--muted);
+        text-transform: uppercase;
+        font-size: 11px;
+        font-weight: 800;
+      }
+
+      .control-row select,
+      .control-row input[type="text"],
+      .control-row textarea {
+        width: 100%;
+        min-height: 38px;
+        color: var(--text);
+        background: #f7f9fc;
+        border: 1px solid var(--line);
+        border-radius: 6px;
+        padding: 0 10px;
+      }
+
+      .control-row textarea {
+        min-height: 148px;
+        resize: vertical;
+        padding: 10px;
+        font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+        font-size: 12px;
+      }
+
+      .check-row {
+        display: flex;
+        align-items: center;
+        gap: 9px;
+        min-height: 38px;
+      }
+
+      .check-row input {
+        width: 16px;
+        height: 16px;
+        accent-color: var(--primary);
+      }
+
+      .copy-url {
+        width: 100%;
+        min-height: 38px;
+        cursor: pointer;
+        color: white;
+        background: var(--text);
+        border: 0;
+        border-radius: 6px;
+        padding: 0 12px;
+        font-weight: 750;
+      }
+
+      .component {
+        transition: transform 140ms ease, box-shadow 140ms ease, filter 140ms ease;
+      }
+
+      .btn {
+        min-height: var(--btn-h, 40px);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        color: var(--btn-fg, #fff);
+        cursor: pointer;
+        text-transform: var(--button-transform);
+        background: var(--btn-bg, var(--primary));
+        border: 1px solid var(--btn-border, var(--btn-bg, var(--primary)));
+        border-radius: var(--radius);
+        padding: 0 var(--btn-px, 16px);
+        font-weight: 760;
+      }
+
+      .btn.outline,
+      .btn.surface {
+        --btn-fg: var(--btn-bg);
+        --btn-border: color-mix(in srgb, var(--btn-bg), white 44%);
+        background: white;
+      }
+
+      .btn.ghost {
+        --btn-fg: var(--btn-bg);
+        --btn-border: transparent;
+        background: transparent;
+      }
+
+      .icon-btn {
+        width: var(--btn-h, 40px);
+        padding: 0;
+      }
+
+      .field,
+      .select,
+      .textarea {
+        display: grid;
+        gap: 7px;
+        min-width: 280px;
+      }
+
+      .field label,
+      .select label,
+      .textarea label {
+        color: #344054;
+        font-size: 13px;
+        font-weight: 700;
+      }
+
+      .input,
+      .select-box,
+      .textarea-box {
+        width: 100%;
+        min-height: 40px;
+        color: var(--text);
+        background: #fff;
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        padding: 0 12px;
+      }
+
+      .textarea-box {
+        min-height: 112px;
+        padding: 12px;
+      }
+
+      .check,
+      .switch,
+      .radio {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        color: #344054;
+        font-weight: 650;
+      }
+
+      .box-mark {
+        width: 18px;
+        height: 18px;
+        display: grid;
+        place-items: center;
+        color: white;
+        background: var(--primary);
+        border: 1px solid var(--primary);
+        border-radius: 4px;
+        font-size: 13px;
+      }
+
+      .switch-track {
+        width: 44px;
+        height: 24px;
+        position: relative;
+        background: var(--primary);
+        border-radius: 999px;
+      }
+
+      .switch-track::after {
+        content: "";
+        width: 18px;
+        height: 18px;
+        position: absolute;
+        top: 3px;
+        right: 3px;
+        background: white;
+        border-radius: 50%;
+      }
+
+      .radio-dot {
+        width: 18px;
+        height: 18px;
+        display: grid;
+        place-items: center;
+        border: 2px solid var(--primary);
+        border-radius: 50%;
+      }
+
+      .radio-dot::after {
+        content: "";
+        width: 8px;
+        height: 8px;
+        background: var(--primary);
+        border-radius: 50%;
+      }
+
+      .slider {
+        width: 260px;
+      }
+
+      .slider-track {
+        height: 6px;
+        background: color-mix(in srgb, var(--primary), white 72%);
+        border-radius: 999px;
+      }
+
+      .slider-fill {
+        height: 100%;
+        width: 58%;
+        background: var(--primary);
+        border-radius: inherit;
+      }
+
+      .badge {
+        display: inline-flex;
+        align-items: center;
+        min-height: 24px;
+        color: var(--badge-fg, var(--primary));
+        background: color-mix(in srgb, var(--badge-fg), white 88%);
+        border: 1px solid color-mix(in srgb, var(--badge-fg), white 65%);
+        border-radius: 999px;
+        padding: 0 9px;
+        font-size: 12px;
+        font-weight: 800;
+      }
+
+      .avatar {
+        width: var(--avatar, 44px);
+        height: var(--avatar, 44px);
+        display: grid;
+        place-items: center;
+        color: white;
+        background: var(--primary);
+        border-radius: 50%;
+        font-weight: 800;
+      }
+
+      .table {
+        min-width: 520px;
+        background: white;
+        border: 1px solid var(--line);
+        border-collapse: collapse;
+        border-radius: var(--radius);
+        overflow: hidden;
+      }
+
+      .table th,
+      .table td {
+        border-bottom: 1px solid var(--line);
+        padding: 11px 13px;
+        text-align: left;
+        font-size: 13px;
+      }
+
+      .table th {
+        background: #f7f9fc;
+        color: #475467;
+      }
+
+      .progress {
+        width: 280px;
+        height: 10px;
+        background: #eef2f7;
+        border-radius: 999px;
+        overflow: hidden;
+      }
+
+      .progress > span {
+        display: block;
+        height: 100%;
+        width: 66%;
+        background: var(--primary);
+      }
+
+      .alert,
+      .toast,
+      .card,
+      .modal {
+        background: white;
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        box-shadow: 0 12px 34px rgba(24, 34, 48, 0.12);
+      }
+
+      .alert {
+        min-width: 340px;
+        display: grid;
+        grid-template-columns: auto minmax(0, 1fr);
+        gap: 12px;
+        padding: 14px;
+      }
+
+      .alert-icon {
+        color: var(--tone);
+      }
+
+      .alert strong,
+      .toast strong,
+      .card strong,
+      .modal strong {
+        display: block;
+        margin-bottom: 4px;
+      }
+
+      .alert p,
+      .toast p,
+      .card p,
+      .modal p {
+        color: var(--muted);
+        font-size: 13px;
+      }
+
+      .toast {
+        min-width: 300px;
+        border-left: 4px solid var(--tone);
+        padding: 14px;
+      }
+
+      .spinner {
+        width: 42px;
+        height: 42px;
+        border: 4px solid color-mix(in srgb, var(--primary), white 72%);
+        border-top-color: var(--primary);
+        border-radius: 50%;
+        animation: spin 900ms linear infinite;
+      }
+
+      @keyframes spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+
+      .tabs {
+        width: 380px;
+      }
+
+      .tab-list {
+        display: flex;
+        gap: 4px;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .tab {
+        border: 0;
+        border-bottom: 2px solid transparent;
+        background: transparent;
+        padding: 10px 12px;
+      }
+
+      .tab.active {
+        color: var(--primary);
+        border-color: var(--primary);
+        font-weight: 800;
+      }
+
+      .tab-panel {
+        color: var(--muted);
+        padding: 14px 0 0;
+      }
+
+      .breadcrumbs,
+      .pagination,
+      .stack,
+      .grid-demo {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .crumb {
+        color: var(--primary);
+        font-size: 14px;
+      }
+
+      .page {
+        min-width: 34px;
+        height: 34px;
+        border: 1px solid var(--line);
+        border-radius: 6px;
+        background: white;
+      }
+
+      .page.active {
+        color: white;
+        background: var(--primary);
+        border-color: var(--primary);
+      }
+
+      .card {
+        width: 320px;
+        padding: 18px;
+      }
+
+      .modal {
+        width: 380px;
+        padding: 18px;
+      }
+
+      .stack {
+        flex-direction: column;
+        align-items: stretch;
+        width: 320px;
+      }
+
+      .tile {
+        min-height: 48px;
+        display: grid;
+        place-items: center;
+        color: var(--primary);
+        background: var(--primary-weak);
+        border: 1px dashed color-mix(in srgb, var(--primary), white 40%);
+        border-radius: var(--radius);
+        font-weight: 750;
+      }
+
+      .grid-demo {
+        display: grid;
+        grid-template-columns: repeat(3, 86px);
+        gap: 10px;
+      }
+
+      .divider {
+        width: 360px;
+        height: 1px;
+        background: var(--line);
+      }
+
+      .sandbox-error {
+        max-width: 520px;
+        color: var(--danger);
+        background: #fff1f0;
+        border: 1px solid #ffccc7;
+        border-radius: var(--radius);
+        padding: 14px;
+        font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+        font-size: 12px;
+        white-space: pre-wrap;
+      }
+
+      @media (max-width: 980px) {
+        .app {
+          grid-template-columns: 1fr;
+        }
+
+        .sidebar,
+        .controls {
+          height: auto;
+          max-height: none;
+          border: 0;
+        }
+
+        .sidebar {
+          border-bottom: 1px solid var(--line);
+        }
+
+        .controls {
+          border-top: 1px solid var(--line);
+        }
+
+        .nav {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+          gap: 10px;
+        }
+
+        .topbar {
+          display: grid;
+        }
+
+        .url-chip {
+          max-width: 100%;
+        }
+
+        .canvas-wrap {
+          padding: 16px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app"></div>
+
+    <script>
+      const brandConfig = {
+        name: "ADS Light",
+        colors: {
+          primary: "#145fc4",
+          secondary: "#5b6475",
+          success: "#15803d",
+          warning: "#b45309",
+          danger: "#b42318",
+          info: "#0369a1",
+          surface: "#ffffff",
+          canvas: "#fbfcfe",
+          text: "#182230",
+          muted: "#667085",
+          line: "#d8dee8"
+        },
+        fontFamily: 'ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
+        borderRadius: "8px",
+        buttonTextTransform: "none",
+        defaults: {
+          Button: { variant: "solid", color: "Primary", size: "md", state: "default", iconLeft: "false", iconRight: "false" },
+          Card: { variant: "outline" },
+          Input: { variant: "outline" }
+        }
+      };
+
+      const iconSet = {
+        None: "",
+        Save: '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2Z"/><path d="M17 21v-8H7v8"/><path d="M7 3v5h8"/></svg>',
+        Search: '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>',
+        Plus: '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>',
+        ArrowRight: '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>',
+        Settings: '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 15.5A3.5 3.5 0 1 0 12 8a3.5 3.5 0 0 0 0 7.5Z"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.9l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.9-.3 1.7 1.7 0 0 0-1 1.6V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1-1.6 1.7 1.7 0 0 0-1.9.3l-.1.1A2 2 0 1 1 4.2 17l.1-.1a1.7 1.7 0 0 0 .3-1.9 1.7 1.7 0 0 0-1.6-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.6-1 1.7 1.7 0 0 0-.3-1.9l-.1-.1A2 2 0 1 1 7 4.2l.1.1a1.7 1.7 0 0 0 1.9.3h.1a1.7 1.7 0 0 0 1-1.6V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.6h.1a1.7 1.7 0 0 0 1.9-.3l.1-.1A2 2 0 1 1 19.8 7l-.1.1a1.7 1.7 0 0 0-.3 1.9v.1a1.7 1.7 0 0 0 1.6 1h.1a2 2 0 1 1 0 4H21a1.7 1.7 0 0 0-1.6 1Z"/></svg>'
+      };
+
+      const categories = {
+        Foundations: ["Design Tokens"],
+        Inputs: ["Button", "IconButton", "Input", "Textarea", "Checkbox", "Switch", "Select", "RadioGroup", "Slider"],
+        "Data display": ["Badge", "Avatar", "Table", "Progress"],
+        Feedback: ["Alert", "Toast", "Spinner"],
+        Navigation: ["Tabs", "Breadcrumbs", "Pagination"],
+        Surfaces: ["Card", "Modal"],
+        Layout: ["Stack", "Grid", "Divider"]
+      };
+
+      const specs = {
+        "Design Tokens": {
+          controls: [],
+          render: () => `
+            <div style="display:grid;gap:18px;min-width:560px">
+              <div style="display:grid;gap:8px">
+                <strong>Active brand config</strong>
+                <span class="meta">Change the brandConfig object once to reskin every preview.</span>
+              </div>
+              <div style="display:grid;grid-template-columns:repeat(6,1fr);gap:8px">
+                ${Object.entries(brandConfig.colors).slice(0, 6).map(([name, value]) => `
+                  <div style="display:grid;gap:7px">
+                    <span style="height:42px;border-radius:var(--radius);border:1px solid var(--line);background:${value}"></span>
+                    <code style="font-size:11px">${name}</code>
+                  </div>`).join("")}
+              </div>
+              <div class="card"><strong>Global shape</strong><p>Font: ${brandConfig.fontFamily.split(",")[0]} · Radius: ${brandConfig.borderRadius} · Button case: ${brandConfig.buttonTextTransform}</p></div>
+            </div>`
+        },
+        Button: {
+          controls: [
+            choice("variant", ["solid", "outline", "surface", "ghost"]),
+            choice("color", ["Primary", "Secondary", "Success", "Warning", "Danger", "Info"]),
+            choice("size", ["sm", "md", "lg"]),
+            choice("state", ["default", "hover", "focus", "active", "disabled"]),
+            bool("iconLeft"),
+            bool("iconRight"),
+            choice("icon", Object.keys(iconSet)),
+            text("label")
+          ],
+          defaults: { label: "Save changes", icon: "Save" },
+          render: buttonRender
+        },
+        IconButton: {
+          controls: [choice("variant", ["solid", "outline", "ghost"]), choice("color", ["Primary", "Secondary", "Success", "Danger"]), choice("size", ["sm", "md", "lg"]), choice("state", ["default", "hover", "focus", "disabled"]), choice("icon", Object.keys(iconSet))],
+          defaults: { icon: "Search" },
+          render: (v) => buttonRender({ ...v, label: "", iconLeft: "true", iconRight: "false", iconOnly: true })
+        },
+        Input: {
+          controls: [choice("variant", ["outline", "filled", "flushed"]), choice("size", ["sm", "md", "lg"]), choice("state", ["default", "focus", "disabled"]), text("label"), text("placeholder")],
+          defaults: { label: "Email", placeholder: "you@example.com" },
+          render: (v) => `<div class="field component"><label>${esc(v.label)}</label><input class="input" placeholder="${esc(v.placeholder)}" ${v.state === "disabled" ? "disabled" : ""}></div>`
+        },
+        Textarea: {
+          controls: [choice("variant", ["outline", "filled"]), choice("state", ["default", "focus", "disabled"]), text("label"), text("placeholder")],
+          defaults: { label: "Notes", placeholder: "Add context" },
+          render: (v) => `<div class="textarea component"><label>${esc(v.label)}</label><textarea class="textarea-box" placeholder="${esc(v.placeholder)}" ${v.state === "disabled" ? "disabled" : ""}></textarea></div>`
+        },
+        Checkbox: {
+          controls: [choice("state", ["checked", "unchecked", "disabled"]), text("label")],
+          defaults: { label: "Email me updates" },
+          render: (v) => `<div class="check component ${v.state === "disabled" ? "state-disabled" : ""}"><span class="box-mark">${v.state === "checked" ? "✓" : ""}</span><span>${esc(v.label)}</span></div>`
+        },
+        Switch: {
+          controls: [choice("state", ["checked", "unchecked", "disabled"]), text("label")],
+          defaults: { label: "Enable previews" },
+          render: (v) => `<div class="switch component ${v.state === "disabled" ? "state-disabled" : ""}"><span class="switch-track" style="${v.state === "unchecked" ? "background:#cbd5e1" : ""}"></span><span>${esc(v.label)}</span></div>`
+        },
+        Select: {
+          controls: [choice("variant", ["outline", "filled"]), choice("size", ["sm", "md", "lg"]), choice("state", ["default", "focus", "disabled"]), text("label")],
+          defaults: { label: "Size" },
+          render: (v) => `<div class="select component"><label>${esc(v.label)}</label><select class="select-box" ${v.state === "disabled" ? "disabled" : ""}><option>Small</option><option>Medium</option><option>Large</option></select></div>`
+        },
+        RadioGroup: {
+          controls: [choice("state", ["default", "disabled"]), text("label")],
+          defaults: { label: "Medium" },
+          render: (v) => `<div class="radio component ${v.state === "disabled" ? "state-disabled" : ""}"><span class="radio-dot"></span><span>${esc(v.label)}</span></div>`
+        },
+        Slider: {
+          controls: [choice("state", ["default", "disabled"])],
+          render: (v) => `<div class="slider component ${v.state === "disabled" ? "state-disabled" : ""}"><div class="slider-track"><div class="slider-fill"></div></div></div>`
+        },
+        Badge: {
+          controls: [choice("color", ["Primary", "Success", "Warning", "Danger", "Info"]), choice("variant", ["subtle", "outline", "solid"]), text("label")],
+          defaults: { label: "Verified" },
+          render: (v) => `<span class="badge component" style="--badge-fg:${tone(v.color)};${v.variant === "solid" ? `background:${tone(v.color)};color:white;border-color:${tone(v.color)}` : ""}">${esc(v.label)}</span>`
+        },
+        Avatar: {
+          controls: [choice("size", ["sm", "md", "lg"]), text("label")],
+          defaults: { label: "AD" },
+          render: (v) => `<div class="avatar component" style="--avatar:${v.size === "sm" ? "34px" : v.size === "lg" ? "58px" : "44px"}">${esc(v.label)}</div>`
+        },
+        Table: {
+          controls: [choice("size", ["sm", "md"]), choice("variant", ["line", "outline"])],
+          render: () => `<table class="table component"><thead><tr><th>Component</th><th>Category</th><th>Status</th></tr></thead><tbody><tr><td>Button</td><td>Inputs</td><td><span class="badge">Ready</span></td></tr><tr><td>Alert</td><td>Feedback</td><td><span class="badge" style="--badge-fg:var(--success)">Verified</span></td></tr></tbody></table>`
+        },
+        Progress: {
+          controls: [choice("color", ["Primary", "Success", "Warning", "Danger"])],
+          render: (v) => `<div class="progress component" style="--primary:${tone(v.color)}"><span></span></div>`
+        },
+        Alert: {
+          controls: [choice("status", ["Info", "Success", "Warning", "Danger"]), choice("variant", ["subtle", "outline", "solid"]), text("title"), text("description")],
+          defaults: { title: "Theme loaded", description: "Every preview uses the active brand." },
+          render: (v) => `<div class="alert component" style="--tone:${tone(v.status)};${v.variant === "solid" ? `background:${tone(v.status)};color:white` : ""}"><span class="alert-icon">●</span><div><strong>${esc(v.title)}</strong><p>${esc(v.description)}</p></div></div>`
+        },
+        Toast: {
+          controls: [choice("status", ["Info", "Success", "Warning", "Danger"]), text("title"), text("description")],
+          defaults: { title: "Saved", description: "Your component settings are shareable." },
+          render: (v) => `<div class="toast component" style="--tone:${tone(v.status)}"><strong>${esc(v.title)}</strong><p>${esc(v.description)}</p></div>`
+        },
+        Spinner: {
+          controls: [choice("color", ["Primary", "Success", "Warning", "Danger"])],
+          render: (v) => `<div class="spinner component" style="--primary:${tone(v.color)}"></div>`
+        },
+        Tabs: {
+          controls: [choice("variant", ["line", "enclosed"]), choice("size", ["sm", "md"])],
+          render: () => `<div class="tabs component"><div class="tab-list"><button class="tab active">Spec</button><button class="tab">Render</button><button class="tab">Theme</button></div><div class="tab-panel">Queryable metadata and live verification.</div></div>`
+        },
+        Breadcrumbs: {
+          controls: [choice("separator", ["/", "›", "→"])],
+          render: (v) => `<div class="breadcrumbs component"><span class="crumb">Library</span><span>${esc(v.separator)}</span><span class="crumb">Inputs</span><span>${esc(v.separator)}</span><strong>Button</strong></div>`
+        },
+        Pagination: {
+          controls: [choice("size", ["sm", "md"])],
+          render: () => `<div class="pagination component"><button class="page">1</button><button class="page active">2</button><button class="page">3</button></div>`
+        },
+        Card: {
+          controls: [choice("variant", ["outline", "elevated", "subtle"]), text("title"), text("description")],
+          defaults: { title: "Render health", description: "3 checks passed" },
+          render: (v) => `<div class="card component" style="${v.variant === "subtle" ? "background:#f7f9fc" : ""}"><strong>${esc(v.title)}</strong><p>${esc(v.description)}</p></div>`
+        },
+        Modal: {
+          controls: [choice("size", ["sm", "md"]), text("title"), text("description")],
+          defaults: { title: "Confirm update", description: "This preview reflects the active brand tokens." },
+          render: (v) => `<div class="modal component" style="${v.size === "sm" ? "width:320px" : ""}"><strong>${esc(v.title)}</strong><p>${esc(v.description)}</p><div style="margin-top:16px">${buttonRender({ label: "Continue", variant: "solid", color: "Primary", size: "sm" })}</div></div>`
+        },
+        Stack: {
+          controls: [choice("spacing", ["sm", "md", "lg"])],
+          render: (v) => `<div class="stack component" style="gap:${v.spacing === "lg" ? 16 : v.spacing === "sm" ? 6 : 10}px"><div class="tile">One</div><div class="tile">Two</div><div class="tile">Three</div></div>`
+        },
+        Grid: {
+          controls: [choice("columns", ["2", "3"])],
+          render: (v) => `<div class="grid-demo component" style="grid-template-columns:repeat(${v.columns},86px)"><div class="tile">A</div><div class="tile">B</div><div class="tile">C</div><div class="tile">D</div></div>`
+        },
+        Divider: {
+          controls: [choice("orientation", ["horizontal", "vertical"])],
+          render: (v) => `<div class="divider component" style="${v.orientation === "vertical" ? "width:1px;height:220px" : ""}"></div>`
+        }
+      };
+
+      function choice(key, options) {
+        return { key, type: "choice", options };
+      }
+
+      function bool(key) {
+        return { key, type: "boolean" };
+      }
+
+      function text(key) {
+        return { key, type: "text" };
+      }
+
+      function esc(value = "") {
+        return String(value).replace(/[&<>"']/g, (char) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[char]));
+      }
+
+      function tone(name = "Primary") {
+        const key = String(name).toLowerCase();
+        return brandConfig.colors[key] || brandConfig.colors.primary;
+      }
+
+      function buttonRender(values) {
+        const size = values.size === "lg" ? ["46px", "20px"] : values.size === "sm" ? ["34px", "12px"] : ["40px", "16px"];
+        const icon = values.icon || "None";
+        const left = values.iconLeft === "true" || values.iconOnly;
+        const right = values.iconRight === "true";
+        return `<button class="btn ${values.variant || "solid"} ${values.iconOnly ? "icon-btn" : ""} component" style="--btn-bg:${tone(values.color)};--btn-h:${size[0]};--btn-px:${size[1]}" ${values.state === "disabled" ? "disabled" : ""}>${left ? iconSet[icon] || "" : ""}${values.iconOnly ? "" : `<span>${esc(values.label || "Button")}</span>`}${right ? iconSet[icon] || "" : ""}</button>`;
+      }
+
+      function applyTheme() {
+        const root = document.documentElement;
+        const colors = brandConfig.colors;
+        root.style.setProperty("--font", brandConfig.fontFamily);
+        root.style.setProperty("--radius", brandConfig.borderRadius);
+        root.style.setProperty("--button-transform", brandConfig.buttonTextTransform);
+        Object.entries(colors).forEach(([key, value]) => root.style.setProperty(`--${key}`, value));
+        root.style.setProperty("--primary-weak", colorMix(colors.primary, "#ffffff", 0.9));
+      }
+
+      function colorMix(hex, white, amount) {
+        const c = hex.replace("#", "");
+        const r = parseInt(c.slice(0, 2), 16);
+        const g = parseInt(c.slice(2, 4), 16);
+        const b = parseInt(c.slice(4, 6), 16);
+        const mix = (v) => Math.round(v * (1 - amount) + 255 * amount).toString(16).padStart(2, "0");
+        return `#${mix(r)}${mix(g)}${mix(b)}`;
+      }
+
+      function defaultsFor(component) {
+        const spec = specs[component];
+        const controlDefaults = Object.fromEntries((spec.controls || []).map((control) => {
+          if (control.type === "choice") return [control.key, control.options[0]];
+          if (control.type === "boolean") return [control.key, "false"];
+          return [control.key, ""];
+        }));
+        return { ...controlDefaults, ...(brandConfig.defaults[component] || {}), ...(spec.defaults || {}) };
+      }
+
+      function readState() {
+        const params = new URLSearchParams(location.search);
+        const mode = params.get("mode") || "explorer";
+        const component = specs[params.get("component")] ? params.get("component") : "Button";
+        const values = { ...defaultsFor(component) };
+        for (const [key, value] of params.entries()) {
+          if (!["component", "mode", "code"].includes(key)) values[key] = value;
+        }
+        return { mode, component, code: params.get("code") || "", values };
+      }
+
+      let state = readState();
+
+      function writeUrl() {
+        const params = new URLSearchParams();
+        if (state.mode === "sandbox") {
+          params.set("mode", "sandbox");
+          params.set("code", state.code);
+        } else {
+          params.set("component", state.component);
+          Object.entries(state.values).forEach(([key, value]) => {
+            if (value !== "" && value != null) params.set(key, value);
+          });
+        }
+        history.replaceState(null, "", `${location.pathname}?${params.toString()}`);
+        const chip = document.querySelector(".url-chip");
+        if (chip) chip.textContent = decodeURIComponent(location.search || "?component=Button");
+      }
+
+      function setComponent(component) {
+        state = { mode: "explorer", component, code: "", values: defaultsFor(component) };
+        writeUrl();
+        render();
+      }
+
+      function setValue(key, value) {
+        state.values[key] = value;
+        writeUrl();
+        drawCanvas();
+      }
+
+      function render() {
+        applyTheme();
+        const app = document.getElementById("app");
+        app.innerHTML = `
+          <div class="app">
+            <aside class="sidebar">
+              <div class="brand"><strong>${brandConfig.name} Explorer</strong><span>Static component source of truth</span></div>
+              <nav class="nav">${Object.entries(categories).map(([category, items]) => `
+                <div class="nav-group">
+                  <div class="nav-group-title">${category}</div>
+                  ${items.map((item) => `<button class="nav-button ${state.component === item && state.mode !== "sandbox" ? "active" : ""}" data-component="${item}" type="button">${item}</button>`).join("")}
+                </div>`).join("")}</nav>
+            </aside>
+            <main class="workspace">
+              <header class="topbar">
+                <div><p class="eyebrow">${state.mode === "sandbox" ? "Sandbox" : categoryFor(state.component)}</p><h1>${state.mode === "sandbox" ? "Sandbox render" : state.component}</h1></div>
+                <div class="url-chip">${decodeURIComponent(location.search || "?component=Button")}</div>
+              </header>
+              <section class="canvas-wrap">
+                <div class="canvas-panel">
+                  <div class="canvas-toolbar"><span class="meta">Canvas</span><code class="meta">${state.mode === "sandbox" ? "base64 code" : summary()}</code></div>
+                  <div class="canvas"><div id="renderTarget"></div></div>
+                </div>
+              </section>
+            </main>
+            <aside class="controls"><div id="controls"></div></aside>
+          </div>`;
+        document.querySelectorAll("[data-component]").forEach((button) => button.addEventListener("click", () => setComponent(button.dataset.component)));
+        drawCanvas();
+        drawControls();
+      }
+
+      function categoryFor(component) {
+        return Object.entries(categories).find(([, items]) => items.includes(component))?.[0] || "Inputs";
+      }
+
+      function summary() {
+        return Object.entries(state.values).filter(([, value]) => value !== "" && value !== "false").map(([key, value]) => `${key}: ${value}`).join(" / ") || "default";
+      }
+
+      function drawCanvas() {
+        const target = document.getElementById("renderTarget");
+        if (!target) return;
+        if (state.mode === "sandbox") {
+          target.innerHTML = sandboxRender(state.code);
+          return;
+        }
+        const html = specs[state.component].render(state.values);
+        const stateClass = state.values.state ? `state-${state.values.state}` : "";
+        target.innerHTML = `<div class="state-frame ${stateClass}">${html}${state.values.state && state.values.state !== "default" ? `<span class="state-note">${state.values.state} preview</span>` : ""}</div>`;
+        const toolbarCode = document.querySelector(".canvas-toolbar code");
+        if (toolbarCode) toolbarCode.textContent = summary();
+      }
+
+      function drawControls() {
+        const panel = document.getElementById("controls");
+        if (!panel) return;
+        if (state.mode === "sandbox") {
+          panel.innerHTML = `
+            <div class="control-section">
+              <div class="control-head"><h2>Sandbox</h2><p class="meta">Paste HTML or call component helpers. Example: Button({label:"Save", color:"Success"})</p></div>
+              <div class="control-row"><label for="sandboxCode">Code</label><textarea id="sandboxCode">${esc(decodeSandbox(state.code))}</textarea></div>
+              <button class="copy-url" id="applySandbox" type="button">Apply sandbox code</button>
+            </div>`;
+          document.getElementById("applySandbox").addEventListener("click", () => {
+            state.code = btoa(unescape(encodeURIComponent(document.getElementById("sandboxCode").value))).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/g, "");
+            writeUrl();
+            drawCanvas();
+          });
+          return;
+        }
+
+        const controls = specs[state.component].controls || [];
+        panel.innerHTML = `
+          <div class="control-section">
+            <div class="control-head"><h2>Controls</h2><p class="meta">${state.component} props are reflected in URL params.</p></div>
+            ${controls.map(controlHtml).join("")}
+            <button class="copy-url" id="copyUrl" type="button">Copy preview URL</button>
+          </div>`;
+        controls.forEach((control) => {
+          const el = document.getElementById(`control-${control.key}`);
+          if (!el) return;
+          el.addEventListener("input", (event) => {
+            const next = control.type === "boolean" ? String(event.target.checked) : event.target.value;
+            setValue(control.key, next);
+          });
+        });
+        document.getElementById("copyUrl").addEventListener("click", () => navigator.clipboard?.writeText(location.href));
+      }
+
+      function controlHtml(control) {
+        const value = state.values[control.key] ?? "";
+        const label = control.key.replace(/([A-Z])/g, " $1").replace(/^./, (char) => char.toUpperCase());
+        if (control.type === "choice") {
+          return `<div class="control-row"><label for="control-${control.key}">${label}</label><select id="control-${control.key}">${control.options.map((option) => `<option ${String(value) === String(option) ? "selected" : ""}>${esc(option)}</option>`).join("")}</select></div>`;
+        }
+        if (control.type === "boolean") {
+          return `<div class="control-row"><span class="control-label">${label}</span><label class="check-row"><input id="control-${control.key}" type="checkbox" ${value === "true" ? "checked" : ""}><span>${value === "true" ? "Enabled" : "Disabled"}</span></label></div>`;
+        }
+        return `<div class="control-row"><label for="control-${control.key}">${label}</label><input id="control-${control.key}" type="text" value="${esc(value)}"></div>`;
+      }
+
+      function decodeSandbox(code) {
+        if (!code) return 'Button({ label: "Save changes", color: "Success", iconLeft: "true", icon: "Save" })';
+        try {
+          const normalized = code.replace(/-/g, "+").replace(/_/g, "/");
+          return decodeURIComponent(escape(atob(normalized)));
+        } catch (error) {
+          return "";
+        }
+      }
+
+      function sandboxRender(encoded) {
+        const source = decodeSandbox(encoded);
+        try {
+          const api = {
+            Button: (props = {}) => buttonRender({ variant: "solid", color: "Primary", size: "md", ...props }),
+            Badge: (props = {}) => specs.Badge.render({ color: "Primary", variant: "subtle", label: "Badge", ...props }),
+            Alert: (props = {}) => specs.Alert.render({ status: "Info", variant: "subtle", title: "Notice", description: "Sandbox render", ...props }),
+            Card: (props = {}) => specs.Card.render({ variant: "outline", title: "Card", description: "Sandbox render", ...props }),
+            Stack: (children = "") => `<div class="stack component">${children}</div>`,
+            Grid: (children = "") => `<div class="grid-demo component">${children}</div>`
+          };
+          if (source.trim().startsWith("<")) return source;
+          const fn = new Function(...Object.keys(api), `"use strict"; const result = (${source}); return result;`);
+          return fn(...Object.values(api));
+        } catch (error) {
+          return `<pre class="sandbox-error">${esc(error.message)}</pre>`;
+        }
+      }
+
+      window.addEventListener("popstate", () => {
+        state = readState();
+        render();
+      });
+
+      render();
+    </script>
+  </body>
+</html>

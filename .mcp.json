@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "ads-light": {
+      "command": "node",
+      "args": ["mcp-server/index.js"]
+    }
+  }
+}
