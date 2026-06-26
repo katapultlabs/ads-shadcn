@@ -12,7 +12,7 @@ import pixelmatch from "pixelmatch";
 
 const root = resolve(".");
 const distDir = resolve(root, "dist");
-const specPath = resolve(root, "components.json");
+const specPath = resolve(root, "ads.components.json");
 const baselineDir = resolve(root, "artifacts", "baseline");
 const diffDir = resolve(root, "artifacts", "visual-diff");
 const reportPath = resolve(root, "artifacts", "visual-report.json");

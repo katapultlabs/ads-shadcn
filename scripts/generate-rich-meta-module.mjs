@@ -1,14 +1,14 @@
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { resolve } from "node:path";
 
-const spec = JSON.parse(await readFile(resolve("components.json"), "utf8"));
+const spec = JSON.parse(await readFile(resolve("ads.components.json"), "utf8"));
 
 const components = spec.components.map((component) => ({
   name: component.name,
   category: component.category,
   description: component.description,
   importFrom: component.importFrom,
-  chakraModule: component.chakraModule,
+  utility: component.utility ?? false,
   variants: component.variants ?? [],
   sizes: component.sizes ?? [],
   states: component.states ?? [],

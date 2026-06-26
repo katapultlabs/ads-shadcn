@@ -1,8 +1,7 @@
 import { readFile, writeFile } from "node:fs/promises";
 import { resolve } from "node:path";
-import { lucideIconNames } from "../src/generated/lucide-icons.generated.js";
 
-const specPath = resolve("components.json");
+const specPath = resolve("ads.components.json");
 const spec = JSON.parse(await readFile(specPath, "utf8"));
 
 const labelize = (value) =>
@@ -13,8 +12,16 @@ const labelize = (value) =>
 
 const unique = (items) => Array.from(new Set(items.filter(Boolean)));
 
-const colorPalettes = ["brand", "blue", "green", "orange", "red", "cyan", "purple", "gray"];
-const iconOptions = lucideIconNames;
+// Curated icon set for the `icon` control. The explorer offers the full lucide
+// catalog at runtime; embedding all ~1700 names per spec bloated the file, so
+// the spec carries a sensible default set.
+const iconOptions = [
+  "Search", "Check", "X", "ChevronRight", "ChevronDown", "ChevronLeft", "ChevronUp",
+  "Plus", "Minus", "ArrowRight", "ArrowLeft", "Settings", "User", "Mail", "Bell",
+  "Trash2", "Pencil", "Copy", "Download", "Upload", "Star", "Heart", "Calendar",
+  "Clock", "Eye", "EyeOff", "Filter", "MoreHorizontal", "MoreVertical", "Menu",
+  "Home", "LogOut", "Info", "TriangleAlert", "CircleCheck", "CircleAlert", "Loader2",
+];
 const contentComponents = new Set([
   "Button",
   "IconButton",
@@ -49,7 +56,7 @@ const valueComponents = new Set([
   "ColorPicker",
   "ColorSwatch",
 ]);
-const overlayComponents = new Set(["Dialog", "Drawer", "Popover", "HoverCard", "Tooltip", "Menu", "ActionBar", "FloatingPanel"]);
+const overlayComponents = new Set(["Dialog", "Drawer", "Popover", "HoverCard", "Tooltip", "Menu", "ActionBar", "FloatingPanel", "NavigationMenu", "Menubar", "ContextMenu"]);
 const formComponents = new Set([
   "Input",
   "Textarea",
@@ -74,6 +81,21 @@ const formComponents = new Set([
   "TagsInput",
 ]);
 const actionComponents = new Set(["Button", "IconButton", "Link", "Clipboard", "DownloadTrigger", "Toggle"]);
+
+// Expand a component's state list to the real interaction/status states it
+// supports, so the explorer's state simulator and stateMetadata cover the same
+// ground the Chakra build did. Only adds states that genuinely apply.
+function expandStates(component) {
+  const name = component.name;
+  const set = new Set(["default", ...(component.states ?? [])]);
+  const interactive = actionComponents.has(name) || formComponents.has(name) || overlayComponents.has(name);
+  if (interactive) { set.add("hover"); set.add("focus-visible"); }
+  if (actionComponents.has(name) || formComponents.has(name)) set.add("disabled");
+  if (actionComponents.has(name)) set.add("active");
+  if (formComponents.has(name)) set.add("invalid");
+  if (["Button", "IconButton"].includes(name) || (component.states ?? []).includes("loading")) set.add("loading");
+  return ["default", ...[...set].filter((s) => s !== "default")];
+}
 
 function categoryType(category, name) {
   if (formComponents.has(name)) return "input";
@@ -133,15 +155,17 @@ function buildControls(component) {
   const add = (control) => {
     if (!controls.some((item) => item.name === control.name)) controls.push(control);
   };
-  const variantOptions = component.variants?.filter((item) => item !== "default") ?? [];
-  const sizeOptions = component.sizes?.filter((item) => item !== "default") ?? [];
+  // Keep "default": in ShadCN it is a real, selectable variant/size (the
+  // primary look), unlike Chakra where "default" meant "no recipe".
+  const variantOptions = component.variants ?? [];
+  const sizeOptions = component.sizes ?? [];
 
   if (variantOptions.length) {
     add(makeControl(component, "variant", {
       type: "select",
       options: variantOptions,
       default: component.defaultVariants?.variant ?? variantOptions[0],
-      source: "chakra-recipe",
+      source: "shadcn-cva",
     }));
   }
   if (sizeOptions.length) {
@@ -149,7 +173,7 @@ function buildControls(component) {
       type: "select",
       options: sizeOptions,
       default: component.defaultVariants?.size ?? (sizeOptions.includes("md") ? "md" : sizeOptions[0]),
-      source: "chakra-recipe",
+      source: "shadcn-cva",
     }));
   }
 
@@ -159,17 +183,17 @@ function buildControls(component) {
       type: options.length <= 2 && options.every((item) => ["true", "false"].includes(String(item))) ? "boolean" : "select",
       options,
       default: component.defaultVariants?.[name] ?? options[0],
-      source: "chakra-recipe-dimension",
+      source: "shadcn-variant-dimension",
     }));
   }
 
   for (const prop of component.keyProps ?? []) {
     const name = prop.name ?? prop;
-    const options = prop.options ?? (name === "colorPalette" ? colorPalettes : []);
+    const options = prop.options ?? [];
     add(makeControl(component, name, {
       type: controlType({ ...prop, componentName: component.name }, options),
       options,
-      default: prop.default ?? (name === "colorPalette" ? "brand" : ""),
+      default: prop.default ?? "",
       source: "component-key-prop",
       description: prop.note ?? describeControl(name, component),
     }));
@@ -247,14 +271,18 @@ function buildVariantMetadata(component) {
         ? "Base rendering when no visual recipe is exposed."
         : `${labelize(name)} visual treatment for ${component.name}.`,
     whenToUse:
-      name === "solid"
+      name === "default"
         ? "Use for the strongest emphasis or primary action."
-        : name === "outline"
-          ? "Use for secondary actions or bordered surfaces."
-          : name === "ghost" || name === "plain"
-            ? "Use for low-emphasis actions in dense interfaces."
-            : `Use when ${labelize(name).toLowerCase()} best communicates the hierarchy.`,
-    tokenIntent: "Must resolve through ADS Light theme and semantic tokens.",
+        : name === "secondary"
+          ? "Use for supporting actions that stay visible."
+          : name === "outline"
+            ? "Use for secondary actions or bordered surfaces."
+            : name === "destructive"
+              ? "Use for irreversible or dangerous actions; pair with explicit copy."
+              : name === "ghost" || name === "link"
+                ? "Use for low-emphasis actions in dense or inline contexts."
+                : `Use when ${labelize(name).toLowerCase()} best communicates the hierarchy.`,
+    tokenIntent: "Must resolve through ADS Light semantic Tailwind tokens, never raw colors.",
   }));
 }
 
@@ -278,17 +306,21 @@ function buildStateMetadata(component) {
   }));
 }
 
+// ShadCN/Tailwind token surface. Components are styled with Tailwind utilities
+// that resolve to these CSS variables (defined in src/index.css from
+// client-theme.json). No per-component custom properties — the semantic layer
+// is shared, which is the whole point of the brand-swap model.
 function buildTokens(component) {
-  const slug = component.name.replace(/([a-z])([A-Z])/g, "$1-$2").replace(/\s+/g, "-").toLowerCase();
-  const categorySlug = component.category.toLowerCase().replace(/\s+/g, "-");
+  const interactive = formComponents.has(component.name) || actionComponents.has(component.name);
   return {
-    color: ["--color-bg", "--color-surface", "--color-text", "--color-border", "--color-brand-main"],
-    spacing: ["--space-2", "--space-3", "--space-4", "--space-5"],
-    typography: ["--font-family-body", "--type-desktop-body-1-size", "--type-desktop-button-size"],
-    radius: ["--component-radius", `--${slug}-radius`, `--category-${categorySlug}-radius`],
-    elevation: ["--shadow-xs", "--shadow-sm", `--${slug}-shadow`],
-    motion: ["--motion-fast", "--motion-normal", `--${slug}-motion`],
-    component: [`--${slug}-bg`, `--${slug}-text`, `--${slug}-border`, `--${slug}-padding`, `--${slug}-gap`],
+    color: ["--background", "--foreground", "--card", "--muted", "--muted-foreground", "--border", "--primary", "--primary-foreground"],
+    spacing: ["--spacing", "Tailwind p-* / gap-* utilities"],
+    typography: ["--font-sans", "--font-heading", "Tailwind text-* / font-* utilities"],
+    radius: ["--radius", "--radius-sm", "--radius-md", "--radius-lg"],
+    elevation: ["Tailwind shadow-xs / shadow-sm / shadow-md utilities"],
+    motion: ["Tailwind transition-* + tw-animate-css", "Radix data-[state] transitions"],
+    interactive: interactive ? ["--ring", "--accent", "--accent-foreground"] : [],
+    statusPalettes: ["--destructive", "--success", "--warning", "--info"],
   };
 }
 
@@ -369,6 +401,7 @@ function buildAgentHints(component, controls) {
 }
 
 spec.components = spec.components.map((component) => {
+  component.states = expandStates(component);
   const controls = buildControls(component);
   const enriched = {
     ...component,
@@ -376,7 +409,7 @@ spec.components = spec.components.map((component) => {
       richness: "rich",
       generatedBy: "scripts/enrich-component-metadata.mjs",
       updatedAt: new Date().toISOString(),
-      sourceConfidence: component.coverage?.includes("chakra") ? "chakra-recipe-plus-ads" : "ads-heuristic-plus-existing-spec",
+      sourceConfidence: "shadcn-source-extracted-plus-ads",
     },
     controls,
     propMetadata: buildPropMetadata(component, controls),

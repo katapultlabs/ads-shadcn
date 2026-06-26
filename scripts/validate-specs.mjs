@@ -5,7 +5,7 @@ import { validateComponent } from "../mcp-server/validate.js";
 // Audits every shipped spec against the same contract the MCP server enforces
 // on add/update. Exits non-zero on the first invalid spec so CI can gate it.
 
-const specPath = resolve(".", "components.json");
+const specPath = resolve(".", "ads.components.json");
 const spec = JSON.parse(await readFile(specPath, "utf8"));
 
 const failures = [];

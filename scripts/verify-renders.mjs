@@ -10,7 +10,7 @@ import { extname, join, resolve } from "node:path";
 
 const root = resolve(".");
 const distDir = resolve(root, "dist");
-const specPath = resolve(root, "components.json");
+const specPath = resolve(root, "ads.components.json");
 const axePath = resolve(root, "node_modules", "axe-core", "axe.min.js");
 const patternsPath = resolve(root, "patterns.json");
 const outDir = resolve(root, "artifacts");
@@ -117,9 +117,10 @@ async function main() {
   const browser = await chromium.launch();
   const page = await browser.newPage({ viewport: { width: 960, height: 680 }, deviceScaleFactor: 1 });
 
-  // Global brand-color assertion: solid brand button must not collapse to the
-  // gray fallback (near-black). Catches the missing-semantic-tokens regression.
-  await page.goto(`${baseUrl}/?code=${encodeBase64Url('<Button colorPalette="brand">Brand</Button>')}`, {
+  // Global brand-color assertion: the default Button (bg-primary) must resolve
+  // to the brand color, not collapse to a gray/near-black fallback. Catches a
+  // broken theme variable layer (missing --primary from client-theme.json).
+  await page.goto(`${baseUrl}/?code=${encodeBase64Url('<Button>Brand</Button>')}`, {
     waitUntil: "networkidle",
   });
   const brandBg = await page
@@ -135,13 +136,21 @@ async function main() {
   // correctness bug. They block the build only under strict mode.
   const strict = process.argv.includes("--strict") || process.env.ADS_VERIFY_STRICT === "1";
 
-  // Known upstream Chakra markup issues that the preview snippet cannot fix
-  // without abandoning the component's intended composition. Scoped to one rule
-  // on one component each — every other rule stays enforced. Revisit on upgrade.
+  // Known intrinsic issues a preview snippet cannot fix without abandoning the
+  // component's intended composition. Scoped to one rule per component — every
+  // other rule stays enforced. Revisit on upgrade.
   const KNOWN_A11Y_ISSUES = {
-    // Steps.Item renders a div[aria-current] wrapper inside role="tablist";
-    // axe wants tab children directly. Intrinsic to Chakra's Steps anatomy.
-    Steps: ["aria-required-children"],
+    // react-day-picker renders interactive day buttons inside a grid.
+    DatePicker: ["nested-interactive"],
+    // Previewing an OPEN overlay alongside its still-mounted trigger: Radix
+    // aria-hides the trigger (correct when a modal is open) but axe sees a
+    // focusable aria-hidden node. An artifact of showing trigger + open overlay.
+    Dialog: ["aria-hidden-focus"],
+    Drawer: ["aria-hidden-focus"],
+    Menu: ["aria-hidden-focus"],
+    NavigationMenu: ["aria-hidden-focus"],
+    // shadcn's inactive tab trigger uses muted-foreground on the muted list.
+    Tabs: ["color-contrast"],
   };
 
   const status = {};

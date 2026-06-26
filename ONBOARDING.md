@@ -1,9 +1,10 @@
 # Onboarding — using ADS Light for a new client
 
 ADS Light is an **agentic design system**: a foundation of accessible, themeable
-components plus a machine-readable spec (`components.json`), composition patterns
-(`patterns.json`), a render-and-verify explorer, and an MCP server. You build a
-client's UI by **theming the shared system**, not by forking components.
+ShadCN components (Radix UI primitives + Tailwind CSS v4) plus a machine-readable
+spec (`ads.components.json`), composition patterns (`patterns.json`), a
+render-and-verify explorer, and an MCP server. You build a client's UI by
+**theming the shared system**, not by forking components.
 
 This guide gets you from zero to a branded, verified client UI. It is written for
 both **people** (read the prose, use the explorer) and **AI agents** (follow the
@@ -17,9 +18,10 @@ MCP tool / command sequences in the boxes).
 ## The one rule
 
 A per-client branch should normally change **only the brand layer**
-(`client-theme.json`). Never hardcode brand colors, fonts, radii, or button
-styling into components — change the theme. Client-specific components are
-allowed, but they must be registered in `components.json` (and `src/meta`).
+(`client-theme.json`). Never hardcode brand colors, fonts, or radii into
+components — use semantic Tailwind tokens (`bg-primary`, `border-border`, …) and
+change the theme. Client-specific components are allowed, but they must be
+registered in `ads.components.json` (and `src/meta`).
 
 ---
 
@@ -57,7 +59,7 @@ core set, register any bespoke components, deliver.
 ## Scenario B — client already has an ongoing product
 
 The deciding question: **is their product built on the same component foundation
-(Chakra UI v3) that ADS Light wraps?**
+(ShadCN — Radix UI + Tailwind CSS) that ADS Light wraps?**
 
 - **Same foundation** → ADS becomes their runtime design system.
   1. Reverse their existing brand into tokens with `npm run new-client` (set
@@ -67,11 +69,11 @@ The deciding question: **is their product built on the same component foundation
   4. Adopt **incrementally** — restyle via tokens first, then swap ad-hoc
      primitives for ADS components screen by screen. No big-bang rewrite.
 
-- **Different stack (Vue, React+Tailwind, native, …)** → ADS is the *source of
-  truth*, not the runtime.
+- **Different stack (Vue, Angular, native, a different React UI kit, …)** → ADS is
+  the *source of truth*, not the runtime.
   1. Use `search_components` / `get_component` / `get_pattern` as the spec authority.
-  2. Reproduce the token layers (`src/tokens`) in their framework (the
-     `/design-tokens` skill generates this).
+  2. Reproduce the CSS-variable token layer (`src/theme/tokens.generated.css`) in their
+     framework (the `/design-tokens` skill generates this).
   3. Mirror `patterns.json` recipes into their components.
   4. Keep code ↔ Figma in sync with the `/figma-*` skills if they have a library.
 
@@ -90,7 +92,7 @@ one by copying it to `client-theme.json`.
 | Command | What it does |
 |---|---|
 | `npm run new-client -- "Acme Corp"` | Create `client-themes/acme-corp.json` from the current active theme |
-| `… --primary "#ff5a1f"` | Set brand seed; the 50/100/500/600/700 ramp is derived to match `createTheme` |
+| `… --primary "#ff5a1f"` | Set brand seed; `generate:theme` derives the matching `--primary` CSS variables (light + dark) |
 | `… --font "Geist"` | Set heading + body font stack |
 | `… --font-url "https://…"` | Set the webfont URL token |
 | `… --radius 8` | Set brand corner radius (px) |
@@ -102,6 +104,32 @@ one by copying it to `client-theme.json`.
 
 Activating backs up the previous `client-theme.json` to `client-theme.backup.json`.
 The script never touches git, components, or patterns — only the theme file.
+
+## Import a brand from a brand-guidelines doc
+
+The fastest path to "make the ADS look like *our* product": hand the system the
+brand and let it map and adjust.
+
+1. Put the brand guidelines (PDF/doc) in the repo (or paste the values).
+2. Extract the brand into a **brand profile** — `brand-profile.example.json`
+   shows the shape. Only `colors.primary` is essential; everything else is
+   optional. (An agent can read the doc and produce this directly.)
+3. Apply it:
+   ```bash
+   npm run import-brand -- path/to/brand-profile.json
+   ```
+   or, via the MCP server, the `apply_brand` tool with the profile.
+
+The importer **understands and adjusts**: it maps your colors/fonts/radius into
+the ADS token model, **derives missing color stops** from your primary, **keeps
+sensible defaults** for anything you didn't specify, **validates WCAG AA
+contrast** (warning if e.g. your primary is too light for its text), regenerates
+the theme, and prints a report of what it applied / derived / kept. Then
+`npm run dev` to review, or `review_ui` to verify.
+
+> The ADS theme only controls the brand surface — colors, fonts, radius.
+> Spacing, the type scale, shadows, and motion are system design decisions and
+> are intentionally not brand-imported.
 
 ---
 
@@ -158,13 +186,14 @@ the no-hardcoded-color rule enforced at the point UI is generated.
 
 | File / dir | Role |
 |---|---|
-| `client-theme.json` | The **active** brand layer (imported by `src/App.jsx`) |
+| `client-theme.json` | The **active** brand layer (compiled into the tokens CSS) |
 | `client-themes/` | Stored per-client brand layers (managed by `new-client`) |
-| `src/theme/createTheme.js` | Turns the theme JSON into the Chakra system (ramps, semantic tokens) |
-| `components.json` | Machine-readable component specs (variants, states, props, examples) |
+| `scripts/generate-theme.mjs` | Compiles the theme JSON into `src/theme/tokens.generated.css` (shadcn CSS variables, light + dark) |
+| `src/index.css` | Tailwind v4 entry (`@import "tailwindcss"`, `@theme inline` token mapping, `.dark` variant) |
+| `ads.components.json` | Machine-readable component specs (variants, states, props, examples) |
 | `patterns.json` | Composition patterns (multi-component recipes) |
 | `src/meta` | Rich per-component contracts (axes, relationships, a11y, AI hints) |
-| `src/tokens` | Primitive → typography → semantic → component token layers |
+| `src/components/ui` + `primitives.tsx` / `typography.tsx` / `ads/*.tsx` | Component sources (shadcn + ADS-authored) |
 | `CLAUDE.md` / `AGENT_GUIDE.md` / `ARCHITECTURE.md` | Rules, decision tree, architecture |
 
 ---
@@ -175,7 +204,9 @@ the no-hardcoded-color rule enforced at the point UI is generated.
   `client-theme.json`; `verify:renders` will point at the offending render.
 - **Wrong client is active** — `npm run new-client -- --list`, then `--switch`.
   Restore a clobbered active theme from `client-theme.backup.json`.
-- **A component looks off in dark mode** — check its `ads.*` semantic tokens;
-  the explorer's `?colorMode=dark` renders the `.dark` path.
+- **A component looks off in dark mode** — check its semantic Tailwind tokens
+  (`bg-background`, `text-foreground`, `border-border`, …) and the `.dark`
+  overrides in `src/theme/tokens.generated.css`; the explorer's `?colorMode=dark`
+  renders the `.dark` path.
 - **Render can't reach the explorer** — the render script falls back to serving
   built `dist/` on a temp port. Run `npm run build` if `dist/` is stale.

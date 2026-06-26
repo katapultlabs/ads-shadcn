@@ -5,11 +5,11 @@ import { extname, join, resolve } from "node:path";
 
 // Renders every component and drives each select/checkbox control, recording
 // which controls do NOT change the rendered output. Writes a map the explorer
-// reads to hide provably-inert controls. Re-run after Chakra upgrades or spec
-// changes:  npm run generate:inert-controls
+// reads to hide provably-inert controls. Re-run after component-library
+// upgrades or spec changes:  npm run generate:inert-controls
 
 const distDir = resolve("dist");
-const spec = JSON.parse(await readFile("components.json", "utf8"));
+const spec = JSON.parse(await readFile("ads.components.json", "utf8"));
 const outPath = resolve("src/generated/inert-controls.generated.json");
 const mime = { ".css": "text/css", ".html": "text/html", ".js": "text/javascript", ".json": "application/json", ".png": "image/png", ".svg": "image/svg+xml" };
 const server = createServer(async (req, res) => {

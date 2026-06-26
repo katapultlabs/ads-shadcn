@@ -6,37 +6,33 @@ export const CardMeta: ComponentMeta = {
     category: "molecules",
     type: "container",
     description: "Bounded surface for one object, grouped content, or a compact tool panel.",
-    path: "@chakra-ui/react/Card"
+    path: "@/components/ui/card"
   },
   props: {
-    variant: { type: "string", default: "outline", values: ["elevated", "outline", "subtle"], description: "Surface treatment." },
-    size: { type: "string", default: "md", values: ["sm", "md", "lg"], description: "Internal density." }
+    className: { type: "string", description: "Tailwind utilities on the root container; ShadCN Card has no cva variants — treatment is composed." }
   },
   variants: {
     axes: {
-      variant: ["elevated", "outline", "subtle"],
       density: ["compact", "comfortable"]
     },
     purpose: {
-      "variant:outline": "Default app surface with clear grouping and low visual noise.",
-      "variant:elevated": "Use only when layering over another surface.",
-      "variant:subtle": "Use for quiet grouped content inside a larger panel."
+      "density:comfortable": "Default spacing for grouped content and actions.",
+      "density:compact": "Tighter padding for dense dashboards and lists."
     },
-    invalidCombinations: [
-      { axes: { variant: "elevated", density: "compact" }, reason: "Heavy elevation on dense cards creates visual clutter." }
-    ]
+    invalidCombinations: []
   },
   relationships: {
-    mustBeParentOf: ["Card.Header", "Card.Body", "Card.Footer"],
+    mustBeParentOf: ["CardHeader", "CardContent", "CardFooter"],
+    optionalSibling: ["CardTitle", "CardDescription", "CardAction"],
     commonPartners: ["Badge", "Button", "Heading", "Text", "DataList"],
     role: "group",
-    screenReader: "Use headings inside cards when card introduces a distinct object or section."
+    screenReader: "Use a heading inside the card when it introduces a distinct object or section."
   },
   tokens: {
-    color: ["--color-surface", "--card-border-color"],
-    spacing: ["--card-padding-md"],
-    border: ["--card-radius"],
-    elevation: ["--card-shadow"]
+    color: ["--card", "--card-foreground", "--border", "--muted-foreground"],
+    spacing: ["Tailwind p-* / gap-* utilities"],
+    border: ["--radius", "--border"],
+    elevation: ["Tailwind shadow-sm"]
   },
   aiHints: {
     priority: "high",
@@ -49,7 +45,7 @@ export const CardMeta: ComponentMeta = {
     usage: {
       useCases: ["Metric summary", "Object card", "Settings group", "Preview panel"],
       commonPatterns: [
-        { name: "Object card", composition: "Card.Root with Header title, Body metadata, Footer actions." }
+        { name: "Object card", composition: "Card with CardHeader (CardTitle + CardDescription), CardContent metadata, CardFooter actions." }
       ],
       antiPatterns: [
         { scenario: "Wrapping every page section in a Card", reason: "The page becomes noisy and loses hierarchy.", alternative: "Use full-width sections and reserve Card for repeated objects." },

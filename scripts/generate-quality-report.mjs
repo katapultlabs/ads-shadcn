@@ -1,8 +1,8 @@
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { resolve } from "node:path";
 
-const spec = JSON.parse(await readFile(resolve("components.json"), "utf8"));
-const starterText = "Generated Chakra component spec starter";
+const spec = JSON.parse(await readFile(resolve("ads.components.json"), "utf8"));
+const starterText = "Generated component spec starter";
 
 function quality(component) {
   const checks = {
@@ -16,7 +16,7 @@ function quality(component) {
     accessibility: component.accessibilityMetadata && Object.keys(component.accessibilityMetadata).length > 0,
     agentHints: component.agentHints && Object.keys(component.agentHints).length > 0,
     realExample: Array.isArray(component.examples) && component.examples.some((example) => example.jsx && !example.jsx.includes(starterText)),
-    chakraRecipe: Boolean(component.metadataStatus?.sourceConfidence?.includes("chakra") || component.coverage?.includes("chakra") || (component.chakraModule && component.variantDimensions)),
+    libraryMapped: Boolean(component.importFrom),
   };
   const weights = {
     richMetadata: 10,
@@ -29,7 +29,7 @@ function quality(component) {
     accessibility: 8,
     agentHints: 10,
     realExample: 12,
-    chakraRecipe: 6,
+    libraryMapped: 6,
   };
   const max = Object.values(weights).reduce((sum, value) => sum + value, 0);
   const score = Object.entries(checks).reduce((sum, [key, passed]) => sum + (passed ? weights[key] : 0), 0);

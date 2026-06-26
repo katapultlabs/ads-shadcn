@@ -10,6 +10,7 @@
 // brand layer, exactly the file CLAUDE.md says a client branch should change.
 
 import { copyFile, mkdir, readdir, readFile, writeFile } from "node:fs/promises";
+import { execSync } from "node:child_process";
 import { existsSync } from "node:fs";
 import { resolve, join } from "node:path";
 
@@ -17,7 +18,7 @@ const ROOT = resolve(".");
 const THEMES_DIR = join(ROOT, "client-themes");
 const ACTIVE = join(ROOT, "client-theme.json");
 
-// --- color math (mirrors src/theme/createTheme.js so generated stops match) ---
+// --- color math (mirrors scripts/generate-theme.mjs so generated stops match) ---
 const clamp = (v) => Math.max(0, Math.min(255, Math.round(v)));
 function hexToRgb(hex) {
   const n = String(hex).replace("#", "").trim();
@@ -96,6 +97,9 @@ async function activate(file, label) {
   if (existsSync(ACTIVE)) await copyFile(ACTIVE, join(ROOT, "client-theme.backup.json"));
   await copyFile(file, ACTIVE);
   console.log(`✓ Activated ${label} → client-theme.json (previous saved to client-theme.backup.json)`);
+  // Regenerate the ShadCN CSS variables + token catalog so the brand actually
+  // takes effect (the explorer/components read the generated layer, not the JSON).
+  execSync("node scripts/generate-theme.mjs", { cwd: ROOT, stdio: "inherit" });
 }
 
 const NEXT_STEPS = (name, slug) => `
@@ -104,7 +108,7 @@ Next steps for ${name}:
   2. Refine tokens: open the explorer (npm run dev), click "Tokens", or use the MCP set_theme tool.
   3. Render the core set — Button, Input, Card, Alert, Dialog, Table — and inspect screenshots.
      npm run render -- "<Button>Continue</Button>"
-  4. Register any client-only components in components.json + src/meta.
+  4. Register any client-only components in ads.components.json + src/meta.
   5. Verify before delivering: npm run verify:renders
   Theme file: client-themes/${slug}.json`;
 

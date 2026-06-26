@@ -1,0 +1,23 @@
+{
+  "_comment": "Brand profile: the structured brand extracted from a brand-guidelines doc, fed to `npm run import-brand` or the MCP `apply_brand` tool. Only `colors.primary` is essential; everything else is optional and falls back to ADS defaults (the import reports what it derived/kept). The ADS theme only controls brand surface — colors, fonts, radius; spacing/type-scale/shadows/motion are system design decisions.",
+  "name": "Acme Light",
+  "client": "Acme Corp",
+  "colors": {
+    "primary": "#ff5a1f",
+    "secondary": "#5b6475",
+    "success": "#15803d",
+    "warning": "#b45309",
+    "danger": "#b42318",
+    "info": "#0369a1",
+    "background": "#fbfcfe",
+    "surface": "#ffffff",
+    "text": "#182230",
+    "muted": "#667085",
+    "border": "#d8dee8"
+  },
+  "fonts": {
+    "heading": "Geist, ui-sans-serif, system-ui, sans-serif",
+    "body": "Geist, ui-sans-serif, system-ui, sans-serif"
+  },
+  "radius": 8
+}

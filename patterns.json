@@ -3,98 +3,239 @@
     {
       "name": "Labeled Form Field",
       "intent": "Collect a short value with an accessible label, helper copy, and optional error.",
-      "components": ["Field", "Input", "Field.HelperText", "Field.ErrorText"],
-      "composition": "Field.Root > Field.Label + Input + helper/error text.",
+      "tags": ["form", "field", "label", "input", "email", "text", "validation"],
+      "components": [
+        "Label",
+        "Input"
+      ],
+      "composition": "Stack: Label (htmlFor) + Input (id) + helper/error text.",
       "selectionRules": [
         "Use Input for one-line values.",
         "Use Textarea when the expected answer is longer than one sentence.",
         "Never rely on placeholder as the only label."
       ],
-      "jsx": "<Field.Root width=\"320px\"><Field.Label>Email</Field.Label><Input placeholder=\"you@example.com\" /><Field.HelperText>We only use this for account updates.</Field.HelperText></Field.Root>"
+      "jsx": "<div className=\"grid w-80 gap-2\"><Label htmlFor=\"email\">Email</Label><Input id=\"email\" type=\"email\" placeholder=\"you@example.com\" /><p className=\"text-sm text-muted-foreground\">We only use this for account updates.</p></div>"
     },
     {
       "name": "Dialog Confirmation",
       "intent": "Ask the user to confirm a consequential action without losing page context.",
-      "components": ["Dialog", "Button"],
-      "composition": "Dialog.Root with Title, concise Body, footer HStack containing secondary and primary/destructive Button.",
+      "tags": ["dialog", "modal", "confirm", "confirmation", "delete", "destructive", "prompt", "warning"],
+      "components": [
+        "Dialog",
+        "Button"
+      ],
+      "composition": "Dialog with DialogContent: title, concise description, footer with a secondary outline Button and a destructive Button.",
       "selectionRules": [
         "Use Dialog for blocking decisions.",
-        "Use the danger palette for destructive confirmation.",
+        "Use the destructive variant for destructive confirmation.",
         "Avoid long multi-step flows inside Dialog."
       ],
-      "jsx": "<Dialog.Root defaultOpen modal={false}><Dialog.Positioner position=\"absolute\" inset=\"auto\"><Dialog.Content maxW=\"380px\" boxShadow=\"lg\"><Dialog.Header><Dialog.Title>Delete project?</Dialog.Title></Dialog.Header><Dialog.Body><Text color=\"ads.muted\">This permanently removes the project and its data.</Text></Dialog.Body><Dialog.Footer><HStack><Dialog.CloseTrigger asChild><Button variant=\"outline\">Cancel</Button></Dialog.CloseTrigger><Button colorPalette=\"red\">Delete</Button></HStack></Dialog.Footer></Dialog.Content></Dialog.Positioner></Dialog.Root>"
+      "jsx": "<Dialog defaultOpen><DialogContent><DialogHeader><DialogTitle>Delete project?</DialogTitle><DialogDescription>This permanently removes the project and its data.</DialogDescription></DialogHeader><DialogFooter><DialogClose asChild><Button variant=\"outline\">Cancel</Button></DialogClose><Button variant=\"destructive\">Delete</Button></DialogFooter></DialogContent></Dialog>"
     },
     {
       "name": "Object Summary Card",
       "intent": "Represent one repeated entity in a collection.",
-      "components": ["Card", "Badge", "DataList", "Button"],
-      "composition": "Card.Root with Header title/status, Body metadata, Footer actions.",
+      "tags": ["card", "entity", "summary", "tile", "record", "item", "profile"],
+      "components": [
+        "Card",
+        "Badge",
+        "DataList",
+        "Button"
+      ],
+      "composition": "Card with header title/status, content metadata (DataList), footer actions.",
       "selectionRules": [
         "Use one card per object.",
         "Avoid nested cards.",
         "Use Table when row/column comparison matters more than object browsing."
       ],
-      "jsx": "<Card.Root width=\"320px\" variant=\"outline\"><Card.Header><HStack justify=\"space-between\"><Heading size=\"sm\">Acme Inc.</Heading><Badge colorPalette=\"green\">Active</Badge></HStack></Card.Header><Card.Body><DataList.Root orientation=\"horizontal\"><DataList.Item><DataList.ItemLabel>Plan</DataList.ItemLabel><DataList.ItemValue>Enterprise</DataList.ItemValue></DataList.Item><DataList.Item><DataList.ItemLabel>Seats</DataList.ItemLabel><DataList.ItemValue>240</DataList.ItemValue></DataList.Item></DataList.Root></Card.Body><Card.Footer><Button size=\"sm\" variant=\"outline\">Open</Button></Card.Footer></Card.Root>"
+      "jsx": "<Card className=\"w-80\"><CardHeader><div className=\"flex items-center justify-between\"><CardTitle>Acme Inc.</CardTitle><Badge variant=\"secondary\">Active</Badge></div></CardHeader><CardContent><DataList items={[{label:\"Plan\",value:\"Enterprise\"},{label:\"Seats\",value:\"240\"}]} /></CardContent><CardFooter><Button size=\"sm\" variant=\"outline\">Open</Button></CardFooter></Card>"
     },
     {
       "name": "Persistent Feedback",
       "intent": "Keep status visible until the underlying condition changes.",
-      "components": ["Alert", "Button"],
-      "composition": "Alert.Root with Indicator, Title, Description, and an optional action nearby.",
+      "tags": ["alert", "banner", "notice", "status", "message", "feedback", "notification"],
+      "components": [
+        "Alert"
+      ],
+      "composition": "Alert with an icon, AlertTitle, AlertDescription, and an optional action nearby.",
       "selectionRules": [
         "Use Alert for persistent feedback.",
-        "Use Toast/Toaster only when the message can disappear.",
-        "Match status to severity."
+        "Use Toast/Toaster (sonner) only when the message can disappear.",
+        "Match the variant to severity (destructive for errors)."
       ],
-      "jsx": "<Alert.Root status=\"warning\" variant=\"surface\" maxW=\"380px\"><Alert.Indicator /><Alert.Content><Alert.Title>Payment method expiring</Alert.Title><Alert.Description>Update your card before the next billing cycle.</Alert.Description></Alert.Content></Alert.Root>"
+      "jsx": "<Alert className=\"w-96\"><TriangleAlert /><AlertTitle>Payment method expiring</AlertTitle><AlertDescription>Update your card before the next billing cycle.</AlertDescription></Alert>"
     },
     {
       "name": "Page Header with Actions",
       "intent": "Title a view and expose its primary and secondary actions.",
-      "components": ["Flex", "Heading", "Text", "Button"],
-      "composition": "Flex space-between: left Stack with Heading + supporting Text, right HStack of actions with one primary Button.",
+      "tags": ["header", "title", "page", "toolbar", "actions", "heading", "top bar"],
+      "components": [
+        "Heading",
+        "Text",
+        "Button"
+      ],
+      "composition": "Flex space-between: left stack with Heading + supporting Text, right row of actions with one default (primary) Button.",
       "selectionRules": [
-        "Expose at most one primary (brand) action per header.",
+        "Expose at most one default (primary) action per header.",
         "Use Button for actions and Link/Breadcrumb for navigation.",
         "Keep the supporting line to one sentence."
       ],
-      "jsx": "<Flex width=\"520px\" align=\"center\" justify=\"space-between\" gap=\"4\"><Stack gap=\"1\"><Heading size=\"md\">Team members</Heading><Text color=\"ads.muted\">Manage who can access this workspace.</Text></Stack><HStack><Button variant=\"outline\">Export</Button><Button colorPalette=\"brand\">Invite</Button></HStack></Flex>"
+      "jsx": "<div className=\"flex w-[520px] items-center justify-between gap-4\"><div className=\"space-y-1\"><Heading size=\"md\">Team members</Heading><Text className=\"text-muted-foreground\">Manage who can access this workspace.</Text></div><div className=\"flex gap-2\"><Button variant=\"outline\">Export</Button><Button>Invite</Button></div></div>"
     },
     {
       "name": "Empty State",
       "intent": "Explain why a region is empty and offer the next action.",
-      "components": ["EmptyState", "Button"],
-      "composition": "EmptyState.Root > Content with Indicator icon, Title, Description, and a single recovery action.",
+      "tags": ["empty", "no results", "placeholder", "zero state", "nothing", "blank"],
+      "components": [
+        "EmptyState",
+        "Button"
+      ],
+      "composition": "EmptyState with an icon, title, description, and a single recovery action.",
       "selectionRules": [
         "Give one clear next action, not several.",
         "Use neutral, non-alarming copy for normal-empty (not error) states.",
         "Reserve for genuinely empty regions, not loading (use Skeleton/Spinner)."
       ],
-      "jsx": "<EmptyState.Root><EmptyState.Content><EmptyState.Indicator><Search size={28} /></EmptyState.Indicator><EmptyState.Title>No results found</EmptyState.Title><EmptyState.Description>Try adjusting your filters or search terms.</EmptyState.Description><Button mt=\"2\" colorPalette=\"brand\">Clear filters</Button></EmptyState.Content></EmptyState.Root>"
+      "jsx": "<EmptyState icon={<Search size={28} />} title=\"No results found\" description=\"Try adjusting your filters or search terms.\" action={<Button>Clear filters</Button>} />"
     },
     {
       "name": "Search and Filter Bar",
       "intent": "Let the user narrow a collection by free text and a category.",
-      "components": ["InputGroup", "Input", "NativeSelect"],
-      "composition": "HStack: InputGroup with leading search icon (flex 1) + a NativeSelect for the category facet.",
+      "tags": ["search", "filter", "facet", "find", "query", "toolbar", "lookup"],
+      "components": [
+        "InputGroup",
+        "Input",
+        "NativeSelect"
+      ],
+      "composition": "Flex row: InputGroup with a leading search icon (flex-1) + a NativeSelect for the category facet.",
       "selectionRules": [
         "Always give the search Input an accessible label.",
         "Use Select/NativeSelect for finite facets, not free text.",
         "Keep the search field the widest element in the row."
       ],
-      "jsx": "<HStack width=\"520px\" gap=\"3\"><InputGroup flex=\"1\" startElement={<Search size={16} />}><Input aria-label=\"Search\" placeholder=\"Search components\" /></InputGroup><NativeSelect.Root width=\"160px\"><NativeSelect.Field aria-label=\"Category\"><option>All</option><option>Inputs</option><option>Layout</option></NativeSelect.Field><NativeSelect.Indicator /></NativeSelect.Root></HStack>"
+      "jsx": "<div className=\"flex w-[520px] items-center gap-3\"><div className=\"flex-1\"><InputGroup startElement={<Search size={16} />}><Input aria-label=\"Search\" placeholder=\"Search components\" /></InputGroup></div><NativeSelect aria-label=\"Category\" className=\"w-40\"><option>All</option><option>Inputs</option><option>Layout</option></NativeSelect></div>"
     },
     {
       "name": "Metric Summary Row",
       "intent": "Show a few headline numbers side by side at the top of a dashboard.",
-      "components": ["Card", "Stat"],
-      "composition": "HStack of equal-width outline Cards, each wrapping a Stat.Root with Label + ValueText.",
+      "tags": ["metrics", "stats", "kpi", "dashboard", "numbers", "summary", "analytics"],
+      "components": [
+        "Card",
+        "Stat"
+      ],
+      "composition": "Flex row of equal-width Cards, each wrapping a Stat with label + value.",
       "selectionRules": [
         "Keep to 2-4 metrics; more belongs in a Table.",
-        "Use Stat.Label + Stat.ValueText only inside the dl (no bare spans).",
-        "Right-align or format numbers consistently."
+        "Use the Stat component for the label/value pair (no bare spans).",
+        "Format numbers consistently."
       ],
-      "jsx": "<HStack width=\"540px\" gap=\"4\">{[[\"Revenue\",\"$48.2k\"],[\"Active users\",\"1,284\"],[\"Churn\",\"2.1%\"]].map(([label,value]) => (<Card.Root key={label} flex=\"1\" variant=\"outline\"><Card.Body><Stat.Root><Stat.Label>{label}</Stat.Label><Stat.ValueText>{value}</Stat.ValueText></Stat.Root></Card.Body></Card.Root>))}</HStack>"
+      "jsx": "<div className=\"flex w-[560px] gap-4\">{[[\"Revenue\",\"$48.2k\"],[\"Active users\",\"1,284\"],[\"Churn\",\"2.1%\"]].map(([label,value]) => (<Card key={label} className=\"flex-1\"><CardContent><Stat label={label} value={value} /></CardContent></Card>))}</div>"
+    },
+    {
+      "name": "Form Layout",
+      "intent": "Collect several related fields with labels, then submit.",
+      "tags": ["form", "signup", "sign up", "register", "create", "fields", "submit", "account", "profile"],
+      "components": [
+        "Card",
+        "Label",
+        "Input",
+        "Textarea",
+        "Button"
+      ],
+      "composition": "Card with header, a grid of labeled fields in the content, and footer actions (secondary + primary).",
+      "selectionRules": [
+        "One primary submit Button; secondary actions outline.",
+        "Every field has a Label tied by htmlFor/id.",
+        "Use Textarea for multi-line answers."
+      ],
+      "jsx": "<Card className=\"w-96\"><CardHeader><CardTitle>Create account</CardTitle><CardDescription>Fill in your details to get started.</CardDescription></CardHeader><CardContent className=\"grid gap-4\"><div className=\"grid gap-2\"><Label htmlFor=\"name\">Name</Label><Input id=\"name\" placeholder=\"Jane Doe\" /></div><div className=\"grid gap-2\"><Label htmlFor=\"email\">Email</Label><Input id=\"email\" type=\"email\" placeholder=\"jane@example.com\" /></div><div className=\"grid gap-2\"><Label htmlFor=\"bio\">Bio</Label><Textarea id=\"bio\" placeholder=\"A short bio\" /></div></CardContent><CardFooter className=\"justify-end gap-2\"><Button variant=\"outline\">Cancel</Button><Button>Create</Button></CardFooter></Card>"
+    },
+    {
+      "name": "Table with Toolbar",
+      "intent": "Browse a collection with search, a facet filter, and an action.",
+      "tags": ["table", "list", "data", "grid", "rows", "invoices", "toolbar", "browse", "datagrid"],
+      "components": [
+        "InputGroup",
+        "Input",
+        "NativeSelect",
+        "Button",
+        "Table",
+        "Badge"
+      ],
+      "composition": "Toolbar row (search InputGroup flex-1 + NativeSelect facet + primary Button) above a Table; status cells use Badge variants.",
+      "selectionRules": [
+        "Use Table when row/column comparison matters more than browsing objects.",
+        "Give the search Input an accessible label.",
+        "Use status Badge variants (success/warning) for state cells."
+      ],
+      "jsx": "<div className=\"w-[560px] space-y-3\"><div className=\"flex items-center gap-3\"><div className=\"flex-1\"><InputGroup startElement={<Search size={16} />}><Input aria-label=\"Search invoices\" placeholder=\"Search invoices\" /></InputGroup></div><NativeSelect aria-label=\"Status\" className=\"w-36\"><option>All</option><option>Paid</option><option>Pending</option></NativeSelect><Button size=\"sm\">New invoice</Button></div><Table><TableHeader><TableRow><TableHead>Invoice</TableHead><TableHead>Status</TableHead><TableHead className=\"text-right\">Amount</TableHead></TableRow></TableHeader><TableBody><TableRow><TableCell className=\"font-medium\">INV-001</TableCell><TableCell><Badge variant=\"success\">Paid</Badge></TableCell><TableCell className=\"text-right\">$250.00</TableCell></TableRow><TableRow><TableCell className=\"font-medium\">INV-002</TableCell><TableCell><Badge variant=\"warning\">Pending</Badge></TableCell><TableCell className=\"text-right\">$150.00</TableCell></TableRow></TableBody></Table></div>"
+    },
+    {
+      "name": "Settings Section",
+      "intent": "Group related preference toggles with labels and descriptions.",
+      "tags": ["settings", "preferences", "toggles", "options", "switch", "config", "account"],
+      "components": [
+        "Card",
+        "Switch",
+        "Separator"
+      ],
+      "composition": "Card with a titled header and rows of (label + description, Switch) separated by Separator.",
+      "selectionRules": [
+        "Use Switch for instant on/off settings (no save needed).",
+        "Separate rows with Separator, not nested cards.",
+        "Pair each control with a short description."
+      ],
+      "jsx": "<Card className=\"w-96\"><CardHeader><CardTitle>Notifications</CardTitle><CardDescription>Choose what you want to hear about.</CardDescription></CardHeader><CardContent className=\"grid gap-4\"><div className=\"flex items-center justify-between gap-4\"><div><p className=\"text-sm font-medium\">Email</p><p className=\"text-sm text-muted-foreground\">Account activity and security</p></div><Switch defaultChecked aria-label=\"Email notifications\" /></div><Separator /><div className=\"flex items-center justify-between gap-4\"><div><p className=\"text-sm font-medium\">Push</p><p className=\"text-sm text-muted-foreground\">Reminders and product news</p></div><Switch aria-label=\"Push notifications\" /></div></CardContent></Card>"
+    },
+    {
+      "name": "Auth Card",
+      "intent": "Sign in or sign up in a focused, centered card.",
+      "tags": ["login", "log in", "sign in", "signin", "sign up", "signup", "auth", "authentication", "email", "password", "credentials", "register", "screen"],
+      "components": [
+        "Card",
+        "Label",
+        "Input",
+        "Button"
+      ],
+      "composition": "Narrow Card with title/description, stacked labeled fields, a full-width primary Button, and a link action.",
+      "selectionRules": [
+        "One full-width primary action.",
+        "Use type=password / type=email for the right keyboards.",
+        "Secondary actions as variant=link."
+      ],
+      "jsx": "<Card className=\"w-80\"><CardHeader><CardTitle>Sign in</CardTitle><CardDescription>Welcome back — enter your details.</CardDescription></CardHeader><CardContent className=\"grid gap-4\"><div className=\"grid gap-2\"><Label htmlFor=\"login-email\">Email</Label><Input id=\"login-email\" type=\"email\" placeholder=\"you@example.com\" /></div><div className=\"grid gap-2\"><Label htmlFor=\"login-pw\">Password</Label><Input id=\"login-pw\" type=\"password\" placeholder=\"Your password\" /></div></CardContent><CardFooter className=\"flex-col gap-2\"><Button className=\"w-full\">Sign in</Button><Button variant=\"link\" className=\"w-full\">Forgot password?</Button></CardFooter></Card>"
+    },
+    {
+      "name": "Loading State",
+      "intent": "Hold layout with skeletons while content loads.",
+      "tags": ["loading", "skeleton", "placeholder", "fetching", "spinner", "wait", "pending"],
+      "components": [
+        "Card",
+        "Skeleton"
+      ],
+      "composition": "The destination layout rebuilt from Skeleton blocks matching the real content's shape.",
+      "selectionRules": [
+        "Use Skeleton for known-shape content; Spinner for unknown-duration waits.",
+        "Match skeleton sizes to the real content to avoid layout shift.",
+        "Not for empty results (use the Empty State pattern)."
+      ],
+      "jsx": "<Card className=\"w-80\"><CardHeader><div className=\"flex items-center gap-3\"><Skeleton className=\"size-10 rounded-full\" /><div className=\"space-y-2\"><Skeleton className=\"h-4 w-32\" /><Skeleton className=\"h-3 w-20\" /></div></div></CardHeader><CardContent className=\"space-y-2\"><Skeleton className=\"h-4 w-full\" /><Skeleton className=\"h-4 w-full\" /><Skeleton className=\"h-4 w-2/3\" /></CardContent></Card>"
+    },
+    {
+      "name": "Error State",
+      "intent": "Explain a failure and offer a recovery action.",
+      "tags": ["error", "failure", "failed", "retry", "problem", "exception", "broken"],
+      "components": [
+        "Alert",
+        "Button"
+      ],
+      "composition": "A destructive Alert (icon + title + cause) with a retry Button nearby.",
+      "selectionRules": [
+        "Use the destructive Alert variant for failures.",
+        "Always offer a next action (retry / contact).",
+        "Keep the cause specific and non-blaming."
+      ],
+      "jsx": "<div className=\"w-96 space-y-3\"><Alert variant=\"destructive\"><CircleAlert /><AlertTitle>Couldn't load data</AlertTitle><AlertDescription>Something went wrong while fetching. Check your connection and try again.</AlertDescription></Alert><div className=\"flex justify-end\"><Button variant=\"outline\"><RefreshCw size={16} /> Retry</Button></div></div>"
     }
   ]
 }

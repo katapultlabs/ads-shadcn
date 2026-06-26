@@ -1,0 +1,4847 @@
+{
+  "_comment": "ShadCN base manifest — ground truth extracted from src/components source. apply-shadcn-base.mjs merges these base fields into ads.components.json; enrich-component-metadata.mjs derives the rich metadata. Hand-edit here, not in ads.components.json.",
+  "components": [
+    {
+      "name": "Button",
+      "importFrom": "@/components/ui/button",
+      "variants": [
+        "default",
+        "destructive",
+        "success",
+        "warning",
+        "info",
+        "outline",
+        "secondary",
+        "ghost",
+        "link"
+      ],
+      "sizes": [
+        "default",
+        "xs",
+        "sm",
+        "lg",
+        "icon",
+        "icon-xs",
+        "icon-sm",
+        "icon-lg"
+      ],
+      "defaultVariants": {
+        "variant": "default",
+        "size": "default"
+      },
+      "states": [
+        "default",
+        "hover",
+        "focus",
+        "disabled"
+      ],
+      "keyProps": [
+        {
+          "name": "variant",
+          "type": "string",
+          "options": [
+            "default",
+            "destructive",
+            "success",
+            "warning",
+            "info",
+            "outline",
+            "secondary",
+            "ghost",
+            "link"
+          ],
+          "default": "default",
+          "note": "Visual style from cva variants."
+        },
+        {
+          "name": "size",
+          "type": "string",
+          "options": [
+            "default",
+            "xs",
+            "sm",
+            "lg",
+            "icon",
+            "icon-xs",
+            "icon-sm",
+            "icon-lg"
+          ],
+          "default": "default",
+          "note": "Height/padding; icon sizes are square."
+        },
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "default": false,
+          "note": "Render as the child element via Radix Slot."
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "default": false,
+          "note": "Native disabled; reduces opacity."
+        }
+      ],
+      "slots": [],
+      "examples": [
+        {
+          "name": "Variants",
+          "jsx": "<div className=\"flex flex-wrap gap-2\"><Button>Default</Button><Button variant=\"secondary\">Secondary</Button><Button variant=\"outline\">Outline</Button><Button variant=\"destructive\">Destructive</Button><Button variant=\"ghost\">Ghost</Button><Button variant=\"link\">Link</Button></div>"
+        },
+        {
+          "name": "Sizes",
+          "jsx": "<div className=\"flex items-center gap-2\"><Button size=\"sm\">Small</Button><Button>Default</Button><Button size=\"lg\">Large</Button></div>"
+        },
+        {
+          "name": "With icon",
+          "jsx": "<Button><Search />Search</Button>"
+        },
+        {
+          "name": "Status actions",
+          "jsx": "<div className=\"flex flex-wrap gap-2\"><Button variant=\"success\">Approve</Button><Button variant=\"warning\">Review</Button><Button variant=\"info\">Details</Button><Button variant=\"destructive\">Delete</Button></div>"
+        }
+      ],
+      "relatedComponents": [
+        "IconButton",
+        "Toggle"
+      ]
+    },
+    {
+      "name": "IconButton",
+      "importFrom": "@/components/ui/button",
+      "variants": [
+        "default",
+        "destructive",
+        "outline",
+        "secondary",
+        "ghost",
+        "link"
+      ],
+      "sizes": [
+        "icon",
+        "icon-xs",
+        "icon-sm",
+        "icon-lg"
+      ],
+      "defaultVariants": {
+        "variant": "default",
+        "size": "icon"
+      },
+      "states": [
+        "default",
+        "hover",
+        "focus",
+        "disabled"
+      ],
+      "keyProps": [
+        {
+          "name": "variant",
+          "type": "string",
+          "options": [
+            "default",
+            "destructive",
+            "outline",
+            "secondary",
+            "ghost",
+            "link"
+          ],
+          "default": "default",
+          "note": "Same cva variants as Button."
+        },
+        {
+          "name": "size",
+          "type": "string",
+          "options": [
+            "icon",
+            "icon-xs",
+            "icon-sm",
+            "icon-lg"
+          ],
+          "default": "icon",
+          "note": "Square icon size; needs aria-label."
+        },
+        {
+          "name": "aria-label",
+          "type": "string",
+          "note": "Required since there is no text."
+        }
+      ],
+      "slots": [],
+      "examples": [
+        {
+          "name": "Icon button",
+          "jsx": "<Button size=\"icon\" aria-label=\"Search\"><Search /></Button>"
+        },
+        {
+          "name": "Sizes",
+          "jsx": "<div className=\"flex items-center gap-2\"><Button size=\"icon-sm\" variant=\"outline\" aria-label=\"Settings\"><Settings /></Button><Button size=\"icon\" variant=\"outline\" aria-label=\"Settings\"><Settings /></Button><Button size=\"icon-lg\" variant=\"outline\" aria-label=\"Settings\"><Settings /></Button></div>"
+        }
+      ],
+      "relatedComponents": [
+        "Button",
+        "Toggle"
+      ]
+    },
+    {
+      "name": "Checkbox",
+      "importFrom": "@/components/ui/checkbox",
+      "variants": [],
+      "sizes": [],
+      "defaultVariants": {},
+      "states": [
+        "default",
+        "checked",
+        "focus",
+        "disabled"
+      ],
+      "keyProps": [
+        {
+          "name": "checked",
+          "type": "boolean",
+          "note": "Controlled checked state."
+        },
+        {
+          "name": "defaultChecked",
+          "type": "boolean",
+          "note": "Uncontrolled initial checked state."
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "default": false,
+          "note": "Disables and dims the control."
+        }
+      ],
+      "slots": [],
+      "examples": [
+        {
+          "name": "With label",
+          "jsx": "<div className=\"flex items-center gap-2\"><Checkbox id=\"terms\" defaultChecked /><Label htmlFor=\"terms\">Accept terms and conditions</Label></div>"
+        },
+        {
+          "name": "States",
+          "jsx": "<div className=\"flex items-center gap-4\"><Checkbox /><Checkbox defaultChecked /><Checkbox disabled /></div>"
+        }
+      ],
+      "relatedComponents": [
+        "RadioGroup",
+        "Switch",
+        "Label"
+      ]
+    },
+    {
+      "name": "Input",
+      "importFrom": "@/components/ui/input",
+      "variants": [],
+      "sizes": [],
+      "defaultVariants": {},
+      "states": [
+        "default",
+        "focus",
+        "disabled"
+      ],
+      "keyProps": [
+        {
+          "name": "type",
+          "type": "string",
+          "options": [
+            "text",
+            "email",
+            "password",
+            "number",
+            "search",
+            "tel",
+            "url",
+            "file"
+          ],
+          "default": "text",
+          "note": "Native input type."
+        },
+        {
+          "name": "placeholder",
+          "type": "string",
+          "note": "Placeholder text when empty."
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "default": false,
+          "note": "Disables and dims the field."
+        },
+        {
+          "name": "aria-invalid",
+          "type": "boolean",
+          "note": "Switches border/ring to destructive."
+        }
+      ],
+      "slots": [],
+      "examples": [
+        {
+          "name": "Basic",
+          "jsx": "<Input placeholder=\"Email\" type=\"email\" className=\"w-64\" />"
+        },
+        {
+          "name": "Disabled",
+          "jsx": "<Input placeholder=\"Disabled\" disabled className=\"w-64\" />"
+        }
+      ],
+      "relatedComponents": [
+        "Textarea",
+        "Label",
+        "Field"
+      ]
+    },
+    {
+      "name": "RadioGroup",
+      "importFrom": "@/components/ui/radio-group",
+      "variants": [],
+      "sizes": [],
+      "defaultVariants": {},
+      "states": [
+        "default",
+        "checked",
+        "focus",
+        "disabled"
+      ],
+      "keyProps": [
+        {
+          "name": "value",
+          "type": "string",
+          "note": "Controlled selected item value."
+        },
+        {
+          "name": "defaultValue",
+          "type": "string",
+          "note": "Uncontrolled initial value."
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "default": false,
+          "note": "Disables the whole group."
+        }
+      ],
+      "slots": [
+        "radiogroupitem"
+      ],
+      "examples": [
+        {
+          "name": "Basic",
+          "jsx": "<RadioGroup defaultValue=\"comfortable\"><div className=\"flex items-center gap-2\"><RadioGroupItem value=\"default\" id=\"r1\" /><Label htmlFor=\"r1\">Default</Label></div><div className=\"flex items-center gap-2\"><RadioGroupItem value=\"comfortable\" id=\"r2\" /><Label htmlFor=\"r2\">Comfortable</Label></div><div className=\"flex items-center gap-2\"><RadioGroupItem value=\"compact\" id=\"r3\" /><Label htmlFor=\"r3\">Compact</Label></div></RadioGroup>"
+        }
+      ],
+      "relatedComponents": [
+        "Checkbox",
+        "SegmentGroup",
+        "Select"
+      ]
+    },
+    {
+      "name": "Select",
+      "importFrom": "@/components/ui/select",
+      "variants": [],
+      "sizes": [
+        "sm",
+        "default"
+      ],
+      "defaultVariants": {
+        "size": "default"
+      },
+      "states": [
+        "default",
+        "focus",
+        "disabled",
+        "open"
+      ],
+      "keyProps": [
+        {
+          "name": "value",
+          "type": "string",
+          "note": "Controlled selected value."
+        },
+        {
+          "name": "defaultValue",
+          "type": "string",
+          "note": "Uncontrolled initial value."
+        },
+        {
+          "name": "size",
+          "type": "string",
+          "options": [
+            "sm",
+            "default"
+          ],
+          "default": "default",
+          "note": "Trigger height; set on SelectTrigger."
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "default": false,
+          "note": "Disables the trigger."
+        }
+      ],
+      "slots": [
+        "selecttrigger",
+        "selectvalue",
+        "selectcontent",
+        "selectgroup",
+        "selectlabel",
+        "selectitem",
+        "selectseparator"
+      ],
+      "examples": [
+        {
+          "name": "Basic",
+          "jsx": "<Select defaultValue=\"apple\"><SelectTrigger className=\"w-48\" aria-label=\"Fruit\"><SelectValue placeholder=\"Select a fruit\" /></SelectTrigger><SelectContent><SelectGroup><SelectLabel>Fruits</SelectLabel><SelectItem value=\"apple\">Apple</SelectItem><SelectItem value=\"banana\">Banana</SelectItem><SelectItem value=\"orange\">Orange</SelectItem></SelectGroup></SelectContent></Select>"
+        }
+      ],
+      "relatedComponents": [
+        "Combobox",
+        "RadioGroup",
+        "Menu"
+      ]
+    },
+    {
+      "name": "Slider",
+      "importFrom": "@/components/ui/slider",
+      "variants": [],
+      "sizes": [],
+      "defaultVariants": {},
+      "states": [
+        "default",
+        "focus",
+        "disabled"
+      ],
+      "keyProps": [
+        {
+          "name": "defaultValue",
+          "type": "number",
+          "note": "Uncontrolled initial value array."
+        },
+        {
+          "name": "min",
+          "type": "number",
+          "default": 0,
+          "note": "Minimum value."
+        },
+        {
+          "name": "max",
+          "type": "number",
+          "default": 100,
+          "note": "Maximum value."
+        },
+        {
+          "name": "step",
+          "type": "number",
+          "default": 1,
+          "note": "Step increment."
+        },
+        {
+          "name": "orientation",
+          "type": "string",
+          "options": [
+            "horizontal",
+            "vertical"
+          ],
+          "default": "horizontal",
+          "note": "Layout axis."
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "default": false,
+          "note": "Disables and dims."
+        }
+      ],
+      "slots": [],
+      "examples": [
+        {
+          "name": "Single",
+          "jsx": "<Slider defaultValue={[50]} max={100} step={1} className=\"w-64\" aria-label=\"Volume\" />"
+        },
+        {
+          "name": "Range",
+          "jsx": "<Slider defaultValue={[25, 75]} max={100} step={1} className=\"w-64\" aria-label=\"Price range\" />"
+        }
+      ],
+      "relatedComponents": [
+        "Input",
+        "Switch"
+      ]
+    },
+    {
+      "name": "Switch",
+      "importFrom": "@/components/ui/switch",
+      "variants": [],
+      "sizes": [
+        "sm",
+        "default"
+      ],
+      "defaultVariants": {
+        "size": "default"
+      },
+      "states": [
+        "default",
+        "checked",
+        "focus",
+        "disabled"
+      ],
+      "keyProps": [
+        {
+          "name": "checked",
+          "type": "boolean",
+          "note": "Controlled on/off state."
+        },
+        {
+          "name": "defaultChecked",
+          "type": "boolean",
+          "note": "Uncontrolled initial state."
+        },
+        {
+          "name": "size",
+          "type": "string",
+          "options": [
+            "sm",
+            "default"
+          ],
+          "default": "default",
+          "note": "Track/thumb dimensions."
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "default": false,
+          "note": "Disables and dims."
+        }
+      ],
+      "slots": [],
+      "examples": [
+        {
+          "name": "With label",
+          "jsx": "<div className=\"flex items-center gap-2\"><Switch id=\"airplane\" defaultChecked /><Label htmlFor=\"airplane\">Airplane mode</Label></div>"
+        },
+        {
+          "name": "Sizes",
+          "jsx": "<div className=\"flex items-center gap-3\"><Switch size=\"sm\" /><Switch /></div>"
+        }
+      ],
+      "relatedComponents": [
+        "Checkbox",
+        "Toggle"
+      ]
+    },
+    {
+      "name": "Textarea",
+      "importFrom": "@/components/ui/textarea",
+      "variants": [],
+      "sizes": [],
+      "defaultVariants": {},
+      "states": [
+        "default",
+        "focus",
+        "disabled"
+      ],
+      "keyProps": [
+        {
+          "name": "placeholder",
+          "type": "string",
+          "note": "Placeholder text when empty."
+        },
+        {
+          "name": "rows",
+          "type": "number",
+          "note": "Visible text rows."
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "default": false,
+          "note": "Disables and dims."
+        },
+        {
+          "name": "aria-invalid",
+          "type": "boolean",
+          "note": "Switches border/ring to destructive."
+        }
+      ],
+      "slots": [],
+      "examples": [
+        {
+          "name": "Basic",
+          "jsx": "<Textarea placeholder=\"Type your message here.\" className=\"w-72\" />"
+        }
+      ],
+      "relatedComponents": [
+        "Input",
+        "Label",
+        "Field"
+      ]
+    },
+    {
+      "name": "Toggle",
+      "importFrom": "@/components/ui/toggle",
+      "variants": [
+        "default",
+        "outline"
+      ],
+      "sizes": [
+        "default",
+        "sm",
+        "lg"
+      ],
+      "defaultVariants": {
+        "variant": "default",
+        "size": "default"
+      },
+      "states": [
+        "default",
+        "hover",
+        "focus",
+        "checked",
+        "disabled"
+      ],
+      "keyProps": [
+        {
+          "name": "variant",
+          "type": "string",
+          "options": [
+            "default",
+            "outline"
+          ],
+          "default": "default",
+          "note": "Visual style."
+        },
+        {
+          "name": "size",
+          "type": "string",
+          "options": [
+            "default",
+            "sm",
+            "lg"
+          ],
+          "default": "default",
+          "note": "Height/padding."
+        },
+        {
+          "name": "pressed",
+          "type": "boolean",
+          "note": "Controlled on (pressed) state."
+        },
+        {
+          "name": "defaultPressed",
+          "type": "boolean",
+          "note": "Uncontrolled initial pressed state."
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "default": false,
+          "note": "Disables and dims."
+        }
+      ],
+      "slots": [],
+      "examples": [
+        {
+          "name": "Basic",
+          "jsx": "<Toggle aria-label=\"Toggle bold\"><Bold /></Toggle>"
+        },
+        {
+          "name": "Outline",
+          "jsx": "<Toggle variant=\"outline\" defaultPressed><Italic />Italic</Toggle>"
+        }
+      ],
+      "relatedComponents": [
+        "SegmentGroup",
+        "Button",
+        "Switch"
+      ]
+    },
+    {
+      "name": "SegmentGroup",
+      "importFrom": "@/components/ui/toggle-group",
+      "variants": [
+        "default",
+        "outline"
+      ],
+      "sizes": [
+        "default",
+        "sm",
+        "lg"
+      ],
+      "defaultVariants": {
+        "variant": "default",
+        "size": "default"
+      },
+      "states": [
+        "default",
+        "hover",
+        "focus",
+        "checked",
+        "disabled"
+      ],
+      "keyProps": [
+        {
+          "name": "type",
+          "type": "string",
+          "options": [
+            "single",
+            "multiple"
+          ],
+          "note": "Use single for a segmented control."
+        },
+        {
+          "name": "variant",
+          "type": "string",
+          "options": [
+            "default",
+            "outline"
+          ],
+          "default": "default",
+          "note": "Shared visual style via context."
+        },
+        {
+          "name": "size",
+          "type": "string",
+          "options": [
+            "default",
+            "sm",
+            "lg"
+          ],
+          "default": "default",
+          "note": "Shared item size via context."
+        },
+        {
+          "name": "defaultValue",
+          "type": "string",
+          "note": "Uncontrolled initial selected value."
+        }
+      ],
+      "slots": [
+        "togglegroupitem"
+      ],
+      "examples": [
+        {
+          "name": "Single",
+          "jsx": "<ToggleGroup type=\"single\" defaultValue=\"center\" variant=\"outline\"><ToggleGroupItem value=\"left\" aria-label=\"Left\"><AlignLeft /></ToggleGroupItem><ToggleGroupItem value=\"center\" aria-label=\"Center\"><AlignCenter /></ToggleGroupItem><ToggleGroupItem value=\"right\" aria-label=\"Right\"><AlignRight /></ToggleGroupItem></ToggleGroup>"
+        },
+        {
+          "name": "Text",
+          "jsx": "<ToggleGroup type=\"single\" defaultValue=\"day\"><ToggleGroupItem value=\"day\">Day</ToggleGroupItem><ToggleGroupItem value=\"week\">Week</ToggleGroupItem><ToggleGroupItem value=\"month\">Month</ToggleGroupItem></ToggleGroup>"
+        }
+      ],
+      "relatedComponents": [
+        "Toggle",
+        "RadioGroup",
+        "Tabs"
+      ]
+    },
+    {
+      "name": "Field",
+      "importFrom": "@/components/ui/label",
+      "variants": [],
+      "sizes": [],
+      "defaultVariants": {},
+      "states": [
+        "default",
+        "focus",
+        "disabled"
+      ],
+      "keyProps": [
+        {
+          "name": "htmlFor",
+          "type": "string",
+          "note": "On Label; must match the input id."
+        },
+        {
+          "name": "id",
+          "type": "string",
+          "note": "On Input; ties label and helper text to the control."
+        }
+      ],
+      "slots": [
+        "label",
+        "input",
+        "description"
+      ],
+      "examples": [
+        {
+          "name": "Input field",
+          "jsx": "<div className=\"grid gap-2 w-72\"><Label htmlFor=\"email\">Email</Label><Input id=\"email\" type=\"email\" placeholder=\"you@example.com\" /><p className=\"text-sm text-muted-foreground\">We'll never share your email.</p></div>"
+        }
+      ],
+      "relatedComponents": [
+        "Input",
+        "Textarea",
+        "Label"
+      ]
+    },
+    {
+      "name": "PinInput",
+      "importFrom": "@/components/ui/input-otp",
+      "variants": [],
+      "sizes": [],
+      "defaultVariants": {},
+      "states": [
+        "default",
+        "focus",
+        "disabled"
+      ],
+      "keyProps": [
+        {
+          "name": "maxLength",
+          "type": "number",
+          "note": "Total number of slots; required on InputOTP."
+        },
+        {
+          "name": "value",
+          "type": "string",
+          "note": "Controlled entered value."
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "default": false,
+          "note": "Disables and dims."
+        }
+      ],
+      "slots": [
+        "inputotpgroup",
+        "inputotpslot",
+        "inputotpseparator"
+      ],
+      "examples": [
+        {
+          "name": "Six digit",
+          "jsx": "<InputOTP maxLength={6} aria-label=\"One-time passcode\"><InputOTPGroup><InputOTPSlot index={0} /><InputOTPSlot index={1} /><InputOTPSlot index={2} /></InputOTPGroup><InputOTPSeparator /><InputOTPGroup><InputOTPSlot index={3} /><InputOTPSlot index={4} /><InputOTPSlot index={5} /></InputOTPGroup></InputOTP>"
+        }
+      ],
+      "relatedComponents": [
+        "Input",
+        "Field"
+      ]
+    },
+    {
+      "name": "Combobox",
+      "importFrom": "@/components/ui/command",
+      "variants": [],
+      "sizes": [],
+      "defaultVariants": {},
+      "states": [
+        "default",
+        "focus",
+        "open"
+      ],
+      "keyProps": [
+        {
+          "name": "defaultOpen",
+          "type": "boolean",
+          "default": false,
+          "note": "On Popover; opens the dropdown."
+        },
+        {
+          "name": "placeholder",
+          "type": "string",
+          "note": "On CommandInput; search placeholder."
+        }
+      ],
+      "slots": [
+        "popovertrigger",
+        "popovercontent",
+        "command",
+        "commandinput",
+        "commandlist",
+        "commandempty",
+        "commandgroup",
+        "commanditem"
+      ],
+      "examples": [
+        {
+          "name": "Basic",
+          "jsx": "<Popover defaultOpen><PopoverTrigger asChild><Button variant=\"outline\" className=\"w-56 justify-between\">Select framework<ChevronsUpDown className=\"opacity-50\" /></Button></PopoverTrigger><PopoverContent className=\"w-56 p-0\"><Command><CommandInput placeholder=\"Search framework...\" /><CommandList><CommandEmpty>No framework found.</CommandEmpty><CommandGroup><CommandItem value=\"next\"><Check />Next.js</CommandItem><CommandItem value=\"remix\">Remix</CommandItem><CommandItem value=\"astro\">Astro</CommandItem></CommandGroup></CommandList></Command></PopoverContent></Popover>"
+        }
+      ],
+      "relatedComponents": [
+        "Select",
+        "Popover"
+      ]
+    },
+    {
+      "name": "DatePicker",
+      "importFrom": "@/components/ui/calendar",
+      "variants": [],
+      "sizes": [],
+      "defaultVariants": {},
+      "states": [
+        "default",
+        "focus",
+        "open"
+      ],
+      "keyProps": [
+        {
+          "name": "defaultOpen",
+          "type": "boolean",
+          "default": false,
+          "note": "On Popover; opens the calendar."
+        },
+        {
+          "name": "mode",
+          "type": "string",
+          "options": [
+            "single",
+            "multiple",
+            "range"
+          ],
+          "default": "single",
+          "note": "On Calendar; selection mode."
+        },
+        {
+          "name": "captionLayout",
+          "type": "string",
+          "options": [
+            "label",
+            "dropdown"
+          ],
+          "default": "label",
+          "note": "On Calendar; header layout."
+        }
+      ],
+      "slots": [
+        "popovertrigger",
+        "popovercontent",
+        "calendar"
+      ],
+      "examples": [
+        {
+          "name": "Basic",
+          "jsx": "<Popover defaultOpen><PopoverTrigger asChild><Button variant=\"outline\" className=\"w-56 justify-start text-left font-normal\"><Calendar />Pick a date</Button></PopoverTrigger><PopoverContent className=\"w-auto p-0\"><Calendar mode=\"single\" /></PopoverContent></Popover>"
+        }
+      ],
+      "relatedComponents": [
+        "Calendar",
+        "Popover",
+        "Input"
+      ]
+    },
+    {
+      "name": "Card",
+      "importFrom": "@/components/ui/card",
+      "variants": [],
+      "sizes": [],
+      "defaultVariants": {},
+      "states": [
+        "default"
+      ],
+      "keyProps": [
+        {
+          "name": "className",
+          "type": "string",
+          "note": "Tailwind utilities on the root container."
+        }
+      ],
+      "slots": [
+        "root",
+        "header",
+        "title",
+        "description",
+        "action",
+        "content",
+        "footer"
+      ],
+      "examples": [
+        {
+          "name": "Basic card",
+          "jsx": "<Card className=\"w-80\"><CardHeader><CardTitle>Account</CardTitle><CardDescription>Manage your profile settings.</CardDescription></CardHeader><CardContent className=\"text-sm text-muted-foreground\">You are signed in as Jane Doe.</CardContent><CardFooter className=\"justify-end\"><Button size=\"sm\">Save</Button></CardFooter></Card>"
+        }
+      ],
+      "relatedComponents": [
+        "Dialog",
+        "Alert",
+        "Table"
+      ]
+    },
+    {
+      "name": "Dialog",
+      "importFrom": "@/components/ui/dialog",
+      "variants": [],
+      "sizes": [],
+      "defaultVariants": {},
+      "states": [
+        "open",
+        "closed"
+      ],
+      "keyProps": [
+        {
+          "name": "defaultOpen",
+          "type": "boolean",
+          "note": "Uncontrolled open state on the Dialog root."
+        },
+        {
+          "name": "open",
+          "type": "boolean",
+          "note": "Controlled open state."
+        },
+        {
+          "name": "showCloseButton",
+          "type": "boolean",
+          "default": true,
+          "note": "DialogContent corner X button."
+        }
+      ],
+      "slots": [
+        "root",
+        "trigger",
+        "content",
+        "header",
+        "footer",
+        "title",
+        "description",
+        "close"
+      ],
+      "examples": [
+        {
+          "name": "Open dialog",
+          "jsx": "<Dialog defaultOpen><DialogTrigger asChild><Button variant=\"outline\">Edit profile</Button></DialogTrigger><DialogContent><DialogHeader><DialogTitle>Edit profile</DialogTitle><DialogDescription>Make changes to your profile here.</DialogDescription></DialogHeader><DialogFooter><DialogClose asChild><Button variant=\"outline\">Cancel</Button></DialogClose><Button>Save changes</Button></DialogFooter></DialogContent></Dialog>"
+        }
+      ],
+      "relatedComponents": [
+        "Drawer",
+        "Popover",
+        "Card"
+      ]
+    },
+    {
+      "name": "Drawer",
+      "importFrom": "@/components/ui/drawer",
+      "variants": [],
+      "sizes": [],
+      "defaultVariants": {},
+      "states": [
+        "open",
+        "closed"
+      ],
+      "keyProps": [
+        {
+          "name": "defaultOpen",
+          "type": "boolean",
+          "note": "Uncontrolled open state."
+        },
+        {
+          "name": "direction",
+          "type": "string",
+          "options": [
+            "top",
+            "bottom",
+            "left",
+            "right"
+          ],
+          "default": "bottom",
+          "note": "Side the drawer slides from."
+        }
+      ],
+      "slots": [
+        "root",
+        "trigger",
+        "content",
+        "header",
+        "footer",
+        "title",
+        "description",
+        "close"
+      ],
+      "examples": [
+        {
+          "name": "Open drawer",
+          "jsx": "<Drawer defaultOpen><DrawerTrigger asChild><Button variant=\"outline\">Open drawer</Button></DrawerTrigger><DrawerContent><DrawerHeader><DrawerTitle>Notifications</DrawerTitle><DrawerDescription>You have 3 unread messages.</DrawerDescription></DrawerHeader><DrawerFooter><Button>Mark all read</Button><DrawerClose asChild><Button variant=\"outline\">Close</Button></DrawerClose></DrawerFooter></DrawerContent></Drawer>"
+        }
+      ],
+      "relatedComponents": [
+        "Dialog",
+        "Popover"
+      ]
+    },
+    {
+      "name": "Popover",
+      "importFrom": "@/components/ui/popover",
+      "variants": [],
+      "sizes": [],
+      "defaultVariants": {},
+      "states": [
+        "open",
+        "closed"
+      ],
+      "keyProps": [
+        {
+          "name": "defaultOpen",
+          "type": "boolean",
+          "note": "Uncontrolled open state."
+        },
+        {
+          "name": "align",
+          "type": "string",
+          "options": [
+            "start",
+            "center",
+            "end"
+          ],
+          "default": "center",
+          "note": "Content alignment."
+        },
+        {
+          "name": "sideOffset",
+          "type": "number",
+          "default": 4,
+          "note": "Distance from trigger."
+        }
+      ],
+      "slots": [
+        "root",
+        "trigger",
+        "content",
+        "anchor"
+      ],
+      "examples": [
+        {
+          "name": "Open popover",
+          "jsx": "<Popover defaultOpen><PopoverTrigger asChild><Button variant=\"outline\">Open</Button></PopoverTrigger><PopoverContent><div className=\"space-y-1\"><p className=\"font-medium\">Dimensions</p><p className=\"text-sm text-muted-foreground\">Set the layout dimensions.</p></div></PopoverContent></Popover>"
+        }
+      ],
+      "relatedComponents": [
+        "HoverCard",
+        "Tooltip",
+        "Menu"
+      ]
+    },
+    {
+      "name": "HoverCard",
+      "importFrom": "@/components/ui/hover-card",
+      "variants": [],
+      "sizes": [],
+      "defaultVariants": {},
+      "states": [
+        "open",
+        "closed"
+      ],
+      "keyProps": [
+        {
+          "name": "defaultOpen",
+          "type": "boolean",
+          "note": "Uncontrolled open state."
+        },
+        {
+          "name": "align",
+          "type": "string",
+          "options": [
+            "start",
+            "center",
+            "end"
+          ],
+          "default": "center",
+          "note": "Content alignment."
+        },
+        {
+          "name": "sideOffset",
+          "type": "number",
+          "default": 4,
+          "note": "Distance from trigger."
+        }
+      ],
+      "slots": [
+        "root",
+        "trigger",
+        "content"
+      ],
+      "examples": [
+        {
+          "name": "Open hover card",
+          "jsx": "<HoverCard defaultOpen><HoverCardTrigger asChild><Button variant=\"link\">@nextjs</Button></HoverCardTrigger><HoverCardContent><div className=\"flex gap-3\"><Avatar><AvatarFallback>NJ</AvatarFallback></Avatar><div className=\"text-sm\"><p className=\"font-semibold\">@nextjs</p><p className=\"text-muted-foreground\">The React framework.</p></div></div></HoverCardContent></HoverCard>"
+        }
+      ],
+      "relatedComponents": [
+        "Popover",
+        "Tooltip"
+      ]
+    },
+    {
+      "name": "Accordion",
+      "importFrom": "@/components/ui/accordion",
+      "variants": [],
+      "sizes": [],
+      "defaultVariants": {},
+      "states": [
+        "open",
+        "closed"
+      ],
+      "keyProps": [
+        {
+          "name": "type",
+          "type": "string",
+          "options": [
+            "single",
+            "multiple"
+          ],
+          "note": "single allows one open item, multiple allows many."
+        },
+        {
+          "name": "collapsible",
+          "type": "boolean",
+          "note": "When type=single, allows closing the open item."
+        },
+        {
+          "name": "defaultValue",
+          "type": "string",
+          "note": "Uncontrolled open item value(s)."
+        }
+      ],
+      "slots": [
+        "root",
+        "item",
+        "trigger",
+        "content"
+      ],
+      "examples": [
+        {
+          "name": "Single collapsible",
+          "jsx": "<Accordion type=\"single\" collapsible defaultValue=\"item-1\" className=\"w-80\"><AccordionItem value=\"item-1\"><AccordionTrigger>Is it accessible?</AccordionTrigger><AccordionContent>Yes. It adheres to the WAI-ARIA design pattern.</AccordionContent></AccordionItem><AccordionItem value=\"item-2\"><AccordionTrigger>Is it styled?</AccordionTrigger><AccordionContent>Yes, with default styles.</AccordionContent></AccordionItem></Accordion>"
+        }
+      ],
+      "relatedComponents": [
+        "Collapsible",
+        "Tabs"
+      ]
+    },
+    {
+      "name": "Breadcrumb",
+      "importFrom": "@/components/ui/breadcrumb",
+      "variants": [],
+      "sizes": [],
+      "defaultVariants": {},
+      "states": [
+        "default"
+      ],
+      "keyProps": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "note": "BreadcrumbLink renders a custom anchor."
+        }
+      ],
+      "slots": [
+        "root",
+        "list",
+        "item",
+        "link",
+        "page",
+        "separator",
+        "ellipsis"
+      ],
+      "examples": [
+        {
+          "name": "Basic",
+          "jsx": "<Breadcrumb><BreadcrumbList><BreadcrumbItem><BreadcrumbLink href=\"#\">Home</BreadcrumbLink></BreadcrumbItem><BreadcrumbSeparator /><BreadcrumbItem><BreadcrumbLink href=\"#\">Components</BreadcrumbLink></BreadcrumbItem><BreadcrumbSeparator /><BreadcrumbItem><BreadcrumbPage>Breadcrumb</BreadcrumbPage></BreadcrumbItem></BreadcrumbList></Breadcrumb>"
+        }
+      ],
+      "relatedComponents": [
+        "Pagination",
+        "Tabs"
+      ]
+    },
+    {
+      "name": "Carousel",
+      "importFrom": "@/components/ui/carousel",
+      "variants": [],
+      "sizes": [],
+      "defaultVariants": {},
+      "states": [
+        "default"
+      ],
+      "keyProps": [
+        {
+          "name": "orientation",
+          "type": "string",
+          "options": [
+            "horizontal",
+            "vertical"
+          ],
+          "default": "horizontal",
+          "note": "Scroll axis."
+        },
+        {
+          "name": "opts",
+          "type": "object",
+          "note": "Embla options passed to the root."
+        }
+      ],
+      "slots": [
+        "root",
+        "content",
+        "item",
+        "previous",
+        "next"
+      ],
+      "examples": [
+        {
+          "name": "Basic",
+          "jsx": "<Carousel className=\"mx-12 w-60\"><CarouselContent>{[1, 2, 3].map((n) => (<CarouselItem key={n}><div className=\"flex aspect-square items-center justify-center rounded-md border bg-card text-4xl font-semibold\">{n}</div></CarouselItem>))}</CarouselContent><CarouselPrevious /><CarouselNext /></Carousel>"
+        }
+      ],
+      "relatedComponents": [
+        "ScrollArea",
+        "AspectRatio"
+      ]
+    },
+    {
+      "name": "Collapsible",
+      "importFrom": "@/components/ui/collapsible",
+      "variants": [],
+      "sizes": [],
+      "defaultVariants": {},
+      "states": [
+        "open",
+        "closed"
+      ],
+      "keyProps": [
+        {
+          "name": "defaultOpen",
+          "type": "boolean",
+          "note": "Uncontrolled open state."
+        },
+        {
+          "name": "open",
+          "type": "boolean",
+          "note": "Controlled open state."
+        }
+      ],
+      "slots": [
+        "root",
+        "trigger",
+        "content"
+      ],
+      "examples": [
+        {
+          "name": "Open",
+          "jsx": "<Collapsible defaultOpen className=\"w-72 space-y-2\"><div className=\"flex items-center justify-between\"><span className=\"text-sm font-semibold\">Starred repos</span><CollapsibleTrigger asChild><Button variant=\"ghost\" size=\"icon\" aria-label=\"Toggle repos\"><ChevronsUpDown /></Button></CollapsibleTrigger></div><CollapsibleContent className=\"space-y-2\"><div className=\"rounded-md border px-3 py-2 text-sm\">@radix-ui/primitives</div><div className=\"rounded-md border px-3 py-2 text-sm\">@stitches/react</div></CollapsibleContent></Collapsible>"
+        }
+      ],
+      "relatedComponents": [
+        "Accordion"
+      ]
+    },
+    {
+      "name": "Menu",
+      "importFrom": "@/components/ui/dropdown-menu",
+      "variants": [],
+      "sizes": [],
+      "defaultVariants": {},
+      "states": [
+        "open",
+        "closed"
+      ],
+      "keyProps": [
+        {
+          "name": "defaultOpen",
+          "type": "boolean",
+          "note": "Uncontrolled open state."
+        },
+        {
+          "name": "variant",
+          "type": "string",
+          "options": [
+            "default",
+            "destructive"
+          ],
+          "default": "default",
+          "note": "DropdownMenuItem visual variant."
+        },
+        {
+          "name": "inset",
+          "type": "boolean",
+          "note": "Item/Label left padding to align with checkbox items."
+        }
+      ],
+      "slots": [
+        "root",
+        "trigger",
+        "content",
+        "group",
+        "label",
+        "item",
+        "checkboxitem",
+        "radiogroup",
+        "radioitem",
+        "separator",
+        "shortcut",
+        "sub"
+      ],
+      "examples": [
+        {
+          "name": "Open menu",
+          "jsx": "<DropdownMenu defaultOpen><DropdownMenuTrigger asChild><Button variant=\"outline\">Open</Button></DropdownMenuTrigger><DropdownMenuContent className=\"w-48\"><DropdownMenuLabel>My Account</DropdownMenuLabel><DropdownMenuSeparator /><DropdownMenuItem><User />Profile<DropdownMenuShortcut>Shift+P</DropdownMenuShortcut></DropdownMenuItem><DropdownMenuItem><Settings />Settings</DropdownMenuItem><DropdownMenuSeparator /><DropdownMenuItem variant=\"destructive\"><LogOut />Log out</DropdownMenuItem></DropdownMenuContent></DropdownMenu>"
+        }
+      ],
+      "relatedComponents": [
+        "Popover",
+        "Select",
+        "Tooltip"
+      ]
+    },
+    {
+      "name": "Pagination",
+      "importFrom": "@/components/ui/pagination",
+      "variants": [],
+      "sizes": [],
+      "defaultVariants": {},
+      "states": [
+        "default",
+        "active"
+      ],
+      "keyProps": [
+        {
+          "name": "isActive",
+          "type": "boolean",
+          "note": "PaginationLink active page (outline style)."
+        },
+        {
+          "name": "size",
+          "type": "string",
+          "options": [
+            "default",
+            "sm",
+            "lg",
+            "icon"
+          ],
+          "default": "icon",
+          "note": "PaginationLink button size."
+        }
+      ],
+      "slots": [
+        "root",
+        "content",
+        "item",
+        "link",
+        "previous",
+        "next",
+        "ellipsis"
+      ],
+      "examples": [
+        {
+          "name": "Basic",
+          "jsx": "<Pagination><PaginationContent><PaginationItem><PaginationPrevious href=\"#\" /></PaginationItem><PaginationItem><PaginationLink href=\"#\">1</PaginationLink></PaginationItem><PaginationItem><PaginationLink href=\"#\" isActive>2</PaginationLink></PaginationItem><PaginationItem><PaginationLink href=\"#\">3</PaginationLink></PaginationItem><PaginationItem><PaginationEllipsis /></PaginationItem><PaginationItem><PaginationNext href=\"#\" /></PaginationItem></PaginationContent></Pagination>"
+        }
+      ],
+      "relatedComponents": [
+        "Breadcrumb"
+      ]
+    },
+    {
+      "name": "Tabs",
+      "importFrom": "@/components/ui/tabs",
+      "variants": [
+        "default",
+        "line"
+      ],
+      "sizes": [],
+      "defaultVariants": {
+        "variant": "default"
+      },
+      "states": [
+        "default",
+        "active"
+      ],
+      "keyProps": [
+        {
+          "name": "defaultValue",
+          "type": "string",
+          "note": "Uncontrolled active tab value."
+        },
+        {
+          "name": "orientation",
+          "type": "string",
+          "options": [
+            "horizontal",
+            "vertical"
+          ],
+          "default": "horizontal",
+          "note": "Layout orientation."
+        },
+        {
+          "name": "variant",
+          "type": "string",
+          "options": [
+            "default",
+            "line"
+          ],
+          "default": "default",
+          "note": "TabsList visual variant."
+        }
+      ],
+      "slots": [
+        "root",
+        "list",
+        "trigger",
+        "content"
+      ],
+      "examples": [
+        {
+          "name": "Basic",
+          "jsx": "<Tabs defaultValue=\"account\" className=\"w-80\"><TabsList><TabsTrigger value=\"account\">Account</TabsTrigger><TabsTrigger value=\"password\">Password</TabsTrigger></TabsList><TabsContent value=\"account\" className=\"text-sm text-muted-foreground\">Make changes to your account.</TabsContent><TabsContent value=\"password\" className=\"text-sm text-muted-foreground\">Change your password here.</TabsContent></Tabs>"
+        },
+        {
+          "name": "Line variant",
+          "jsx": "<Tabs defaultValue=\"overview\" className=\"w-80\"><TabsList variant=\"line\"><TabsTrigger value=\"overview\">Overview</TabsTrigger><TabsTrigger value=\"activity\">Activity</TabsTrigger></TabsList><TabsContent value=\"overview\" className=\"text-sm text-muted-foreground\">Overview content.</TabsContent><TabsContent value=\"activity\" className=\"text-sm text-muted-foreground\">Activity content.</TabsContent></Tabs>"
+        }
+      ],
+      "relatedComponents": [
+        "Accordion",
+        "SegmentGroup"
+      ]
+    },
+    {
+      "name": "Tooltip",
+      "importFrom": "@/components/ui/tooltip",
+      "variants": [],
+      "sizes": [],
+      "defaultVariants": {},
+      "states": [
+        "open",
+        "closed"
+      ],
+      "keyProps": [
+        {
+          "name": "defaultOpen",
+          "type": "boolean",
+          "note": "Uncontrolled open state."
+        },
+        {
+          "name": "delayDuration",
+          "type": "number",
+          "default": 0,
+          "note": "Delay before showing."
+        },
+        {
+          "name": "sideOffset",
+          "type": "number",
+          "default": 0,
+          "note": "Distance from trigger."
+        }
+      ],
+      "slots": [
+        "provider",
+        "root",
+        "trigger",
+        "content"
+      ],
+      "examples": [
+        {
+          "name": "Open tooltip",
+          "jsx": "<TooltipProvider><Tooltip defaultOpen><TooltipTrigger asChild><Button variant=\"outline\">Hover</Button></TooltipTrigger><TooltipContent>Add to library</TooltipContent></Tooltip></TooltipProvider>"
+        }
+      ],
+      "relatedComponents": [
+        "Popover",
+        "HoverCard"
+      ]
+    },
+    {
+      "name": "Alert",
+      "importFrom": "@/components/ui/alert",
+      "variants": [
+        "default",
+        "destructive",
+        "success",
+        "warning",
+        "info"
+      ],
+      "sizes": [],
+      "defaultVariants": {
+        "variant": "default"
+      },
+      "states": [
+        "default"
+      ],
+      "keyProps": [
+        {
+          "name": "variant",
+          "type": "string",
+          "options": [
+            "default",
+            "destructive",
+            "success",
+            "warning",
+            "info"
+          ],
+          "default": "default",
+          "note": "Alert visual variant."
+        }
+      ],
+      "slots": [
+        "root",
+        "title",
+        "description"
+      ],
+      "examples": [
+        {
+          "name": "Default",
+          "jsx": "<Alert className=\"w-96\"><Terminal /><AlertTitle>Heads up!</AlertTitle><AlertDescription>You can add components to your app using the CLI.</AlertDescription></Alert>"
+        },
+        {
+          "name": "Status variants",
+          "jsx": "<div className=\"flex w-96 flex-col gap-2\"><Alert variant=\"success\"><CircleCheck /><AlertTitle>Saved</AlertTitle><AlertDescription>Your changes are synced.</AlertDescription></Alert><Alert variant=\"warning\"><TriangleAlert /><AlertTitle>Heads up</AlertTitle><AlertDescription>Your trial ends in 3 days.</AlertDescription></Alert><Alert variant=\"info\"><Info /><AlertTitle>Note</AlertTitle><AlertDescription>A new version is available.</AlertDescription></Alert><Alert variant=\"destructive\"><CircleAlert /><AlertTitle>Error</AlertTitle><AlertDescription>Your session expired.</AlertDescription></Alert></div>"
+        }
+      ],
+      "relatedComponents": [
+        "Toast",
+        "Card"
+      ]
+    },
+    {
+      "name": "Progress",
+      "importFrom": "@/components/ui/progress",
+      "variants": [
+        "default",
+        "success",
+        "warning",
+        "destructive",
+        "info"
+      ],
+      "sizes": [],
+      "defaultVariants": {
+        "variant": "default"
+      },
+      "states": [
+        "default"
+      ],
+      "keyProps": [
+        {
+          "name": "variant",
+          "type": "string",
+          "options": [
+            "default",
+            "success",
+            "warning",
+            "destructive",
+            "info"
+          ],
+          "default": "default",
+          "note": "Status intent for the bar color."
+        },
+        {
+          "name": "value",
+          "type": "number",
+          "note": "Current progress percentage (0-100)."
+        }
+      ],
+      "slots": [],
+      "examples": [
+        {
+          "name": "At 60%",
+          "jsx": "<Progress value={60} aria-label=\"Upload progress\" className=\"w-80\" />"
+        },
+        {
+          "name": "Status bars",
+          "jsx": "<div className=\"flex w-80 flex-col gap-3\"><Progress value={90} variant=\"success\" aria-label=\"Healthy\" /><Progress value={75} variant=\"warning\" aria-label=\"Nearing limit\" /><Progress value={96} variant=\"destructive\" aria-label=\"Over limit\" /></div>"
+        }
+      ],
+      "relatedComponents": [
+        "Skeleton",
+        "ProgressCircle"
+      ]
+    },
+    {
+      "name": "Skeleton",
+      "importFrom": "@/components/ui/skeleton",
+      "variants": [],
+      "sizes": [],
+      "defaultVariants": {},
+      "states": [
+        "default"
+      ],
+      "keyProps": [
+        {
+          "name": "className",
+          "type": "string",
+          "note": "Size/shape via Tailwind utilities (h-4 w-32 rounded-full)."
+        }
+      ],
+      "slots": [],
+      "examples": [
+        {
+          "name": "Card skeleton",
+          "jsx": "<div className=\"flex items-center gap-4\"><Skeleton className=\"size-12 rounded-full\" /><div className=\"space-y-2\"><Skeleton className=\"h-4 w-48\" /><Skeleton className=\"h-4 w-32\" /></div></div>"
+        }
+      ],
+      "relatedComponents": [
+        "Progress",
+        "Avatar"
+      ]
+    },
+    {
+      "name": "Toast",
+      "importFrom": "@/components/ui/sonner",
+      "variants": [],
+      "sizes": [],
+      "defaultVariants": {},
+      "states": [
+        "default"
+      ],
+      "keyProps": [
+        {
+          "name": "toast()",
+          "type": "function",
+          "note": "sonner is imperative: call toast()/toast.success()/toast.error(). No JSX Toast element; the example is an inline Alert stand-in."
+        }
+      ],
+      "slots": [],
+      "examples": [
+        {
+          "name": "Inline stand-in",
+          "jsx": "<Alert className=\"w-80 shadow-md\"><CircleCheck /><AlertTitle>Event created</AlertTitle><AlertDescription>Sunday, December 03 at 9:00 AM</AlertDescription></Alert>"
+        }
+      ],
+      "relatedComponents": [
+        "Toaster",
+        "Alert"
+      ]
+    },
+    {
+      "name": "Toaster",
+      "importFrom": "@/components/ui/sonner",
+      "variants": [],
+      "sizes": [],
+      "defaultVariants": {},
+      "states": [
+        "default"
+      ],
+      "keyProps": [
+        {
+          "name": "theme",
+          "type": "string",
+          "options": [
+            "light",
+            "dark",
+            "system"
+          ],
+          "default": "system",
+          "note": "Mount point rendered once near the app root; fire toasts via toast()."
+        }
+      ],
+      "slots": [],
+      "examples": [
+        {
+          "name": "Inline stand-in",
+          "jsx": "<Alert className=\"w-80 shadow-md\"><Info /><AlertTitle>Notifications enabled</AlertTitle><AlertDescription>Toaster is mounted; fire toasts with toast().</AlertDescription></Alert>"
+        }
+      ],
+      "relatedComponents": [
+        "Toast",
+        "Alert"
+      ]
+    },
+    {
+      "name": "Avatar",
+      "importFrom": "@/components/ui/avatar",
+      "variants": [],
+      "sizes": [
+        "default",
+        "sm",
+        "lg"
+      ],
+      "defaultVariants": {
+        "size": "default"
+      },
+      "states": [
+        "default"
+      ],
+      "keyProps": [
+        {
+          "name": "size",
+          "type": "string",
+          "options": [
+            "default",
+            "sm",
+            "lg"
+          ],
+          "default": "default",
+          "note": "Avatar root size."
+        },
+        {
+          "name": "src",
+          "type": "string",
+          "note": "AvatarImage source URL."
+        }
+      ],
+      "slots": [
+        "root",
+        "image",
+        "fallback",
+        "group"
+      ],
+      "examples": [
+        {
+          "name": "With fallback",
+          "jsx": "<Avatar><AvatarImage src=\"https://github.com/shadcn.png\" alt=\"shadcn avatar\" /><AvatarFallback>CN</AvatarFallback></Avatar>"
+        },
+        {
+          "name": "Group",
+          "jsx": "<AvatarGroup><Avatar><AvatarFallback>AB</AvatarFallback></Avatar><Avatar><AvatarFallback>CD</AvatarFallback></Avatar><AvatarGroupCount>+3</AvatarGroupCount></AvatarGroup>"
+        }
+      ],
+      "relatedComponents": [
+        "Badge",
+        "Skeleton"
+      ]
+    },
+    {
+      "name": "Badge",
+      "importFrom": "@/components/ui/badge",
+      "variants": [
+        "default",
+        "secondary",
+        "success",
+        "warning",
+        "info",
+        "destructive",
+        "outline",
+        "ghost",
+        "link"
+      ],
+      "sizes": [],
+      "defaultVariants": {
+        "variant": "default"
+      },
+      "states": [
+        "default"
+      ],
+      "keyProps": [
+        {
+          "name": "variant",
+          "type": "string",
+          "options": [
+            "default",
+            "secondary",
+            "success",
+            "warning",
+            "info",
+            "destructive",
+            "outline",
+            "ghost",
+            "link"
+          ],
+          "default": "default",
+          "note": "Badge visual variant."
+        },
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "default": false,
+          "note": "Render as a child element (e.g. an anchor)."
+        }
+      ],
+      "slots": [],
+      "examples": [
+        {
+          "name": "Variants",
+          "jsx": "<div className=\"flex flex-wrap gap-2\"><Badge>Default</Badge><Badge variant=\"secondary\">Secondary</Badge><Badge variant=\"success\">Success</Badge><Badge variant=\"warning\">Warning</Badge><Badge variant=\"info\">Info</Badge><Badge variant=\"destructive\">Destructive</Badge><Badge variant=\"outline\">Outline</Badge></div>"
+        }
+      ],
+      "relatedComponents": [
+        "Avatar",
+        "Alert",
+        "Tag"
+      ]
+    },
+    {
+      "name": "Table",
+      "importFrom": "@/components/ui/table",
+      "variants": [],
+      "sizes": [],
+      "defaultVariants": {},
+      "states": [
+        "default",
+        "selected"
+      ],
+      "keyProps": [
+        {
+          "name": "className",
+          "type": "string",
+          "note": "Root wraps the table in an overflow-x-auto container."
+        }
+      ],
+      "slots": [
+        "root",
+        "header",
+        "body",
+        "footer",
+        "head",
+        "row",
+        "cell",
+        "caption"
+      ],
+      "examples": [
+        {
+          "name": "Basic",
+          "jsx": "<Table className=\"w-96\"><TableCaption>Recent invoices.</TableCaption><TableHeader><TableRow><TableHead>Invoice</TableHead><TableHead>Status</TableHead><TableHead className=\"text-right\">Amount</TableHead></TableRow></TableHeader><TableBody><TableRow><TableCell className=\"font-medium\">INV001</TableCell><TableCell><Badge variant=\"secondary\">Paid</Badge></TableCell><TableCell className=\"text-right\">$250.00</TableCell></TableRow><TableRow><TableCell className=\"font-medium\">INV002</TableCell><TableCell><Badge variant=\"outline\">Pending</Badge></TableCell><TableCell className=\"text-right\">$150.00</TableCell></TableRow></TableBody></Table>"
+        }
+      ],
+      "relatedComponents": [
+        "Card",
+        "Pagination",
+        "Badge"
+      ]
+    },
+    {
+      "name": "AspectRatio",
+      "importFrom": "@/components/ui/aspect-ratio",
+      "variants": [],
+      "sizes": [],
+      "defaultVariants": {},
+      "states": [
+        "default"
+      ],
+      "keyProps": [
+        {
+          "name": "ratio",
+          "type": "number",
+          "default": 1,
+          "note": "Width-to-height ratio, e.g. 16 / 9."
+        }
+      ],
+      "slots": [],
+      "examples": [
+        {
+          "name": "16:9",
+          "jsx": "<div className=\"w-80\"><AspectRatio ratio={16 / 9}><div className=\"flex size-full items-center justify-center rounded-md bg-muted text-sm text-foreground\">16 / 9</div></AspectRatio></div>"
+        }
+      ],
+      "relatedComponents": [
+        "Carousel",
+        "ScrollArea"
+      ]
+    },
+    {
+      "name": "ScrollArea",
+      "importFrom": "@/components/ui/scroll-area",
+      "variants": [],
+      "sizes": [],
+      "defaultVariants": {},
+      "states": [
+        "default"
+      ],
+      "keyProps": [
+        {
+          "name": "className",
+          "type": "string",
+          "note": "Set a fixed size so content overflows."
+        },
+        {
+          "name": "orientation",
+          "type": "string",
+          "options": [
+            "vertical",
+            "horizontal"
+          ],
+          "default": "vertical",
+          "note": "ScrollBar orientation."
+        }
+      ],
+      "slots": [
+        "root",
+        "scrollbar"
+      ],
+      "examples": [
+        {
+          "name": "Vertical",
+          "jsx": "<ScrollArea className=\"h-40 w-60 rounded-md border p-4\"><div className=\"space-y-2 text-sm\">{Array.from({ length: 20 }).map((_, i) => (<div key={i}>Item {i + 1}</div>))}</div></ScrollArea>"
+        }
+      ],
+      "relatedComponents": [
+        "Carousel",
+        "Separator"
+      ]
+    },
+    {
+      "name": "Separator",
+      "importFrom": "@/components/ui/separator",
+      "variants": [],
+      "sizes": [],
+      "defaultVariants": {},
+      "states": [
+        "default"
+      ],
+      "keyProps": [
+        {
+          "name": "orientation",
+          "type": "string",
+          "options": [
+            "horizontal",
+            "vertical"
+          ],
+          "default": "horizontal",
+          "note": "Separator direction."
+        },
+        {
+          "name": "decorative",
+          "type": "boolean",
+          "default": true,
+          "note": "Hidden from assistive tech when purely visual."
+        }
+      ],
+      "slots": [],
+      "examples": [
+        {
+          "name": "Horizontal and vertical",
+          "jsx": "<div className=\"w-80\"><div className=\"text-sm font-medium\">Radix Primitives</div><p className=\"text-sm text-muted-foreground\">An open-source UI library.</p><Separator className=\"my-4\" /><div className=\"flex h-5 items-center gap-4 text-sm\"><span>Blog</span><Separator orientation=\"vertical\" /><span>Docs</span><Separator orientation=\"vertical\" /><span>Source</span></div></div>"
+        }
+      ],
+      "relatedComponents": [
+        "ScrollArea",
+        "Splitter"
+      ]
+    },
+    {
+      "name": "Splitter",
+      "importFrom": "@/components/ui/resizable",
+      "variants": [],
+      "sizes": [],
+      "defaultVariants": {},
+      "states": [
+        "default"
+      ],
+      "keyProps": [
+        {
+          "name": "direction",
+          "type": "string",
+          "options": [
+            "horizontal",
+            "vertical"
+          ],
+          "note": "ResizablePanelGroup layout direction; required."
+        },
+        {
+          "name": "defaultSize",
+          "type": "number",
+          "note": "ResizablePanel initial size (percent)."
+        },
+        {
+          "name": "withHandle",
+          "type": "boolean",
+          "note": "ResizableHandle visible grip."
+        }
+      ],
+      "slots": [
+        "panelgroup",
+        "panel",
+        "handle"
+      ],
+      "examples": [
+        {
+          "name": "Horizontal split",
+          "jsx": "<ResizablePanelGroup direction=\"horizontal\" className=\"h-40 w-80 rounded-lg border\"><ResizablePanel defaultSize={50}><div className=\"flex h-full items-center justify-center p-4 text-sm\">One</div></ResizablePanel><ResizableHandle withHandle /><ResizablePanel defaultSize={50}><div className=\"flex h-full items-center justify-center p-4 text-sm\">Two</div></ResizablePanel></ResizablePanelGroup>"
+        }
+      ],
+      "relatedComponents": [
+        "Separator",
+        "ScrollArea"
+      ]
+    },
+    {
+      "name": "Box",
+      "importFrom": "@/components/primitives",
+      "variants": [],
+      "sizes": [],
+      "defaultVariants": {},
+      "states": [
+        "default"
+      ],
+      "keyProps": [
+        {
+          "name": "className",
+          "type": "string",
+          "note": "Unstyled div wrapper; style via Tailwind."
+        }
+      ],
+      "slots": [],
+      "examples": [
+        {
+          "name": "Padded surface",
+          "jsx": "<Box className=\"rounded-lg border border-border bg-card p-4 text-foreground\">Content</Box>"
+        }
+      ],
+      "relatedComponents": [
+        "Flex",
+        "Stack",
+        "Container"
+      ]
+    },
+    {
+      "name": "Center",
+      "importFrom": "@/components/primitives",
+      "variants": [],
+      "sizes": [],
+      "defaultVariants": {},
+      "states": [
+        "default"
+      ],
+      "keyProps": [
+        {
+          "name": "className",
+          "type": "string",
+          "note": "Base: flex items-center justify-center."
+        }
+      ],
+      "slots": [],
+      "examples": [
+        {
+          "name": "Centered",
+          "jsx": "<Center className=\"size-32 rounded-lg bg-muted text-foreground\">Centered</Center>"
+        }
+      ],
+      "relatedComponents": [
+        "AbsoluteCenter",
+        "Flex",
+        "Circle"
+      ]
+    },
+    {
+      "name": "Circle",
+      "importFrom": "@/components/primitives",
+      "variants": [],
+      "sizes": [],
+      "defaultVariants": {},
+      "states": [
+        "default"
+      ],
+      "keyProps": [
+        {
+          "name": "className",
+          "type": "string",
+          "note": "Base: flex items-center justify-center rounded-full; set size via size-*."
+        }
+      ],
+      "slots": [],
+      "examples": [
+        {
+          "name": "Avatar dot",
+          "jsx": "<Circle className=\"size-12 bg-primary text-primary-foreground\">A</Circle>"
+        }
+      ],
+      "relatedComponents": [
+        "Square",
+        "Center"
+      ]
+    },
+    {
+      "name": "Square",
+      "importFrom": "@/components/primitives",
+      "variants": [],
+      "sizes": [],
+      "defaultVariants": {},
+      "states": [
+        "default"
+      ],
+      "keyProps": [
+        {
+          "name": "className",
+          "type": "string",
+          "note": "Base: aspect-square; width drives height."
+        }
+      ],
+      "slots": [],
+      "examples": [
+        {
+          "name": "Icon tile",
+          "jsx": "<Square className=\"w-12 rounded-md bg-secondary text-secondary-foreground\"><Star /></Square>"
+        }
+      ],
+      "relatedComponents": [
+        "Circle",
+        "Center"
+      ]
+    },
+    {
+      "name": "Flex",
+      "importFrom": "@/components/primitives",
+      "variants": [],
+      "sizes": [],
+      "defaultVariants": {},
+      "states": [
+        "default"
+      ],
+      "keyProps": [
+        {
+          "name": "className",
+          "type": "string",
+          "note": "Base: flex; control with flex-col, gap-*, items-*."
+        }
+      ],
+      "slots": [],
+      "examples": [
+        {
+          "name": "Row",
+          "jsx": "<Flex className=\"gap-3\"><div className=\"size-12 rounded-md bg-primary\" /><div className=\"size-12 rounded-md bg-secondary\" /></Flex>"
+        }
+      ],
+      "relatedComponents": [
+        "Stack",
+        "Wrap",
+        "Group"
+      ]
+    },
+    {
+      "name": "Stack",
+      "importFrom": "@/components/primitives",
+      "variants": [],
+      "sizes": [],
+      "defaultVariants": {
+        "direction": "column"
+      },
+      "states": [
+        "default"
+      ],
+      "keyProps": [
+        {
+          "name": "direction",
+          "type": "string",
+          "options": [
+            "row",
+            "column"
+          ],
+          "default": "column",
+          "note": "flex-row or flex-col."
+        },
+        {
+          "name": "gap",
+          "type": "number",
+          "default": 4,
+          "note": "Spacing multiplier."
+        }
+      ],
+      "slots": [],
+      "examples": [
+        {
+          "name": "Vertical",
+          "jsx": "<Stack gap={3}><div className=\"h-10 rounded-md bg-muted\" /><div className=\"h-10 rounded-md bg-muted\" /></Stack>"
+        },
+        {
+          "name": "Horizontal",
+          "jsx": "<Stack direction=\"row\" gap={2}><div className=\"size-10 rounded-md bg-primary\" /><div className=\"size-10 rounded-md bg-secondary\" /></Stack>"
+        }
+      ],
+      "relatedComponents": [
+        "Flex",
+        "SimpleGrid",
+        "Wrap"
+      ]
+    },
+    {
+      "name": "Grid",
+      "importFrom": "@/components/primitives",
+      "variants": [],
+      "sizes": [],
+      "defaultVariants": {},
+      "states": [
+        "default"
+      ],
+      "keyProps": [
+        {
+          "name": "className",
+          "type": "string",
+          "note": "Base: grid; define grid-cols-*, gap-*."
+        }
+      ],
+      "slots": [],
+      "examples": [
+        {
+          "name": "Three columns",
+          "jsx": "<Grid className=\"grid-cols-3 gap-4\"><div className=\"h-16 rounded-md bg-muted\" /><div className=\"h-16 rounded-md bg-muted\" /><div className=\"h-16 rounded-md bg-muted\" /></Grid>"
+        }
+      ],
+      "relatedComponents": [
+        "SimpleGrid",
+        "Flex"
+      ]
+    },
+    {
+      "name": "SimpleGrid",
+      "importFrom": "@/components/primitives",
+      "variants": [],
+      "sizes": [],
+      "defaultVariants": {
+        "columns": 3
+      },
+      "states": [
+        "default"
+      ],
+      "keyProps": [
+        {
+          "name": "columns",
+          "type": "number",
+          "default": 3,
+          "note": "Equal columns via repeat(columns, minmax(0,1fr))."
+        }
+      ],
+      "slots": [],
+      "examples": [
+        {
+          "name": "Equal columns",
+          "jsx": "<SimpleGrid columns={2}><div className=\"h-16 rounded-md bg-muted\" /><div className=\"h-16 rounded-md bg-muted\" /></SimpleGrid>"
+        }
+      ],
+      "relatedComponents": [
+        "Grid",
+        "Stack"
+      ]
+    },
+    {
+      "name": "Wrap",
+      "importFrom": "@/components/primitives",
+      "variants": [],
+      "sizes": [],
+      "defaultVariants": {},
+      "states": [
+        "default"
+      ],
+      "keyProps": [
+        {
+          "name": "className",
+          "type": "string",
+          "note": "Base: flex flex-wrap gap-2."
+        }
+      ],
+      "slots": [],
+      "examples": [
+        {
+          "name": "Wrapping",
+          "jsx": "<Wrap><span className=\"rounded-full bg-muted px-3 py-1 text-sm text-foreground\">tag</span><span className=\"rounded-full bg-muted px-3 py-1 text-sm text-foreground\">another</span></Wrap>"
+        }
+      ],
+      "relatedComponents": [
+        "Flex",
+        "Group"
+      ]
+    },
+    {
+      "name": "Spacer",
+      "importFrom": "@/components/primitives",
+      "variants": [],
+      "sizes": [],
+      "defaultVariants": {},
+      "states": [
+        "default"
+      ],
+      "keyProps": [
+        {
+          "name": "className",
+          "type": "string",
+          "note": "Base: flex-1; pushes flex children apart."
+        }
+      ],
+      "slots": [],
+      "examples": [
+        {
+          "name": "Push apart",
+          "jsx": "<Flex className=\"items-center\"><span className=\"text-foreground\">Left</span><Spacer /><span className=\"text-foreground\">Right</span></Flex>"
+        }
+      ],
+      "relatedComponents": [
+        "Flex",
+        "Stack"
+      ]
+    },
+    {
+      "name": "Group",
+      "importFrom": "@/components/primitives",
+      "variants": [],
+      "sizes": [],
+      "defaultVariants": {},
+      "states": [
+        "default"
+      ],
+      "keyProps": [
+        {
+          "name": "className",
+          "type": "string",
+          "note": "Collapses gaps between adjacent children for attached controls."
+        }
+      ],
+      "slots": [],
+      "examples": [
+        {
+          "name": "Attached buttons",
+          "jsx": "<Group><button className=\"rounded-l-md bg-secondary px-3 py-1 text-secondary-foreground\">One</button><button className=\"rounded-r-md bg-secondary px-3 py-1 text-secondary-foreground\">Two</button></Group>"
+        }
+      ],
+      "relatedComponents": [
+        "Flex",
+        "Wrap"
+      ]
+    },
+    {
+      "name": "Container",
+      "importFrom": "@/components/primitives",
+      "variants": [],
+      "sizes": [],
+      "defaultVariants": {},
+      "states": [
+        "default"
+      ],
+      "keyProps": [
+        {
+          "name": "className",
+          "type": "string",
+          "note": "Base: mx-auto w-full max-w-5xl px-4."
+        }
+      ],
+      "slots": [],
+      "examples": [
+        {
+          "name": "Centered width",
+          "jsx": "<Container><div className=\"rounded-lg border border-border bg-card p-6 text-foreground\">Page content</div></Container>"
+        }
+      ],
+      "relatedComponents": [
+        "Box",
+        "Stack"
+      ]
+    },
+    {
+      "name": "AbsoluteCenter",
+      "importFrom": "@/components/primitives",
+      "variants": [],
+      "sizes": [],
+      "defaultVariants": {},
+      "states": [
+        "default"
+      ],
+      "keyProps": [
+        {
+          "name": "className",
+          "type": "string",
+          "note": "Base: absolute inset-0 grid place-items-center; needs relative parent."
+        }
+      ],
+      "slots": [],
+      "examples": [
+        {
+          "name": "Overlay center",
+          "jsx": "<div className=\"relative h-32 rounded-lg bg-muted\"><AbsoluteCenter><span className=\"text-muted-foreground\">Centered overlay</span></AbsoluteCenter></div>"
+        }
+      ],
+      "relatedComponents": [
+        "Center",
+        "Float"
+      ]
+    },
+    {
+      "name": "Float",
+      "importFrom": "@/components/primitives",
+      "variants": [],
+      "sizes": [],
+      "defaultVariants": {
+        "placement": "top-end"
+      },
+      "states": [
+        "default"
+      ],
+      "keyProps": [
+        {
+          "name": "placement",
+          "type": "string",
+          "options": [
+            "top-end",
+            "top-start",
+            "bottom-end",
+            "bottom-start"
+          ],
+          "default": "top-end",
+          "note": "Anchors to a corner of the relative parent."
+        }
+      ],
+      "slots": [],
+      "examples": [
+        {
+          "name": "Corner badge",
+          "jsx": "<div className=\"relative inline-block\"><div className=\"size-12 rounded-md bg-muted\" /><Float placement=\"top-end\"><span className=\"flex size-5 items-center justify-center rounded-full bg-primary text-xs text-primary-foreground\">3</span></Float></div>"
+        }
+      ],
+      "relatedComponents": [
+        "AbsoluteCenter",
+        "Box"
+      ]
+    },
+    {
+      "name": "Bleed",
+      "importFrom": "@/components/primitives",
+      "variants": [],
+      "sizes": [],
+      "defaultVariants": {
+        "inline": 4
+      },
+      "states": [
+        "default"
+      ],
+      "keyProps": [
+        {
+          "name": "inline",
+          "type": "number",
+          "default": 4,
+          "note": "Negative horizontal margin multiplier."
+        },
+        {
+          "name": "block",
+          "type": "number",
+          "default": 0,
+          "note": "Negative vertical margin multiplier."
+        }
+      ],
+      "slots": [],
+      "examples": [
+        {
+          "name": "Full-bleed strip",
+          "jsx": "<div className=\"rounded-lg border border-border p-4\"><Bleed inline={4}><div className=\"h-16 bg-muted\" /></Bleed></div>"
+        }
+      ],
+      "relatedComponents": [
+        "Container",
+        "Box"
+      ]
+    },
+    {
+      "name": "Sticky",
+      "importFrom": "@/components/primitives",
+      "variants": [],
+      "sizes": [],
+      "defaultVariants": {},
+      "states": [
+        "default"
+      ],
+      "keyProps": [
+        {
+          "name": "className",
+          "type": "string",
+          "note": "Base: sticky top-0."
+        }
+      ],
+      "slots": [],
+      "examples": [
+        {
+          "name": "Sticky header",
+          "jsx": "<Sticky className=\"z-10 border-b border-border bg-background px-4 py-2 text-foreground\">Sticky header</Sticky>"
+        }
+      ],
+      "relatedComponents": [
+        "Box",
+        "Container"
+      ]
+    },
+    {
+      "name": "ColorSwatch",
+      "importFrom": "@/components/primitives",
+      "variants": [],
+      "sizes": [],
+      "defaultVariants": {
+        "size": 32
+      },
+      "states": [
+        "default"
+      ],
+      "keyProps": [
+        {
+          "name": "value",
+          "type": "string",
+          "note": "CSS color; prefer a token reference like var(--primary)."
+        },
+        {
+          "name": "size",
+          "type": "number",
+          "default": 32,
+          "note": "Width/height in pixels."
+        }
+      ],
+      "slots": [],
+      "examples": [
+        {
+          "name": "Token swatch",
+          "jsx": "<div className=\"flex gap-2\"><ColorSwatch value=\"var(--primary)\" size={32} /><ColorSwatch value=\"var(--secondary)\" size={32} /><ColorSwatch value=\"var(--destructive)\" size={32} /></div>"
+        }
+      ],
+      "relatedComponents": [
+        "Square",
+        "Box"
+      ]
+    },
+    {
+      "name": "Heading",
+      "importFrom": "@/components/typography",
+      "variants": [],
+      "sizes": [
+        "xs",
+        "sm",
+        "md",
+        "lg",
+        "xl",
+        "2xl"
+      ],
+      "defaultVariants": {
+        "size": "lg"
+      },
+      "states": [
+        "default"
+      ],
+      "keyProps": [
+        {
+          "name": "as",
+          "type": "string",
+          "options": [
+            "h1",
+            "h2",
+            "h3",
+            "h4",
+            "h5",
+            "h6"
+          ],
+          "default": "h2",
+          "note": "Heading tag; controls semantics."
+        },
+        {
+          "name": "size",
+          "type": "string",
+          "options": [
+            "xs",
+            "sm",
+            "md",
+            "lg",
+            "xl",
+            "2xl"
+          ],
+          "default": "lg",
+          "note": "Visual type scale."
+        }
+      ],
+      "slots": [],
+      "examples": [
+        {
+          "name": "Default",
+          "jsx": "<Heading>Section title</Heading>"
+        },
+        {
+          "name": "Page title",
+          "jsx": "<Heading as=\"h1\" size=\"2xl\">Dashboard</Heading>"
+        }
+      ],
+      "relatedComponents": [
+        "Text",
+        "Span"
+      ]
+    },
+    {
+      "name": "Text",
+      "importFrom": "@/components/typography",
+      "variants": [],
+      "sizes": [],
+      "defaultVariants": {},
+      "states": [
+        "default"
+      ],
+      "keyProps": [
+        {
+          "name": "className",
+          "type": "string",
+          "note": "Renders a <p> with relaxed leading."
+        }
+      ],
+      "slots": [],
+      "examples": [
+        {
+          "name": "Default",
+          "jsx": "<Text>Body copy that explains the section in plain language.</Text>"
+        },
+        {
+          "name": "Muted",
+          "jsx": "<Text className=\"text-muted-foreground\">Secondary supporting copy.</Text>"
+        }
+      ],
+      "relatedComponents": [
+        "Heading",
+        "Span",
+        "Strong"
+      ]
+    },
+    {
+      "name": "Span",
+      "importFrom": "@/components/typography",
+      "variants": [],
+      "sizes": [],
+      "defaultVariants": {},
+      "states": [
+        "default"
+      ],
+      "keyProps": [
+        {
+          "name": "className",
+          "type": "string",
+          "note": "Inline span; style via Tailwind."
+        }
+      ],
+      "slots": [],
+      "examples": [
+        {
+          "name": "Inline",
+          "jsx": "<Text>Status: <Span className=\"font-medium text-primary\">Active</Span></Text>"
+        }
+      ],
+      "relatedComponents": [
+        "Text",
+        "Strong",
+        "Em"
+      ]
+    },
+    {
+      "name": "Strong",
+      "importFrom": "@/components/typography",
+      "variants": [],
+      "sizes": [],
+      "defaultVariants": {},
+      "states": [
+        "default"
+      ],
+      "keyProps": [
+        {
+          "name": "className",
+          "type": "string",
+          "note": "Renders <strong>, semibold."
+        }
+      ],
+      "slots": [],
+      "examples": [
+        {
+          "name": "Inline emphasis",
+          "jsx": "<Text>Save your work, <Strong>this cannot be undone</Strong>.</Text>"
+        }
+      ],
+      "relatedComponents": [
+        "Em",
+        "Span",
+        "Text"
+      ]
+    },
+    {
+      "name": "Em",
+      "importFrom": "@/components/typography",
+      "variants": [],
+      "sizes": [],
+      "defaultVariants": {},
+      "states": [
+        "default"
+      ],
+      "keyProps": [
+        {
+          "name": "className",
+          "type": "string",
+          "note": "Renders <em>, italic."
+        }
+      ],
+      "slots": [],
+      "examples": [
+        {
+          "name": "Inline",
+          "jsx": "<Text>This is <Em>really</Em> the last step.</Text>"
+        }
+      ],
+      "relatedComponents": [
+        "Strong",
+        "Span",
+        "Text"
+      ]
+    },
+    {
+      "name": "Mark",
+      "importFrom": "@/components/typography",
+      "variants": [],
+      "sizes": [],
+      "defaultVariants": {},
+      "states": [
+        "default"
+      ],
+      "keyProps": [
+        {
+          "name": "className",
+          "type": "string",
+          "note": "Renders <mark> with accent highlight."
+        }
+      ],
+      "slots": [],
+      "examples": [
+        {
+          "name": "Search hit",
+          "jsx": "<Text>Found in <Mark>invoice</Mark> records.</Text>"
+        }
+      ],
+      "relatedComponents": [
+        "Span",
+        "Strong",
+        "Highlight"
+      ]
+    },
+    {
+      "name": "Code",
+      "importFrom": "@/components/typography",
+      "variants": [],
+      "sizes": [],
+      "defaultVariants": {},
+      "states": [
+        "default"
+      ],
+      "keyProps": [
+        {
+          "name": "className",
+          "type": "string",
+          "note": "Inline <code> with muted background, mono font."
+        }
+      ],
+      "slots": [],
+      "examples": [
+        {
+          "name": "Inline",
+          "jsx": "<Text>Run <Code>git status</Code> to check changes.</Text>"
+        }
+      ],
+      "relatedComponents": [
+        "Kbd",
+        "CodeBlock"
+      ]
+    },
+    {
+      "name": "Kbd",
+      "importFrom": "@/components/typography",
+      "variants": [],
+      "sizes": [],
+      "defaultVariants": {},
+      "states": [
+        "default"
+      ],
+      "keyProps": [
+        {
+          "name": "className",
+          "type": "string",
+          "note": "Renders <kbd> as a keycap."
+        }
+      ],
+      "slots": [],
+      "examples": [
+        {
+          "name": "Shortcut",
+          "jsx": "<Text>Press <Kbd>Ctrl</Kbd> + <Kbd>K</Kbd> to search.</Text>"
+        }
+      ],
+      "relatedComponents": [
+        "Code",
+        "Span"
+      ]
+    },
+    {
+      "name": "Link",
+      "importFrom": "@/components/typography",
+      "variants": [],
+      "sizes": [],
+      "defaultVariants": {},
+      "states": [
+        "default",
+        "hover"
+      ],
+      "keyProps": [
+        {
+          "name": "href",
+          "type": "string",
+          "note": "Anchor target."
+        }
+      ],
+      "slots": [],
+      "examples": [
+        {
+          "name": "Default",
+          "jsx": "<Link href=\"#\">Read the docs</Link>"
+        }
+      ],
+      "relatedComponents": [
+        "Text",
+        "SkipNav"
+      ]
+    },
+    {
+      "name": "Quote",
+      "importFrom": "@/components/typography",
+      "variants": [],
+      "sizes": [],
+      "defaultVariants": {},
+      "states": [
+        "default"
+      ],
+      "keyProps": [
+        {
+          "name": "className",
+          "type": "string",
+          "note": "Inline <q>, italic."
+        }
+      ],
+      "slots": [],
+      "examples": [
+        {
+          "name": "Inline",
+          "jsx": "<Text>She said <Quote>ship it today</Quote> and left.</Text>"
+        }
+      ],
+      "relatedComponents": [
+        "Blockquote",
+        "Em"
+      ]
+    },
+    {
+      "name": "Blockquote",
+      "importFrom": "@/components/typography",
+      "variants": [],
+      "sizes": [],
+      "defaultVariants": {},
+      "states": [
+        "default"
+      ],
+      "keyProps": [
+        {
+          "name": "className",
+          "type": "string",
+          "note": "Block-level <blockquote> with left border."
+        }
+      ],
+      "slots": [],
+      "examples": [
+        {
+          "name": "Default",
+          "jsx": "<Blockquote>Design is not just what it looks like; it is how it works.</Blockquote>"
+        }
+      ],
+      "relatedComponents": [
+        "Quote",
+        "Text"
+      ]
+    },
+    {
+      "name": "List",
+      "importFrom": "@/components/typography",
+      "variants": [],
+      "sizes": [],
+      "defaultVariants": {
+        "ordered": false
+      },
+      "states": [
+        "default"
+      ],
+      "keyProps": [
+        {
+          "name": "ordered",
+          "type": "boolean",
+          "default": false,
+          "note": "true renders <ol>, otherwise <ul>."
+        }
+      ],
+      "slots": [
+        "listitem"
+      ],
+      "examples": [
+        {
+          "name": "Unordered",
+          "jsx": "<List><ListItem>First</ListItem><ListItem>Second</ListItem></List>"
+        },
+        {
+          "name": "Ordered",
+          "jsx": "<List ordered><ListItem>Step one</ListItem><ListItem>Step two</ListItem></List>"
+        }
+      ],
+      "relatedComponents": [
+        "Text"
+      ]
+    },
+    {
+      "name": "Image",
+      "importFrom": "@/components/typography",
+      "variants": [],
+      "sizes": [],
+      "defaultVariants": {},
+      "states": [
+        "default"
+      ],
+      "keyProps": [
+        {
+          "name": "src",
+          "type": "string",
+          "note": "Image source URL."
+        },
+        {
+          "name": "alt",
+          "type": "string",
+          "note": "Accessible alternative text."
+        }
+      ],
+      "slots": [],
+      "examples": [
+        {
+          "name": "Rounded",
+          "jsx": "<Image src=\"https://github.com/shadcn.png\" alt=\"Avatar\" className=\"size-16 rounded-full\" />"
+        }
+      ],
+      "relatedComponents": [
+        "Icon",
+        "Avatar"
+      ]
+    },
+    {
+      "name": "VisuallyHidden",
+      "importFrom": "@/components/typography",
+      "variants": [],
+      "sizes": [],
+      "defaultVariants": {},
+      "states": [
+        "default"
+      ],
+      "keyProps": [
+        {
+          "name": "className",
+          "type": "string",
+          "note": "sr-only span for screen-reader-only text."
+        }
+      ],
+      "slots": [],
+      "examples": [
+        {
+          "name": "Icon label",
+          "jsx": "<Span className=\"inline-flex items-center gap-1\"><Search size={16} /><VisuallyHidden>Search</VisuallyHidden></Span>"
+        }
+      ],
+      "relatedComponents": [
+        "SkipNav",
+        "Span"
+      ]
+    },
+    {
+      "name": "Fieldset",
+      "importFrom": "@/components/typography",
+      "variants": [],
+      "sizes": [],
+      "defaultVariants": {},
+      "states": [
+        "default"
+      ],
+      "keyProps": [
+        {
+          "name": "className",
+          "type": "string",
+          "note": "<fieldset> with border, padding, spacing."
+        }
+      ],
+      "slots": [],
+      "examples": [
+        {
+          "name": "Default",
+          "jsx": "<Fieldset><Text className=\"font-medium\">Contact preferences</Text><Text className=\"text-muted-foreground\">Choose how we reach you.</Text></Fieldset>"
+        }
+      ],
+      "relatedComponents": [
+        "NativeSelect",
+        "Field"
+      ]
+    },
+    {
+      "name": "NativeSelect",
+      "importFrom": "@/components/typography",
+      "variants": [],
+      "sizes": [],
+      "defaultVariants": {},
+      "states": [
+        "default",
+        "focus",
+        "disabled"
+      ],
+      "keyProps": [
+        {
+          "name": "value",
+          "type": "string",
+          "note": "Controlled selected value."
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "note": "Disables the select."
+        }
+      ],
+      "slots": [],
+      "examples": [
+        {
+          "name": "Default",
+          "jsx": "<NativeSelect defaultValue=\"us\" aria-label=\"Country\" className=\"w-48\"><option value=\"us\">United States</option><option value=\"ca\">Canada</option></NativeSelect>"
+        }
+      ],
+      "relatedComponents": [
+        "Select",
+        "Fieldset"
+      ]
+    },
+    {
+      "name": "SkipNav",
+      "importFrom": "@/components/typography",
+      "variants": [],
+      "sizes": [],
+      "defaultVariants": {},
+      "states": [
+        "default",
+        "focus"
+      ],
+      "keyProps": [
+        {
+          "name": "href",
+          "type": "string",
+          "note": "Target id of the main content region."
+        }
+      ],
+      "slots": [],
+      "examples": [
+        {
+          "name": "Default",
+          "jsx": "<SkipNavLink href=\"#main\">Skip to content</SkipNavLink>"
+        }
+      ],
+      "relatedComponents": [
+        "Link",
+        "VisuallyHidden"
+      ]
+    },
+    {
+      "name": "Icon",
+      "importFrom": "lucide-react",
+      "variants": [],
+      "sizes": [],
+      "defaultVariants": {},
+      "states": [
+        "default"
+      ],
+      "keyProps": [
+        {
+          "name": "size",
+          "type": "number",
+          "note": "Pixel size of the lucide icon."
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "note": "Color/size via Tailwind (h-/w-/text-)."
+        }
+      ],
+      "slots": [],
+      "examples": [
+        {
+          "name": "Icon row",
+          "jsx": "<Span className=\"inline-flex items-center gap-2 text-foreground\"><Search className=\"h-4 w-4 text-muted-foreground\" /><Check className=\"h-4 w-4 text-primary\" /><ArrowRight className=\"h-4 w-4\" /></Span>"
+        }
+      ],
+      "relatedComponents": [
+        "Image",
+        "Span"
+      ]
+    },
+    {
+      "name": "Spinner",
+      "importFrom": "@/components/ads/feedback",
+      "variants": [],
+      "sizes": [
+        "xs",
+        "sm",
+        "md",
+        "lg",
+        "xl"
+      ],
+      "defaultVariants": {
+        "size": "md"
+      },
+      "states": [
+        "default"
+      ],
+      "keyProps": [
+        {
+          "name": "size",
+          "type": "string",
+          "options": [
+            "xs",
+            "sm",
+            "md",
+            "lg",
+            "xl"
+          ],
+          "default": "md",
+          "note": "Maps to pixel dimensions."
+        }
+      ],
+      "slots": [],
+      "examples": [
+        {
+          "name": "Default",
+          "jsx": "<Spinner />"
+        },
+        {
+          "name": "Large",
+          "jsx": "<Spinner size=\"lg\" />"
+        }
+      ],
+      "relatedComponents": [
+        "Loader",
+        "ProgressCircle"
+      ]
+    },
+    {
+      "name": "Loader",
+      "importFrom": "@/components/ads/feedback",
+      "variants": [],
+      "sizes": [
+        "xs",
+        "sm",
+        "md",
+        "lg",
+        "xl"
+      ],
+      "defaultVariants": {
+        "size": "md"
+      },
+      "states": [
+        "default"
+      ],
+      "keyProps": [
+        {
+          "name": "text",
+          "type": "string",
+          "default": "Loading",
+          "note": "Label next to spinner; empty to hide."
+        },
+        {
+          "name": "size",
+          "type": "string",
+          "options": [
+            "xs",
+            "sm",
+            "md",
+            "lg",
+            "xl"
+          ],
+          "default": "md",
+          "note": "Forwarded to the inner Spinner."
+        }
+      ],
+      "slots": [],
+      "examples": [
+        {
+          "name": "Default",
+          "jsx": "<Loader />"
+        },
+        {
+          "name": "Custom text",
+          "jsx": "<Loader text=\"Fetching results\" size=\"sm\" />"
+        }
+      ],
+      "relatedComponents": [
+        "Spinner",
+        "ProgressCircle"
+      ]
+    },
+    {
+      "name": "ProgressCircle",
+      "importFrom": "@/components/ads/feedback",
+      "variants": [],
+      "sizes": [],
+      "defaultVariants": {},
+      "states": [
+        "default"
+      ],
+      "keyProps": [
+        {
+          "name": "value",
+          "type": "number",
+          "default": 0,
+          "note": "Percent 0-100; shown in center."
+        },
+        {
+          "name": "size",
+          "type": "number",
+          "default": 56,
+          "note": "Ring diameter in pixels."
+        },
+        {
+          "name": "thickness",
+          "type": "number",
+          "default": 6,
+          "note": "Stroke width."
+        },
+        {
+          "name": "tone",
+          "type": "string",
+          "options": [
+            "primary",
+            "success",
+            "warning",
+            "danger",
+            "info"
+          ],
+          "default": "primary",
+          "note": "Status intent for the ring color."
+        }
+      ],
+      "slots": [],
+      "examples": [
+        {
+          "name": "Default",
+          "jsx": "<ProgressCircle value={72} />"
+        },
+        {
+          "name": "Large thin",
+          "jsx": "<ProgressCircle value={40} size={80} thickness={4} />"
+        },
+        {
+          "name": "Status tones",
+          "jsx": "<div className=\"flex gap-4\"><ProgressCircle value={90} tone=\"success\" /><ProgressCircle value={60} tone=\"warning\" /><ProgressCircle value={30} tone=\"danger\" /></div>"
+        }
+      ],
+      "relatedComponents": [
+        "Spinner",
+        "Progress"
+      ]
+    },
+    {
+      "name": "EmptyState",
+      "importFrom": "@/components/ads/feedback",
+      "variants": [],
+      "sizes": [],
+      "defaultVariants": {},
+      "states": [
+        "default"
+      ],
+      "keyProps": [
+        {
+          "name": "title",
+          "type": "string",
+          "default": "No results",
+          "note": "Primary heading."
+        },
+        {
+          "name": "description",
+          "type": "string",
+          "note": "Supporting copy."
+        },
+        {
+          "name": "icon",
+          "type": "node",
+          "note": "Optional icon; defaults to Search."
+        },
+        {
+          "name": "action",
+          "type": "node",
+          "note": "Optional action element."
+        }
+      ],
+      "slots": [
+        "icon",
+        "action"
+      ],
+      "examples": [
+        {
+          "name": "Default",
+          "jsx": "<EmptyState title=\"No results\" description=\"Try adjusting your filters.\" />"
+        },
+        {
+          "name": "With action",
+          "jsx": "<EmptyState icon={<Search size={28} />} title=\"Nothing found\" description=\"No matching records.\" action={<Button size=\"sm\">Clear filters</Button>} />"
+        }
+      ],
+      "relatedComponents": [
+        "Spinner",
+        "Loader"
+      ]
+    },
+    {
+      "name": "Clipboard",
+      "importFrom": "@/components/ads/feedback",
+      "variants": [],
+      "sizes": [],
+      "defaultVariants": {},
+      "states": [
+        "default",
+        "copied"
+      ],
+      "keyProps": [
+        {
+          "name": "value",
+          "type": "string",
+          "note": "Required. String copied and shown in the field."
+        },
+        {
+          "name": "label",
+          "type": "string",
+          "note": "Optional label above the field."
+        }
+      ],
+      "slots": [],
+      "examples": [
+        {
+          "name": "Default",
+          "jsx": "<Clipboard value=\"npm install ads-light\" className=\"w-72\" />"
+        },
+        {
+          "name": "With label",
+          "jsx": "<Clipboard label=\"API key\" value=\"sk_live_abc123\" className=\"w-72\" />"
+        }
+      ],
+      "relatedComponents": [
+        "CodeBlock"
+      ]
+    },
+    {
+      "name": "Stat",
+      "importFrom": "@/components/ads/data",
+      "variants": [],
+      "sizes": [],
+      "defaultVariants": {},
+      "states": [
+        "default"
+      ],
+      "keyProps": [
+        {
+          "name": "label",
+          "type": "string",
+          "note": "Caption above the value."
+        },
+        {
+          "name": "value",
+          "type": "node",
+          "note": "Large metric value."
+        },
+        {
+          "name": "delta",
+          "type": "object",
+          "note": "{ value, direction: up|down } change indicator."
+        }
+      ],
+      "slots": [],
+      "examples": [
+        {
+          "name": "Up",
+          "jsx": "<Stat label=\"Revenue\" value=\"$48.2k\" delta={{value:\"12%\",direction:\"up\"}} />"
+        },
+        {
+          "name": "Down",
+          "jsx": "<Stat label=\"Churn\" value=\"3.1%\" delta={{value:\"0.4%\",direction:\"down\"}} />"
+        }
+      ],
+      "relatedComponents": [
+        "DataList",
+        "Status"
+      ]
+    },
+    {
+      "name": "Status",
+      "importFrom": "@/components/ads/data",
+      "variants": [
+        "success",
+        "warning",
+        "danger",
+        "info",
+        "neutral"
+      ],
+      "sizes": [],
+      "defaultVariants": {
+        "tone": "neutral"
+      },
+      "states": [
+        "default"
+      ],
+      "keyProps": [
+        {
+          "name": "tone",
+          "type": "string",
+          "options": [
+            "success",
+            "warning",
+            "danger",
+            "info",
+            "neutral"
+          ],
+          "default": "neutral",
+          "note": "Dot color."
+        }
+      ],
+      "slots": [],
+      "examples": [
+        {
+          "name": "Tones",
+          "jsx": "<div className=\"flex flex-col gap-2\"><Status tone=\"success\">Active</Status><Status tone=\"warning\">Pending</Status><Status tone=\"danger\">Failed</Status></div>"
+        }
+      ],
+      "relatedComponents": [
+        "Tag",
+        "Badge"
+      ]
+    },
+    {
+      "name": "Tag",
+      "importFrom": "@/components/ads/data",
+      "variants": [],
+      "sizes": [],
+      "defaultVariants": {},
+      "states": [
+        "default",
+        "removable"
+      ],
+      "keyProps": [
+        {
+          "name": "children",
+          "type": "node",
+          "note": "Tag label."
+        },
+        {
+          "name": "onClose",
+          "type": "function",
+          "note": "When set, renders an X remove button."
+        }
+      ],
+      "slots": [],
+      "examples": [
+        {
+          "name": "Default",
+          "jsx": "<div className=\"flex gap-2\"><Tag>Design</Tag><Tag onClose={() => {}}>Frontend</Tag></div>"
+        }
+      ],
+      "relatedComponents": [
+        "Badge",
+        "Status"
+      ]
+    },
+    {
+      "name": "DataList",
+      "importFrom": "@/components/ads/data",
+      "variants": [],
+      "sizes": [],
+      "defaultVariants": {},
+      "states": [
+        "default"
+      ],
+      "keyProps": [
+        {
+          "name": "items",
+          "type": "array",
+          "note": "Array of { label, value } pairs."
+        }
+      ],
+      "slots": [],
+      "examples": [
+        {
+          "name": "Default",
+          "jsx": "<DataList items={[{label:\"Status\",value:\"Active\"},{label:\"Plan\",value:\"Pro\"},{label:\"Region\",value:\"US-East\"}]} />"
+        }
+      ],
+      "relatedComponents": [
+        "Stat",
+        "Timeline"
+      ]
+    },
+    {
+      "name": "Timeline",
+      "importFrom": "@/components/ads/data",
+      "variants": [],
+      "sizes": [],
+      "defaultVariants": {},
+      "states": [
+        "default"
+      ],
+      "keyProps": [
+        {
+          "name": "items",
+          "type": "array",
+          "note": "Array of { title, description } events."
+        }
+      ],
+      "slots": [],
+      "examples": [
+        {
+          "name": "Default",
+          "jsx": "<Timeline items={[{title:\"Created\",description:\"Project initialized\"},{title:\"Deployed\",description:\"Live in production\"}]} />"
+        }
+      ],
+      "relatedComponents": [
+        "DataList",
+        "Steps"
+      ]
+    },
+    {
+      "name": "TreeView",
+      "importFrom": "@/components/ads/data",
+      "variants": [],
+      "sizes": [],
+      "defaultVariants": {},
+      "states": [
+        "default",
+        "expanded",
+        "collapsed"
+      ],
+      "keyProps": [
+        {
+          "name": "data",
+          "type": "array",
+          "note": "Recursive array of { label, children }."
+        }
+      ],
+      "slots": [],
+      "examples": [
+        {
+          "name": "Default",
+          "jsx": "<TreeView data={[{label:\"src\",children:[{label:\"components\",children:[{label:\"Button.tsx\"}]},{label:\"index.ts\"}]}]} />"
+        }
+      ],
+      "relatedComponents": [
+        "Timeline",
+        "Listbox"
+      ]
+    },
+    {
+      "name": "Listbox",
+      "importFrom": "@/components/ads/data",
+      "variants": [],
+      "sizes": [],
+      "defaultVariants": {},
+      "states": [
+        "default",
+        "selected"
+      ],
+      "keyProps": [
+        {
+          "name": "items",
+          "type": "array",
+          "note": "Array of option label strings."
+        },
+        {
+          "name": "defaultValue",
+          "type": "string",
+          "note": "Initially selected item."
+        }
+      ],
+      "slots": [],
+      "examples": [
+        {
+          "name": "Default",
+          "jsx": "<Listbox items={[\"Apple\",\"Banana\",\"Cherry\"]} defaultValue=\"Banana\" className=\"w-48\" />"
+        }
+      ],
+      "relatedComponents": [
+        "TreeView",
+        "Select"
+      ]
+    },
+    {
+      "name": "CloseButton",
+      "importFrom": "@/components/ads/inputs",
+      "variants": [],
+      "sizes": [],
+      "defaultVariants": {},
+      "states": [
+        "default",
+        "hover"
+      ],
+      "keyProps": [
+        {
+          "name": "size",
+          "type": "number",
+          "default": 16,
+          "note": "Pixel size of the X icon."
+        },
+        {
+          "name": "aria-label",
+          "type": "string",
+          "default": "Close",
+          "note": "Accessible label."
+        }
+      ],
+      "slots": [],
+      "examples": [
+        {
+          "name": "Default",
+          "jsx": "<CloseButton />"
+        }
+      ],
+      "relatedComponents": [
+        "ActionBar",
+        "FloatingPanel"
+      ]
+    },
+    {
+      "name": "Checkmark",
+      "importFrom": "@/components/ads/inputs",
+      "variants": [],
+      "sizes": [],
+      "defaultVariants": {},
+      "states": [
+        "checked",
+        "unchecked"
+      ],
+      "keyProps": [
+        {
+          "name": "checked",
+          "type": "boolean",
+          "default": true,
+          "note": "Filled primary box with check when true."
+        }
+      ],
+      "slots": [],
+      "examples": [
+        {
+          "name": "States",
+          "jsx": "<div className=\"flex gap-2\"><Checkmark checked /><Checkmark checked={false} /></div>"
+        }
+      ],
+      "relatedComponents": [
+        "Radiomark",
+        "Checkbox"
+      ]
+    },
+    {
+      "name": "Radiomark",
+      "importFrom": "@/components/ads/inputs",
+      "variants": [],
+      "sizes": [],
+      "defaultVariants": {},
+      "states": [
+        "checked",
+        "unchecked"
+      ],
+      "keyProps": [
+        {
+          "name": "checked",
+          "type": "boolean",
+          "default": true,
+          "note": "Filled dot inside a ring when true."
+        }
+      ],
+      "slots": [],
+      "examples": [
+        {
+          "name": "States",
+          "jsx": "<div className=\"flex gap-2\"><Radiomark checked /><Radiomark checked={false} /></div>"
+        }
+      ],
+      "relatedComponents": [
+        "Checkmark",
+        "RadioGroup"
+      ]
+    },
+    {
+      "name": "NumberInput",
+      "importFrom": "@/components/ads/inputs",
+      "variants": [],
+      "sizes": [],
+      "defaultVariants": {},
+      "states": [
+        "default"
+      ],
+      "keyProps": [
+        {
+          "name": "defaultValue",
+          "type": "number",
+          "default": 0,
+          "note": "Initial value."
+        },
+        {
+          "name": "min",
+          "type": "number",
+          "note": "Lower clamp."
+        },
+        {
+          "name": "max",
+          "type": "number",
+          "note": "Upper clamp."
+        },
+        {
+          "name": "step",
+          "type": "number",
+          "default": 1,
+          "note": "Increment per click."
+        }
+      ],
+      "slots": [],
+      "examples": [
+        {
+          "name": "Bounded",
+          "jsx": "<NumberInput defaultValue={5} min={0} max={10} step={1} />"
+        }
+      ],
+      "relatedComponents": [
+        "Input",
+        "Slider"
+      ]
+    },
+    {
+      "name": "InputGroup",
+      "importFrom": "@/components/ads/inputs",
+      "variants": [],
+      "sizes": [],
+      "defaultVariants": {},
+      "states": [
+        "default"
+      ],
+      "keyProps": [
+        {
+          "name": "startElement",
+          "type": "node",
+          "note": "Leading element (e.g. icon)."
+        },
+        {
+          "name": "endElement",
+          "type": "node",
+          "note": "Trailing element."
+        }
+      ],
+      "slots": [
+        "startElement",
+        "endElement"
+      ],
+      "examples": [
+        {
+          "name": "Start icon",
+          "jsx": "<InputGroup startElement={<Search size={16} />}><Input placeholder=\"Search\" className=\"w-64\" /></InputGroup>"
+        }
+      ],
+      "relatedComponents": [
+        "InputElement",
+        "InputAddon"
+      ]
+    },
+    {
+      "name": "InputAddon",
+      "importFrom": "@/components/ads/inputs",
+      "variants": [],
+      "sizes": [],
+      "defaultVariants": {
+        "placement": "start"
+      },
+      "states": [
+        "default"
+      ],
+      "keyProps": [
+        {
+          "name": "addon",
+          "type": "node",
+          "note": "Content in the bordered addon box."
+        },
+        {
+          "name": "placement",
+          "type": "string",
+          "options": [
+            "start",
+            "end"
+          ],
+          "default": "start",
+          "note": "Side the addon sits on."
+        }
+      ],
+      "slots": [
+        "addon"
+      ],
+      "examples": [
+        {
+          "name": "Start addon",
+          "jsx": "<InputAddon addon=\"https://\" placement=\"start\"><Input aria-label=\"Website\" placeholder=\"example.com\" /></InputAddon>"
+        }
+      ],
+      "relatedComponents": [
+        "InputGroup",
+        "InputElement"
+      ]
+    },
+    {
+      "name": "InputElement",
+      "importFrom": "@/components/ads/inputs",
+      "variants": [],
+      "sizes": [],
+      "defaultVariants": {},
+      "states": [
+        "default"
+      ],
+      "keyProps": [
+        {
+          "name": "startElement",
+          "type": "node",
+          "note": "Start adornment (alias of InputGroup)."
+        },
+        {
+          "name": "endElement",
+          "type": "node",
+          "note": "End adornment."
+        }
+      ],
+      "slots": [
+        "startElement",
+        "endElement"
+      ],
+      "examples": [
+        {
+          "name": "End icon",
+          "jsx": "<InputElement endElement={<Check size={16} />}><Input aria-label=\"Email\" defaultValue=\"valid@site.com\" className=\"w-64\" /></InputElement>"
+        }
+      ],
+      "relatedComponents": [
+        "InputGroup",
+        "InputAddon"
+      ]
+    },
+    {
+      "name": "CheckboxCard",
+      "importFrom": "@/components/ads/inputs",
+      "variants": [],
+      "sizes": [],
+      "defaultVariants": {},
+      "states": [
+        "default",
+        "checked",
+        "hover"
+      ],
+      "keyProps": [
+        {
+          "name": "label",
+          "type": "string",
+          "note": "Bold primary line."
+        },
+        {
+          "name": "description",
+          "type": "string",
+          "note": "Secondary muted line."
+        },
+        {
+          "name": "defaultChecked",
+          "type": "boolean",
+          "note": "Initial checked state."
+        }
+      ],
+      "slots": [],
+      "examples": [
+        {
+          "name": "Default",
+          "jsx": "<CheckboxCard label=\"Email notifications\" description=\"Get notified about account activity\" defaultChecked className=\"w-72\" />"
+        }
+      ],
+      "relatedComponents": [
+        "RadioCard",
+        "Checkbox"
+      ]
+    },
+    {
+      "name": "RadioCard",
+      "importFrom": "@/components/ads/inputs",
+      "variants": [],
+      "sizes": [],
+      "defaultVariants": {},
+      "states": [
+        "default",
+        "selected",
+        "hover"
+      ],
+      "keyProps": [
+        {
+          "name": "options",
+          "type": "array",
+          "note": "Array of { value, label, description }."
+        },
+        {
+          "name": "defaultValue",
+          "type": "string",
+          "note": "Initially selected value."
+        }
+      ],
+      "slots": [],
+      "examples": [
+        {
+          "name": "Plans",
+          "jsx": "<RadioCard options={[{value:\"a\",label:\"Starter\",description:\"For individuals\"},{value:\"b\",label:\"Pro\",description:\"For teams\"}]} defaultValue=\"a\" className=\"w-72\" />"
+        }
+      ],
+      "relatedComponents": [
+        "CheckboxCard",
+        "RadioGroup"
+      ]
+    },
+    {
+      "name": "RatingGroup",
+      "importFrom": "@/components/ads/inputs",
+      "variants": [],
+      "sizes": [],
+      "defaultVariants": {},
+      "states": [
+        "default"
+      ],
+      "keyProps": [
+        {
+          "name": "defaultValue",
+          "type": "number",
+          "default": 0,
+          "note": "Initial filled stars."
+        },
+        {
+          "name": "count",
+          "type": "number",
+          "default": 5,
+          "note": "Total stars."
+        }
+      ],
+      "slots": [],
+      "examples": [
+        {
+          "name": "Default",
+          "jsx": "<RatingGroup defaultValue={3} />"
+        }
+      ],
+      "relatedComponents": [
+        "Slider"
+      ]
+    },
+    {
+      "name": "TagsInput",
+      "importFrom": "@/components/ads/inputs",
+      "variants": [],
+      "sizes": [],
+      "defaultVariants": {},
+      "states": [
+        "default",
+        "focus"
+      ],
+      "keyProps": [
+        {
+          "name": "defaultValue",
+          "type": "array",
+          "note": "Initial tags."
+        },
+        {
+          "name": "placeholder",
+          "type": "string",
+          "default": "Add tag",
+          "note": "Entry placeholder; Enter commits."
+        }
+      ],
+      "slots": [],
+      "examples": [
+        {
+          "name": "Default",
+          "jsx": "<TagsInput defaultValue={[\"design\",\"react\"]} placeholder=\"Add tag\" className=\"w-72\" />"
+        }
+      ],
+      "relatedComponents": [
+        "Tag",
+        "Combobox"
+      ]
+    },
+    {
+      "name": "Editable",
+      "importFrom": "@/components/ads/inputs",
+      "variants": [],
+      "sizes": [],
+      "defaultVariants": {},
+      "states": [
+        "default",
+        "editing"
+      ],
+      "keyProps": [
+        {
+          "name": "defaultValue",
+          "type": "string",
+          "note": "Initial text; click toggles to an Input."
+        }
+      ],
+      "slots": [],
+      "examples": [
+        {
+          "name": "Default",
+          "jsx": "<Editable defaultValue=\"Click to edit\" />"
+        }
+      ],
+      "relatedComponents": [
+        "Input"
+      ]
+    },
+    {
+      "name": "FileUpload",
+      "importFrom": "@/components/ads/inputs",
+      "variants": [],
+      "sizes": [],
+      "defaultVariants": {},
+      "states": [
+        "default",
+        "hover"
+      ],
+      "keyProps": [
+        {
+          "name": "className",
+          "type": "string",
+          "note": "Dropzone content is fixed."
+        }
+      ],
+      "slots": [],
+      "examples": [
+        {
+          "name": "Default",
+          "jsx": "<FileUpload className=\"w-72\" />"
+        }
+      ],
+      "relatedComponents": [
+        "DownloadTrigger"
+      ]
+    },
+    {
+      "name": "CodeBlock",
+      "importFrom": "@/components/ads/misc",
+      "variants": [],
+      "sizes": [],
+      "defaultVariants": {
+        "language": "tsx"
+      },
+      "states": [
+        "default",
+        "copied"
+      ],
+      "keyProps": [
+        {
+          "name": "code",
+          "type": "string",
+          "note": "Source rendered in the block."
+        },
+        {
+          "name": "title",
+          "type": "string",
+          "note": "Header label; falls back to language."
+        },
+        {
+          "name": "language",
+          "type": "string",
+          "default": "tsx",
+          "note": "Shown when no title."
+        }
+      ],
+      "slots": [],
+      "examples": [
+        {
+          "name": "With title",
+          "jsx": "<CodeBlock title=\"button.tsx\" code={\"export const Button = () => <button>Click</button>;\"} className=\"w-96\" />"
+        }
+      ],
+      "relatedComponents": [
+        "Code",
+        "Clipboard"
+      ]
+    },
+    {
+      "name": "ColorPicker",
+      "importFrom": "@/components/ads/misc",
+      "variants": [],
+      "sizes": [],
+      "defaultVariants": {
+        "defaultValue": "#145fc4"
+      },
+      "states": [
+        "default"
+      ],
+      "keyProps": [
+        {
+          "name": "defaultValue",
+          "type": "string",
+          "default": "#145fc4",
+          "note": "Initial hex color (literal color value)."
+        },
+        {
+          "name": "label",
+          "type": "string",
+          "note": "Optional label."
+        }
+      ],
+      "slots": [],
+      "examples": [
+        {
+          "name": "Default",
+          "jsx": "<ColorPicker defaultValue=\"#145fc4\" label=\"Brand color\" className=\"w-64\" />"
+        }
+      ],
+      "relatedComponents": [
+        "ColorSwatch"
+      ]
+    },
+    {
+      "name": "Highlight",
+      "importFrom": "@/components/ads/misc",
+      "variants": [],
+      "sizes": [],
+      "defaultVariants": {},
+      "states": [
+        "default"
+      ],
+      "keyProps": [
+        {
+          "name": "text",
+          "type": "string",
+          "note": "Full text; matches wrapped in <mark>."
+        },
+        {
+          "name": "query",
+          "type": "string",
+          "note": "Term(s) to highlight; string or string[]."
+        }
+      ],
+      "slots": [],
+      "examples": [
+        {
+          "name": "Multi query",
+          "jsx": "<Highlight text=\"The quick brown fox jumps\" query={[\"quick\",\"fox\"]} />"
+        }
+      ],
+      "relatedComponents": [
+        "Mark",
+        "CodeBlock"
+      ]
+    },
+    {
+      "name": "Steps",
+      "importFrom": "@/components/ads/misc",
+      "variants": [],
+      "sizes": [],
+      "defaultVariants": {
+        "current": 0
+      },
+      "states": [
+        "completed",
+        "active",
+        "upcoming"
+      ],
+      "keyProps": [
+        {
+          "name": "steps",
+          "type": "array",
+          "note": "Ordered step labels."
+        },
+        {
+          "name": "current",
+          "type": "number",
+          "default": 0,
+          "note": "Active step index; earlier steps show a check."
+        }
+      ],
+      "slots": [],
+      "examples": [
+        {
+          "name": "Default",
+          "jsx": "<Steps steps={[\"Cart\",\"Shipping\",\"Payment\"]} current={1} className=\"w-96\" />"
+        }
+      ],
+      "relatedComponents": [
+        "Timeline",
+        "Progress"
+      ]
+    },
+    {
+      "name": "ActionBar",
+      "importFrom": "@/components/ads/misc",
+      "variants": [],
+      "sizes": [],
+      "defaultVariants": {},
+      "states": [
+        "default"
+      ],
+      "keyProps": [
+        {
+          "name": "selectedLabel",
+          "type": "string",
+          "note": "Left-side label (e.g. selection count)."
+        }
+      ],
+      "slots": [
+        "children"
+      ],
+      "examples": [
+        {
+          "name": "Default",
+          "jsx": "<ActionBar selectedLabel=\"3 selected\"><Button size=\"sm\" variant=\"outline\">Archive</Button><Button size=\"sm\">Delete</Button></ActionBar>"
+        }
+      ],
+      "relatedComponents": [
+        "FloatingPanel",
+        "CloseButton"
+      ]
+    },
+    {
+      "name": "FloatingPanel",
+      "importFrom": "@/components/ads/misc",
+      "variants": [],
+      "sizes": [],
+      "defaultVariants": {},
+      "states": [
+        "default"
+      ],
+      "keyProps": [
+        {
+          "name": "title",
+          "type": "string",
+          "note": "Header title; defaults to Panel."
+        }
+      ],
+      "slots": [
+        "children"
+      ],
+      "examples": [
+        {
+          "name": "Default",
+          "jsx": "<FloatingPanel title=\"Filters\">Panel body content</FloatingPanel>"
+        }
+      ],
+      "relatedComponents": [
+        "ActionBar",
+        "Popover"
+      ]
+    },
+    {
+      "name": "Marquee",
+      "importFrom": "@/components/ads/misc",
+      "variants": [],
+      "sizes": [],
+      "defaultVariants": {},
+      "states": [
+        "default"
+      ],
+      "keyProps": [
+        {
+          "name": "children",
+          "type": "node",
+          "note": "Content scrolled horizontally on a loop."
+        }
+      ],
+      "slots": [],
+      "examples": [
+        {
+          "name": "Default",
+          "jsx": "<Marquee className=\"w-80\"><span className=\"px-4 text-sm text-muted-foreground\">Breaking news ticker item</span></Marquee>"
+        }
+      ],
+      "relatedComponents": [
+        "ScrollArea"
+      ]
+    },
+    {
+      "name": "DownloadTrigger",
+      "importFrom": "@/components/ads/misc",
+      "variants": [],
+      "sizes": [],
+      "defaultVariants": {
+        "fileName": "download.txt",
+        "mimeType": "text/plain"
+      },
+      "states": [
+        "default",
+        "hover"
+      ],
+      "keyProps": [
+        {
+          "name": "data",
+          "type": "string",
+          "note": "String payload encoded into the data URL."
+        },
+        {
+          "name": "fileName",
+          "type": "string",
+          "default": "download.txt",
+          "note": "Suggested filename."
+        },
+        {
+          "name": "mimeType",
+          "type": "string",
+          "default": "text/plain",
+          "note": "MIME type."
+        }
+      ],
+      "slots": [
+        "children"
+      ],
+      "examples": [
+        {
+          "name": "Default",
+          "jsx": "<DownloadTrigger data=\"hello world\" fileName=\"note.txt\">Download note</DownloadTrigger>"
+        }
+      ],
+      "relatedComponents": [
+        "FileUpload"
+      ]
+    },
+    {
+      "name": "QRCode",
+      "importFrom": "@/components/ads/misc",
+      "variants": [],
+      "sizes": [],
+      "defaultVariants": {
+        "size": 160
+      },
+      "states": [
+        "default"
+      ],
+      "keyProps": [
+        {
+          "name": "value",
+          "type": "string",
+          "note": "Data encoded into the QR code."
+        },
+        {
+          "name": "size",
+          "type": "number",
+          "default": 160,
+          "note": "Pixel dimensions."
+        }
+      ],
+      "slots": [],
+      "examples": [
+        {
+          "name": "Default",
+          "jsx": "<QRCode value=\"https://example.com\" />"
+        }
+      ],
+      "relatedComponents": []
+    },
+    {
+      "name": "DesignTokens",
+      "importFrom": "@/components",
+      "utility": true,
+      "variants": [],
+      "sizes": [],
+      "defaultVariants": {},
+      "states": [
+        "default"
+      ],
+      "keyProps": [],
+      "slots": [],
+      "examples": [
+        {
+          "name": "Token reference",
+          "jsx": "<div className=\"rounded-lg border border-border bg-card p-4 text-sm text-muted-foreground\">Open the <span className=\"font-medium text-foreground\">Tokens</span> view in the explorer header to browse the live theme variables.</div>"
+        }
+      ],
+      "relatedComponents": [
+        "ColorSwatch"
+      ]
+    },
+    {
+      "name": "ClientOnly",
+      "importFrom": "react",
+      "utility": true,
+      "variants": [],
+      "sizes": [],
+      "defaultVariants": {},
+      "states": [
+        "default"
+      ],
+      "keyProps": [],
+      "slots": [],
+      "examples": [
+        {
+          "name": "Note",
+          "jsx": "<div className=\"rounded-md border border-dashed border-border p-4 text-sm text-muted-foreground\">ClientOnly is a render-gating helper, not a visual component. Mount children only after hydration with a useEffect/useState gate.</div>"
+        }
+      ],
+      "relatedComponents": [
+        "Show"
+      ]
+    },
+    {
+      "name": "For",
+      "importFrom": "react",
+      "utility": true,
+      "variants": [],
+      "sizes": [],
+      "defaultVariants": {},
+      "states": [
+        "default"
+      ],
+      "keyProps": [],
+      "slots": [],
+      "examples": [
+        {
+          "name": "Array map",
+          "jsx": "<div className=\"flex gap-2\">{[\"Spec\",\"Render\",\"Verify\"].map((item) => (<span key={item} className=\"rounded-md bg-secondary px-2 py-1 text-sm text-secondary-foreground\">{item}</span>))}</div>"
+        }
+      ],
+      "relatedComponents": [
+        "Show"
+      ]
+    },
+    {
+      "name": "Format",
+      "importFrom": "react",
+      "utility": true,
+      "variants": [],
+      "sizes": [],
+      "defaultVariants": {},
+      "states": [
+        "default"
+      ],
+      "keyProps": [],
+      "slots": [],
+      "examples": [
+        {
+          "name": "Intl format",
+          "jsx": "<div className=\"flex gap-4 text-sm text-foreground\"><span>{new Intl.NumberFormat(\"en-US\", { style: \"currency\", currency: \"USD\" }).format(1234.56)}</span><span>{new Intl.NumberFormat(\"en-US\").format(2048000)}</span></div>"
+        }
+      ],
+      "relatedComponents": []
+    },
+    {
+      "name": "Locale",
+      "importFrom": "react",
+      "utility": true,
+      "variants": [],
+      "sizes": [],
+      "defaultVariants": {},
+      "states": [
+        "default"
+      ],
+      "keyProps": [],
+      "slots": [],
+      "examples": [
+        {
+          "name": "Note",
+          "jsx": "<div className=\"rounded-md border border-dashed border-border p-4 text-sm text-muted-foreground\">Locale is a context helper for i18n formatting, not a visual component. Provide a locale via React context and read it where you format dates/numbers.</div>"
+        }
+      ],
+      "relatedComponents": [
+        "Format"
+      ]
+    },
+    {
+      "name": "Presence",
+      "importFrom": "react",
+      "utility": true,
+      "variants": [],
+      "sizes": [],
+      "defaultVariants": {},
+      "states": [
+        "default"
+      ],
+      "keyProps": [],
+      "slots": [],
+      "examples": [
+        {
+          "name": "Note",
+          "jsx": "<div className=\"rounded-md border border-dashed border-border p-4 text-sm text-muted-foreground\">Presence is a mount/unmount animation helper. In this stack use tw-animate-css classes or Radix data-state transitions instead.</div>"
+        }
+      ],
+      "relatedComponents": []
+    },
+    {
+      "name": "Environment",
+      "importFrom": "react",
+      "utility": true,
+      "variants": [],
+      "sizes": [],
+      "defaultVariants": {},
+      "states": [
+        "default"
+      ],
+      "keyProps": [],
+      "slots": [],
+      "examples": [
+        {
+          "name": "Note",
+          "jsx": "<div className=\"rounded-md border border-dashed border-border p-4 text-sm text-muted-foreground\">Environment is a DOM-environment provider (for portals in shadow DOM/iframes), not a visual component.</div>"
+        }
+      ],
+      "relatedComponents": [
+        "Portal"
+      ]
+    },
+    {
+      "name": "FocusTrap",
+      "importFrom": "react",
+      "utility": true,
+      "variants": [],
+      "sizes": [],
+      "defaultVariants": {},
+      "states": [
+        "default"
+      ],
+      "keyProps": [],
+      "slots": [],
+      "examples": [
+        {
+          "name": "Note",
+          "jsx": "<div className=\"rounded-md border border-dashed border-border p-4 text-sm text-muted-foreground\">FocusTrap is a behavior helper. Radix Dialog/Popover trap focus automatically; use those instead of a standalone trap.</div>"
+        }
+      ],
+      "relatedComponents": [
+        "Dialog"
+      ]
+    },
+    {
+      "name": "Portal",
+      "importFrom": "react",
+      "utility": true,
+      "variants": [],
+      "sizes": [],
+      "defaultVariants": {},
+      "states": [
+        "default"
+      ],
+      "keyProps": [],
+      "slots": [],
+      "examples": [
+        {
+          "name": "Note",
+          "jsx": "<div className=\"rounded-md border border-dashed border-border p-4 text-sm text-muted-foreground\">Portal renders children into another DOM node. Use ReactDOM.createPortal, or rely on Radix portals built into Dialog/Popover/Tooltip.</div>"
+        }
+      ],
+      "relatedComponents": [
+        "Environment"
+      ]
+    },
+    {
+      "name": "Show",
+      "importFrom": "react",
+      "utility": true,
+      "variants": [],
+      "sizes": [],
+      "defaultVariants": {},
+      "states": [
+        "default"
+      ],
+      "keyProps": [],
+      "slots": [],
+      "examples": [
+        {
+          "name": "Conditional",
+          "jsx": "<div className=\"text-sm\">{true ? (<span className=\"text-success\">Shown when the condition is true</span>) : (<span className=\"text-muted-foreground\">Fallback</span>)}</div>"
+        }
+      ],
+      "relatedComponents": [
+        "For",
+        "ClientOnly"
+      ]
+    },
+    {
+      "name": "NavigationMenu",
+      "importFrom": "@/components/ui/navigation-menu",
+      "variants": [],
+      "sizes": [],
+      "defaultVariants": {},
+      "states": [
+        "default",
+        "open"
+      ],
+      "keyProps": [
+        {
+          "name": "defaultValue",
+          "type": "string",
+          "note": "Open a menu item on mount (matches NavigationMenuItem value)."
+        },
+        {
+          "name": "viewport",
+          "type": "boolean",
+          "default": true,
+          "note": "Render content in a shared viewport panel."
+        }
+      ],
+      "slots": [
+        "root",
+        "list",
+        "item",
+        "trigger",
+        "content",
+        "link",
+        "viewport"
+      ],
+      "examples": [
+        {
+          "name": "Open menu",
+          "jsx": "<NavigationMenu defaultValue=\"start\"><NavigationMenuList><NavigationMenuItem value=\"start\"><NavigationMenuTrigger>Getting started</NavigationMenuTrigger><NavigationMenuContent><div className=\"grid w-56 gap-1 p-2\"><NavigationMenuLink href=\"#\">Introduction</NavigationMenuLink><NavigationMenuLink href=\"#\">Installation</NavigationMenuLink></div></NavigationMenuContent></NavigationMenuItem><NavigationMenuItem><NavigationMenuLink href=\"#\">Docs</NavigationMenuLink></NavigationMenuItem></NavigationMenuList></NavigationMenu>"
+        }
+      ],
+      "relatedComponents": [
+        "Menu",
+        "Menubar",
+        "Breadcrumb"
+      ],
+      "category": "Navigation",
+      "description": "A site-level navigation bar with optional dropdown panels.",
+      "whenToUse": [
+        "Primary site navigation",
+        "Grouping links under top-level sections",
+        "Marketing/header navigation"
+      ],
+      "neverUseFor": [
+        "In-app command menus (use Menu)",
+        "Right-click menus (use ContextMenu)"
+      ],
+      "accessibility": [
+        "Provide accessible names for interactive triggers; preserve built-in keyboard/ARIA behavior."
+      ]
+    },
+    {
+      "name": "Menubar",
+      "importFrom": "@/components/ui/menubar",
+      "variants": [],
+      "sizes": [],
+      "defaultVariants": {},
+      "states": [
+        "default",
+        "open"
+      ],
+      "keyProps": [
+        {
+          "name": "defaultValue",
+          "type": "string",
+          "note": "Open a menu on mount (matches MenubarMenu value)."
+        }
+      ],
+      "slots": [
+        "root",
+        "menu",
+        "trigger",
+        "content",
+        "item",
+        "separator",
+        "label",
+        "checkboxitem",
+        "radiogroup",
+        "radioitem",
+        "sub",
+        "shortcut"
+      ],
+      "examples": [
+        {
+          "name": "Open menubar",
+          "jsx": "<Menubar defaultValue=\"file\"><MenubarMenu value=\"file\"><MenubarTrigger>File</MenubarTrigger><MenubarContent><MenubarItem>New Tab<MenubarShortcut>Ctrl+T</MenubarShortcut></MenubarItem><MenubarItem>New Window</MenubarItem><MenubarSeparator /><MenubarItem>Share</MenubarItem></MenubarContent></MenubarMenu><MenubarMenu value=\"edit\"><MenubarTrigger>Edit</MenubarTrigger></MenubarMenu><MenubarMenu value=\"view\"><MenubarTrigger>View</MenubarTrigger></MenubarMenu></Menubar>"
+        }
+      ],
+      "relatedComponents": [
+        "Menu",
+        "NavigationMenu"
+      ],
+      "category": "Navigation",
+      "description": "A desktop-style menu bar with multiple pull-down menus.",
+      "whenToUse": [
+        "App-style menu bars (File/Edit/View)",
+        "Dense command surfaces",
+        "Desktop-like tools"
+      ],
+      "neverUseFor": [
+        "Single action menus (use Menu)",
+        "Primary site nav (use NavigationMenu)"
+      ],
+      "accessibility": [
+        "Provide accessible names for interactive triggers; preserve built-in keyboard/ARIA behavior."
+      ]
+    },
+    {
+      "name": "ContextMenu",
+      "importFrom": "@/components/ui/context-menu",
+      "variants": [],
+      "sizes": [],
+      "defaultVariants": {},
+      "states": [
+        "default",
+        "open"
+      ],
+      "keyProps": [
+        {
+          "name": "ContextMenuTrigger",
+          "type": "node",
+          "note": "Right-click target that opens the menu."
+        }
+      ],
+      "slots": [
+        "root",
+        "trigger",
+        "content",
+        "item",
+        "checkboxitem",
+        "radioitem",
+        "label",
+        "separator",
+        "shortcut",
+        "sub"
+      ],
+      "examples": [
+        {
+          "name": "Right-click target",
+          "jsx": "<ContextMenu><ContextMenuTrigger className=\"flex h-28 w-64 items-center justify-center rounded-md border border-dashed border-border text-sm text-muted-foreground\">Right-click here</ContextMenuTrigger><ContextMenuContent><ContextMenuItem>Back</ContextMenuItem><ContextMenuItem>Reload</ContextMenuItem><ContextMenuSeparator /><ContextMenuItem>Inspect</ContextMenuItem></ContextMenuContent></ContextMenu>"
+        }
+      ],
+      "relatedComponents": [
+        "Menu",
+        "Menubar"
+      ],
+      "category": "Navigation",
+      "description": "A menu opened by right-clicking a target region.",
+      "whenToUse": [
+        "Right-click actions on an element",
+        "Contextual commands for an item"
+      ],
+      "neverUseFor": [
+        "Always-visible actions (use Button/Menu)",
+        "Primary navigation"
+      ],
+      "accessibility": [
+        "Provide accessible names for interactive triggers; preserve built-in keyboard/ARIA behavior."
+      ]
+    },
+    {
+      "name": "Chart",
+      "importFrom": "@/components/ui/chart",
+      "variants": [],
+      "sizes": [],
+      "defaultVariants": {},
+      "states": [
+        "default"
+      ],
+      "keyProps": [
+        {
+          "name": "config",
+          "type": "object",
+          "note": "ChartConfig mapping data keys to label + color (drives --color-* vars)."
+        },
+        {
+          "name": "data",
+          "type": "array",
+          "note": "Row data passed to the recharts chart."
+        }
+      ],
+      "slots": [
+        "container",
+        "tooltip",
+        "tooltipcontent",
+        "legend",
+        "legendcontent"
+      ],
+      "examples": [
+        {
+          "name": "Bar chart",
+          "jsx": "<ChartContainer config={{ desktop: { label: \"Desktop\", color: \"var(--primary)\" } }} className=\"h-48 w-80\"><BarChart data={[{ month: \"Jan\", desktop: 120 }, { month: \"Feb\", desktop: 180 }, { month: \"Mar\", desktop: 90 }, { month: \"Apr\", desktop: 200 }]}><CartesianGrid vertical={false} /><XAxis dataKey=\"month\" tickLine={false} axisLine={false} tickMargin={8} /><Bar dataKey=\"desktop\" fill=\"var(--color-desktop)\" radius={4} /></BarChart></ChartContainer>"
+        }
+      ],
+      "relatedComponents": [
+        "Stat",
+        "ProgressCircle"
+      ],
+      "category": "Data display",
+      "description": "Themed recharts wrapper with tooltip/legend and token-driven colors.",
+      "whenToUse": [
+        "Visualizing series/metrics",
+        "Dashboards",
+        "Trends over time"
+      ],
+      "neverUseFor": [
+        "Single headline numbers (use Stat)",
+        "Tabular comparison (use Table)"
+      ],
+      "accessibility": [
+        "Provide accessible names for interactive triggers; preserve built-in keyboard/ARIA behavior."
+      ]
+    }
+  ]
+}

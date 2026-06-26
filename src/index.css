@@ -1,0 +1,66 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+/* Brand-driven :root / .dark variables, generated from client-theme.json. */
+@import "./theme/tokens.generated.css";
+
+/* Dark mode is toggled by a `.dark` ancestor (the explorer adds it for
+   colorMode=dark), matching the previous Chakra behavior. */
+@custom-variant dark (&:is(.dark *));
+
+/* Static state simulation for the explorer: when the render target carries
+   data-ads-force="hover|focus|active", a component's own hover:/focus:/active:
+   Tailwind utilities apply unconditionally, so the real interaction styles are
+   visible without live input. Real :hover/:focus still work everywhere else. */
+@custom-variant hover (&:hover, :where([data-ads-force~="hover"]) &);
+@custom-variant focus (&:focus, :where([data-ads-force~="focus"]) &);
+@custom-variant focus-visible (&:focus-visible, :where([data-ads-force~="focus-visible"], [data-ads-force~="focus"]) &);
+@custom-variant active (&:active, :where([data-ads-force~="active"]) &);
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  --color-success: var(--success);
+  --color-success-foreground: var(--success-foreground);
+  --color-warning: var(--warning);
+  --color-warning-foreground: var(--warning-foreground);
+  --color-info: var(--info);
+  --color-info-foreground: var(--info-foreground);
+
+  --font-sans: var(--font-sans);
+  --font-heading: var(--font-heading);
+
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+}
+
+@layer base {
+  * {
+    border-color: var(--border);
+    outline-color: color-mix(in oklch, var(--ring) 50%, transparent);
+  }
+  body {
+    background-color: var(--background);
+    color: var(--foreground);
+    font-family: var(--font-sans);
+  }
+}

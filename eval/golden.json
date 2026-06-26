@@ -1,0 +1,33 @@
+{
+  "description": "Golden tasks for the ADS Light agentic loop. The eval runner (scripts/eval.mjs, `npm run eval`) scores recommend_component, review_ui, fix_ui, and scaffold_screen against these expectations and fails on regression. recommend/scaffold use top-N recall (an expected answer must appear), not exact rank, so they're meaningful without being brittle.",
+  "recommend": [
+    { "task": "submit a form", "expectTop3": ["Button"] },
+    { "task": "pick one of several mutually exclusive options", "expectTop3": ["RadioGroup", "Select"] },
+    { "task": "show a temporary success message", "expectTop3": ["Alert", "Toast", "Sonner", "Toaster"] },
+    { "task": "navigate between top-level sections of the app", "expectTop3": ["NavigationMenu", "Tabs"] },
+    { "task": "display rows of tabular data", "expectTop3": ["Table"] },
+    { "task": "let the user choose a date", "expectTop3": ["DatePicker", "Calendar"] },
+    { "task": "confirm a destructive delete action", "expectTop3": ["Dialog"] },
+    { "task": "toggle a single setting on or off", "expectTop3": ["Switch", "Toggle"] },
+    { "task": "a placeholder while content is loading", "expectTop3": ["Skeleton", "Spinner", "Progress"] },
+    { "task": "search and select from a long list of values", "expectTop3": ["Select", "Combobox", "Command"] }
+  ],
+  "review": [
+    { "name": "hardcoded color", "code": "<div className=\"bg-[#3b82f6] p-4\">Hi</div>", "expectVerdict": "fail", "expectRules": ["no-hardcoded-color"] },
+    { "name": "raw button", "code": "<button className=\"px-3\">Save</button>", "expectVerdict": "warn", "expectRules": ["prefer-component"] },
+    { "name": "nested cards", "code": "<Card><CardContent><Card><CardContent>x</CardContent></Card></CardContent></Card>", "expectVerdict": "warn", "expectRules": ["no-nested-cards"] },
+    { "name": "two primary actions", "code": "<div className=\"flex gap-2\"><Button>Save</Button><Button>Publish</Button></div>", "expectVerdict": "warn", "expectRules": ["single-primary-action"] },
+    { "name": "clean button", "code": "<Button variant=\"default\">Save</Button>", "expectVerdict": "pass", "expectRules": [] },
+    { "name": "clean card", "code": "<Card><CardHeader><CardTitle>Title</CardTitle></CardHeader><CardContent className=\"text-muted-foreground\">Body copy.</CardContent></Card>", "expectVerdict": "pass", "expectRules": [] }
+  ],
+  "fix": [
+    { "name": "color + raw button", "code": "<div className=\"bg-[#145fc4] text-[#667085]\"><button>Go</button></div>", "expectVerdictAfter": "pass" },
+    { "name": "raw input + border color", "code": "<div className=\"border-[#d8dee8]\"><input placeholder=\"Name\" /></div>", "expectVerdictAfter": "pass" }
+  ],
+  "scaffold": [
+    { "brief": "a login screen with email and password", "expectStartIn": ["Auth Card"] },
+    { "brief": "a data table with a search box and a status filter", "expectStartIn": ["Table with Toolbar"] },
+    { "brief": "a dashboard header with key metric numbers", "expectStartIn": ["Metric Summary Row", "Page Header with Actions"] },
+    { "brief": "a settings page with on off toggles", "expectStartIn": ["Settings Section", "Page Header with Actions"] }
+  ]
+}
