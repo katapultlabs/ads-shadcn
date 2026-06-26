@@ -899,7 +899,7 @@ export const tokenData = {
     },
     {
       "name": "--primary-foreground",
-      "value": "#ffffff",
+      "value": "#101828",
       "category": "color",
       "role": "semantic",
       "layer": "semantic",
@@ -971,7 +971,7 @@ export const tokenData = {
     },
     {
       "name": "--destructive-foreground",
-      "value": "#ffffff",
+      "value": "#101828",
       "category": "color",
       "role": "semantic",
       "layer": "semantic",
@@ -1016,7 +1016,7 @@ export const tokenData = {
     },
     {
       "name": "--success-foreground",
-      "value": "#ffffff",
+      "value": "#101828",
       "category": "color",
       "role": "semantic",
       "layer": "semantic",
@@ -1034,7 +1034,7 @@ export const tokenData = {
     },
     {
       "name": "--warning-foreground",
-      "value": "#ffffff",
+      "value": "#101828",
       "category": "color",
       "role": "semantic",
       "layer": "semantic",
@@ -1052,7 +1052,7 @@ export const tokenData = {
     },
     {
       "name": "--info-foreground",
-      "value": "#ffffff",
+      "value": "#101828",
       "category": "color",
       "role": "semantic",
       "layer": "semantic",

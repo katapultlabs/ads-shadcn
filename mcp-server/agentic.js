@@ -45,10 +45,9 @@ export function contrastRatio(a, b) {
   const lo = Math.min(la, lb);
   return Math.round(((hi + 0.05) / (lo + 0.05)) * 100) / 100;
 }
-const onColor = (hex) => {
-  const rgb = hexToRgb(hex);
-  return rgb && relLuminance(rgb) > 0.45 ? "#101828" : "#ffffff";
-};
+// Pick the higher-contrast foreground (matches generate-theme.mjs onColor), so
+// validateThemeContrast checks the same text color the generator actually emits.
+const onColor = (hex) => ((contrastRatio(hex, "#101828") ?? 0) >= (contrastRatio(hex, "#ffffff") ?? 0) ? "#101828" : "#ffffff");
 
 // Validate the brand/status colors in a theme for AA contrast against the text
 // that sits on them. Returns structured warnings (never throws).

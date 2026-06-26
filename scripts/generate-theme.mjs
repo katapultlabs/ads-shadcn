@@ -38,7 +38,17 @@ function luminance(hex) {
   const ch = (v) => { const c = v / 255; return c <= 0.03928 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4; };
   return 0.2126 * ch(rgb.r) + 0.7152 * ch(rgb.g) + 0.0722 * ch(rgb.b);
 }
-const onColor = (hex) => (luminance(hex) > 0.45 ? "#101828" : "#ffffff");
+const contrast = (a, b) => {
+  const la = luminance(a);
+  const lb = luminance(b);
+  return (Math.max(la, lb) + 0.05) / (Math.min(la, lb) + 0.05);
+};
+// Pick the foreground (near-black or white) that gives the HIGHER contrast on
+// `hex` — not a luminance threshold. A naive threshold puts white on mid-tone
+// saturated colors (e.g. a lightened dark-mode primary) where dark text would
+// actually clear AA and white fails. This guarantees the best-readable pairing
+// for any brand color, in both modes.
+const onColor = (hex) => (contrast(hex, "#101828") >= contrast(hex, "#ffffff") ? "#101828" : "#ffffff");
 const def = (v, fallback) => (v == null || v === "" ? fallback : v);
 
 // Per-step tint/shade ratios relative to the 500 seed.
